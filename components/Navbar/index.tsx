@@ -10,8 +10,14 @@ const Navbar = () => {
         <Image src={CMT} alt={'cmt log'} className='w-full' />
       </div>
       
-      <div>
+      <nav>
+        <div className=''>
 
+        </div>
+      </nav>
+
+      <div>
+        
       </div>
     </div>
   )
