@@ -1,26 +1,47 @@
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 // image
 import CMT from "@/public/cmt-full-logo.svg";
 
+const links = [
+  { id: 1, name: "Home", href: "/" },
+  { id: 2, name: "Who we are", href: "/whoweare" },
+  { id: 3, name: "What we do", href: "/whatwedo" },
+  { id: 4, name: "Our Portfolio", href: "/portfolio" },
+  { id: 5, name: "Our Blog", href: "/blog" },
+];
+
 const Navbar = () => {
   return (
-    <div>
+    <nav className="flex justify-between items-center">
       <div className="w-32 md:w-48">
-        <Image src={CMT} alt={'cmt log'} className='w-full' />
+        <Image src={CMT} alt={"cmt log"} className="w-full" />
       </div>
-      
-      <nav>
-        <div className=''>
 
-        </div>
-      </nav>
+      <div className="hidden w-[450px] xl:block xl:w-[600px]">
+        <ul className="flex justify-between items-center">
+          {links.map((link) => (
+            <li key={link.id}>
+              <Link
+                href={link.href}
+                className="text-white hover:text-[#4173CB] active:text-[#4173CB] focus:text-[#4173CB] transition-all"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div>
-        
+        <Button className="bg-[#FFFFFF] text-[#00338D] text-sm px-4 py-3 rounded-[10px] hover:bg-[#c9c9c9] transition-all">
+          Contact us
+        </Button>
       </div>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
 export default Navbar;

@@ -3,10 +3,10 @@ import Navbar from '../Navbar'
 
 const Hero = () => {
   return (
-    <div className='bg-[#000309] container mx-auto p-8'>
+    <div className='container px-auto p-8'>
       <Navbar />
       <div>
-
+        
       </div>
     </div>
   )
