@@ -1,6 +1,9 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 // image
 import CMT from "@/public/cmt-full-logo.svg";
@@ -14,8 +17,10 @@ const links = [
 ];
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  
   return (
-    <nav className="flex justify-between items-center">
+    <header className="hidden justify-between items-center lg:flex">
       <div className="w-32 md:w-48">
         <Image src={CMT} alt={"cmt log"} className="w-full" />
       </div>
@@ -40,7 +45,7 @@ const Navbar = () => {
           Contact us
         </Button>
       </div>
-    </nav>
+    </header>
   );
 };
 

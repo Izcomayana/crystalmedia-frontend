@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className="bg-[#000309]">
           <Hero />
         </div>
-        <div className="container mx-auto">
+        <div>
           {children}
         </div>
         <Footer />

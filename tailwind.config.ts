@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -58,6 +58,13 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        reveal: 'reveal 1s ease-in-out forwards',
+        "text-slide":
+          "text-slide 12.5s cubic-bezier(0.83, 0, 0.17, 1) infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -67,14 +74,34 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        reveal: {
+          '0%': { opacity: '0', transform: 'translateY(-20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        "text-slide": {
+          "0%, 16%": {
+            transform: "translateY(0%)",
+          },
+          "20%, 36%": {
+            transform: "translateY(-16.66%)",
+          },
+          "40%, 56%": {
+            transform: "translateY(-33.33%)",
+          },
+          "60%, 76%": {
+            transform: "translateY(-50%)",
+          },
+          "80%, 96%": {
+            transform: "translateY(-66.66%)",
+          },
+          "100%": {
+            transform: "translateY(-83.33%)",
+          },
+        },
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
