@@ -3,7 +3,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import MenuItem from "./MenuItem";
 import Image from "next/image";
-import CMT from "@/public/cmt-full-logo.svg";
+import CMT from "@/public/images/cmt-full-logo.svg";
 
 const variants = {
   open: {

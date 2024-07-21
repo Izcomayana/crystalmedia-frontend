@@ -1,5 +1,5 @@
 import Image from "next/image";
-import GrowthCompassImg from "@/public/growth-compass.png";
+import GrowthCompassImg from "@/public/images/growth-compass.png";
 
 const GrowthCompass = () => {
   return (
@@ -13,7 +13,7 @@ const GrowthCompass = () => {
                   We help brands grow <br /> and increase their <br /> revenue
                   through <br />{" "}
                   <span className="inline-flex flex-col h-[calc(theme(fontSize.sm)*theme(lineHeight.tight))] md:h-[calc(theme(fontSize.3xl)*theme(lineHeight.tight))] overflow-hidden xl:h-[calc(theme(fontSize.5xl)*theme(lineHeight.tight))]">
-                    <ul className="block animate-text-slide text-[#00338D] text-left leading-tight [&_li]:block">
+                    <ul className="block animate-text-slide text-primaryBlue text-left leading-tight [&_li]:block">
                       <li>Branding</li>
                       <li>Digital Marketing</li>
                       <li>Social Media Marketing</li>

@@ -2,10 +2,10 @@ import * as React from "react"
 
 import EmblaCarousel from '@/components/ui/emblaCaousel';
 import { EmblaOptionsType } from 'embla-carousel';
-import smmam from "@/public/smmam.png";
-import desbra from "@/public/design-branding.png";
-import infmark from "@/public/influencer-marketting.png";
-import PR from "@/public/PR.png";
+import smmam from "@/public/images/smmam.png";
+import desbra from "@/public/images/design-branding.png";
+import infmark from "@/public/images/influencer-marketting.png";
+import PR from "@/public/images/PR.png";
 import Image from "next/image";
 
 const OPTIONS: EmblaOptionsType = { loop: true }
@@ -44,11 +44,11 @@ const Whatwedo = () => {
       <div className="hidden container mx-auto justify-between items-center gap-[15px] xl:flex">
         {WEDO.map((wedos) => (
           <div className="w-[25%]" key={wedos.index}>
-            <div className="border-4 border-[#00338D] embla__slide__number">
+            <div className="border-4 border-primaryBlue embla__slide__number">
               <div>
                 <Image src={wedos.img} alt="social media marketing" className="mx-auto" />
               </div>
-              <div className={`bg-[#00338D] p-4 ${wedos.index === 1 ? 'p-2' : ''}`}>
+              <div className={`bg-primaryBlue p-4 ${wedos.index === 1 ? 'p-2' : ''}`}>
                 <h1 className={`text-white font-bold text-lg ${wedos.index === 1 ? 'text-base' : ''}`}>{wedos.text}</h1>
               </div>
             </div>

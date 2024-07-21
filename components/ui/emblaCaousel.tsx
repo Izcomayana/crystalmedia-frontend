@@ -45,11 +45,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container">
           {slides.map((slide) => (
             <div className="container mx-auto embla__slide" key={slide.index}>
-              <div className="border-4 border-[#00338D] embla__slide__number">
+              <div className="border-4 border-primaryBlue embla__slide__number">
                 <div>
                   <Image src={slide.img} alt="social media marketing" className="mx-auto" />
                 </div>
-                <div className="bg-[#00338D] text-center p-4">
+                <div className="bg-primaryBlue text-center p-4">
                   <h1 className="text-white font-bold text-lg">{slide.text}</h1>
                 </div>
               </div>

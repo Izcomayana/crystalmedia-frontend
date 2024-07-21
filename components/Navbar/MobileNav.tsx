@@ -6,7 +6,7 @@ import { MenuToggle } from "./components/MenuToggle";
 import { Navigation } from "./components/Navigation";
 import Image from "next/image";
 
-import CMT from "@/public/cmt-full-logo.svg";
+import CMT from "@/public/images/cmt-full-logo.svg";
 
 const sidenavbar = {
   open: (height = 1000) => ({

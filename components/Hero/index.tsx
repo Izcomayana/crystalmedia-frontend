@@ -1,21 +1,16 @@
-import Navbar from '../Navbar';
-import Image from 'next/image';
-import circledown from '@/public/circledown-arrow.png';
-import HomeHero from '@/app/homepage/components/HomHero';
-import MobileNav from "@/components/Navbar/MobileNav";
+interface HeroProps {
+  title: string;
+}
 
-const Hero = () => {
+const Hero: React.FC<HeroProps> = ({ title }) => {
   return (
-    <div className='container px-auto p-8'>
-      <Navbar />
-      <MobileNav />
-      <HomeHero />
-      <div className='flex flex-col justify-center items-center mb-20'>
-        <div className="animate-bounce w-20 h-20 text-white">
-          <Image src={circledown} alt={'circle down'} className='cursor-pointer' />
+    <section>
+      <div className="p-8 bg-[#000309] mt-[-4px]">
+        <div className="container mx-auto my-32 mb-44">
+          <h1 className="text-white font-black text-4xl lg:text-7xl">{title}</h1>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

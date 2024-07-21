@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 // images
-import zenith from "@/public/zenith-bank.png";
-import ariya from "@/public/247 -Ariay.png";
-import ahalo from "@/public/m-foods.png";
-import olayemi from "@/public/olayemi-logo.png";
+import zenith from "@/public/images/zenith-bank.png";
+import ariya from "@/public/images/247 -Ariay.png";
+import ahalo from "@/public/images/m-foods.png";
+import olayemi from "@/public/images/olayemi-logo.png";
 
 const Testimonials = () => {
   return (

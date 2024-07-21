@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 // image
-import CMT from "@/public/cmt-full-logo.svg";
+import CMT from "@/public/images/cmt-full-logo.svg";
 
 const links = [
   { id: 1, name: "Home", href: "/" },
@@ -41,7 +41,7 @@ const Navbar = () => {
       </div>
 
       <div>
-        <Button className="bg-[#FFFFFF] text-[#00338D] text-sm px-4 py-3 rounded-[10px] hover:bg-[#c9c9c9] transition-all">
+        <Button className="bg-[#FFFFFF] text-primaryBlue text-sm px-4 py-3 rounded-[10px] hover:bg-[#c9c9c9] transition-all">
           Contact us
         </Button>
       </div>

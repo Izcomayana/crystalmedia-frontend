@@ -54,7 +54,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ i }) => {
         variants={variants}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.85 }}
-        className="p-4 w-80 hover:bg-[#00338D] focus:bg-[#00338D] active:bg-[#00338D] rounded-xl mb-6"
+        className="p-4 w-80 hover:bg-primaryBlue focus:bg-primaryBlue active:bg-primaryBlue rounded-xl mb-6"
       >
         <Link href={href[i]} className="text-placeholder flex items-center text-2xl gap-6" style={style} >
           <div style={style}>{icons[i]}</div>
