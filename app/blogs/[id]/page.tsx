@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
+import Loader from "@/components/Loader";
 
 type Post = {
   id: number;
@@ -34,7 +35,7 @@ const Page: React.FC = () => {
   }, [id]);
 
   if (!post) {
-    return <p>Loading...</p>;
+    return <Loader />
   }
 
   return (
