@@ -25,7 +25,7 @@ const Navbar = () => {
         <Image src={CMT} alt={"cmt log"} className="w-full" />
       </div>
 
-      <div className="hidden w-[450px] xl:block xl:w-[600px]">
+      <div className="hidden w-[450px] lg:block xl:w-[600px]">
         <ul className="flex justify-between items-center">
           {links.map((link) => (
             <li key={link.id}>

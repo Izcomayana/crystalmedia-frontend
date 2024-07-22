@@ -23,11 +23,11 @@ const Page: React.FC = () => {
     if (!id) return;
 
     const fetchPost = async () => {
-      const response = await fetch("/data/blogs.json");
+      const response = await fetch("/data/data.json");
       const data = await response.json();
-      console.log('Data:', data); // Log the data to ensure it is fetched correctly
-      const foundPost = data.find((post: Post) => post.id === parseInt(id, 10));
-      console.log('Found Post:', foundPost); // Log the found post to ensure it is correct
+      console.log('Data:', data);
+      const foundPost = data.blogs.find((post: Post) => post.id === parseInt(id, 10));
+      console.log('Found Post:', foundPost);
       setPost(foundPost);
     };
 

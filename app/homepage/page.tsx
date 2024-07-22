@@ -9,7 +9,7 @@ import HomeHero from "./components/HomeHero";
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <HomeHero />
       <GrowthCompass />
       <WhyWeStarted />
@@ -18,7 +18,7 @@ const HomePage = () => {
       <Testimonials />
       <Blog />
       <CTA />
-    </div>
+    </>
   );
 };
 

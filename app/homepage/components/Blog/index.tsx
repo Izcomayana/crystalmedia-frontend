@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { GetStaticProps, GetStaticPaths  } from 'next';
 
 import slantarrow from "@/public/images/slant-arrow.png";
 import arrow from "@/public/images/arrow.png";
+import Loader from "@/components/Loader";
 
 type Post = {
   id: number;
@@ -22,13 +22,17 @@ const Blog = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("/data/blogs.json");
+      const response = await fetch("/data/data.json");
       const data = await response.json();
-      setPosts(data.slice(0, 2));
+      setPosts(data.blogs.slice(0, 2));
     };
 
     fetchPosts();
   }, []);
+
+  if (!posts) {
+    return <Loader />
+  }
 
   return (
     <section>

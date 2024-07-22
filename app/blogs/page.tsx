@@ -4,7 +4,7 @@ import Testimonials from "@/components/Testimonials";
 
 const Blogs = () => {
   return (
-    <section>
+    <>
       <div>
         <Hero title="Our blog" />
         <div className="container mx-auto">
@@ -21,7 +21,7 @@ const Blogs = () => {
         <Testimonials />
         <CTA />
       </div>
-    </section>
+    </>
   );
 };
 
