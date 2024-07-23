@@ -1,8 +1,12 @@
-import React from 'react'
+import Hero from "@/components/Hero";
+import PortfolioTabs from "./components/PortfolioTabs";
 
 const Portfolio = () => {
   return (
-    <div>Portfolio</div>
+    <>
+      <Hero title="Our Portfolio" />
+      <PortfolioTabs />
+    </>
   )
 }
 

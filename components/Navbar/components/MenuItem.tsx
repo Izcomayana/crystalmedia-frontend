@@ -32,7 +32,7 @@ const variants = {
   },
 };
 
-const href = ["/", "/whoweare", "/whatwedo", "/portfolio", "/blog"];
+const href = ["/", "/whoweare", "/whatwedo", "/portfolio", "/blogs"];
 const name = [
   "Home",
   "Who we are",

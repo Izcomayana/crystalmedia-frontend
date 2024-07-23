@@ -13,7 +13,7 @@ const links = [
   { id: 2, name: "Who we are", href: "/whoweare" },
   { id: 3, name: "What we do", href: "/whatwedo" },
   { id: 4, name: "Our Portfolio", href: "/portfolio" },
-  { id: 5, name: "Our Blog", href: "/blog" },
+  { id: 5, name: "Our Blog", href: "/blogs" },
 ];
 
 const Navbar = () => {

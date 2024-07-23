@@ -28,6 +28,15 @@ const sidenavbar = {
   },
 };
 
+const navbar = {
+  // open: {
+  //   display: 'flex',
+  // },
+  // closed: {
+  //   dispay: "block"
+  // }
+}
+
 const MobileNav = () => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
@@ -37,7 +46,8 @@ const MobileNav = () => {
       <motion.nav
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        ref={containerRef}
+        // ref={containerRef}
+        variants={navbar}
       >
         <motion.div className="background" variants={sidenavbar} />
         <div className="flex justify-between items-center m-4">
