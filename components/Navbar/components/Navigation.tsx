@@ -1,6 +1,6 @@
 'use client';
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, useCycle } from "framer-motion";
 import MenuItem from "./MenuItem";
 import Image from "next/image";
 import CMT from "@/public/images/cmt-full-logo.svg";
@@ -21,19 +21,19 @@ const variants = {
 };
 
 const style = { color: 'white' };
+const itemIds = [0, 1, 2, 3, 4];
 
-export const Navigation = () => (
+export const Navigation = ({ toggleOpen }: { toggleOpen: () => void }) => (
   <div>
     <motion.ul variants={variants}>
       <div className="w-80 mb-16" style={style}>
         <Image src={CMT} alt={"cmt-log"} className="w-full" />
       </div>
       {itemIds.map(i => (
-        <MenuItem i={i} key={i} />
+        <MenuItem i={i} key={i} toggleOpen={toggleOpen} />
       ))}
     </motion.ul>
   </div>
   
 );
 
-const itemIds = [0, 1, 2, 3, 4];

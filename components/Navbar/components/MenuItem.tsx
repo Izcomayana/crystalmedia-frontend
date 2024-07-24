@@ -13,6 +13,7 @@ import { BiNews } from "react-icons/bi";
 // Define the type for the props
 interface MenuItemProps {
   i: number;
+  toggleOpen: () => void;
 }
 
 const variants = {
@@ -45,7 +46,7 @@ const name = [
 // eslint-disable-next-line react/jsx-key
 const icons = [ <RiHomeLine />, <PiUsersThree />, <RiAppsLine />, <BiNews />, <BsCalendarDate />, ];
 
-const MenuItem: React.FC<MenuItemProps> = ({ i }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ i, toggleOpen }) => {
   const style = { color: "white" };
 
   return (
@@ -54,6 +55,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ i }) => {
         variants={variants}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.85 }}
+        onClick={toggleOpen}
         className="p-4 w-80 hover:bg-primaryBlue focus:bg-primaryBlue active:bg-primaryBlue rounded-xl mb-6"
       >
         <Link href={href[i]} className="text-placeholder flex items-center text-2xl gap-6" style={style} >
