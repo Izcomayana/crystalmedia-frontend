@@ -32,7 +32,7 @@ const TheTeam = () => {
   return (
     <section>
       <div className="container mx-auto">
-        <h3 className='font-semibold text-xl'>Meet the <br /> remarkable brains</h3>
+        <h3 className='font-semibold text-xl lg:font-bold md:text-2xl lg:text-3xl xl:text-4xl'>Meet the <br /> remarkable brains</h3>
         <div className="mt-4 flex flex-col justify-between gap-6 lg:flex-row">
           {teams.map((team) => (
             <div key={team.id} className="md:w-1/2 md:mx-auto lg:w-fit">

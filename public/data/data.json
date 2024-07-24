@@ -50,7 +50,6 @@
     }
   ],
 
-  
   "team": [
     {
       "id": 1,
@@ -69,6 +68,195 @@
       "image": "/Crystal.png",
       "name": "ABATI ISAIAH 3",
       "role": "Co Founder"
+    }
+  ],
+
+  "portfolio": [
+    {
+      "id": 1,
+      "name": "Design",
+      "value": "design",
+      "designs": [
+        {
+          "id": 1,
+          "name": "Social Media Creatives",
+          "value": "sm-creatives",
+          "SMDesigns": [
+            {
+              "id": 1,
+              "src": "/designs/design-1.png"
+            },
+            {
+              "id": 2,
+              "src": "/designs/design-2.png"
+            },
+            {
+              "id": 3,
+              "src": "/designs/design-3.png"
+            },
+            {
+              "id": 4,
+              "src": "/designs/design-4.png"
+            },
+            {
+              "id": 5,
+              "src": "/designs/design-5.png"
+            },
+            {
+              "id": 6,
+              "src": "/designs/design-6.png"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Brand Identity Designs",
+          "value": "brand-identity",
+          "brandIdentity": [
+            {
+              "id": 1,
+              "src": "/Saint.png"
+            },
+            {
+              "id": 2,
+              "src": "/Saint.png"
+            },
+            {
+              "id": 3,
+              "src": "/Saint.png"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Website Designs",
+          "value": "web-design",
+          "webDesigns": [
+            {
+              "id": 1,
+              "src": "/Crystal.png"
+            },
+            {
+              "id": 2,
+              "src": "/Crystal.png"
+            },
+            {
+              "id": 3,
+              "src": "/Crystal.png"
+            },
+            {
+              "id": 4,
+              "src": "/Crystal.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Influencer Marketing",
+      "value": "influencer-marketing",
+      "influencerMarketing": [
+        {
+          "id": 1,
+          "name": "Twitter trends",
+          "value": "twitter-trends",
+          "twitterTrends": [
+            {
+              "id": 1,
+              "src": "/trends/trend-1.png"
+            },
+            {
+              "id": 2,
+              "src": "/trends/trend-2.png"
+            },
+            {
+              "id": 3,
+              "src": "/trends/trend-3.png"
+            },
+            {
+              "id": 4,
+              "src": "/trends/trend-4.png"
+            },
+            {
+              "id": 5,
+              "src": "/trends/trend-5.png"
+            },
+            {
+              "id": 6,
+              "src": "/trends/trend-6.png"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Twitter Campaigns",
+          "value": "twitter-campaigns",
+          "twitterCampaigns": [
+            {
+              "id": 1,
+              "src": "/Saint.png"
+            },
+            {
+              "id": 2,
+              "src": "/Saint.png"
+            },
+            {
+              "id": 3,
+              "src": "/Saint.png"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Tiktok campaigns",
+          "value": "tiktok-campaigns",
+          "tiktokCampaigns": [
+            {
+              "id": 1,
+              "image": "/purple-speedy.png",
+              "name": "Purple Speedy",
+              "role": "Co Founder"
+            },
+            {
+              "id": 2,
+              "image": "/Ade.png",
+              "name": "ABATI ISAIAH 2",
+              "role": "Co Founder"
+            },
+            {
+              "id": 3,
+              "image": "/purple-speedy.png",
+              "name": "Purple Speedy",
+              "role": "Co Founder"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Public Relation",
+      "value": "public-relaton",
+      "publicRelation": [
+        {
+          "id": 1,
+          "video": "https://docs.material-tailwind.com/demo.mp4",
+          "caption": "Ut consequat est ante, at commodo elit vehicula at. Morbi dignissim, tellus quis imperdiet vulputate, elit odio blandit lectus, finibus ultrices lorem mauris at augue. Fusce eros ante, egestas sed varius eu, hendrerit id ipsum. Donec aliquet porttitor mi, iaculis interdum neque. Aliquam scelerisque at sapien placerat euismod. Integer molestie arcu vitae justo tristique, nec blandit diam porta. Nullam sapien lacus, aliquam et dui in, fringilla luctus mi. Nullam ligula dolor, faucibus et arcu feugiat, sagittis dictum ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent cursus, metus vitae finibus ultricies, dolor mi auctor tortor, eu gravida nulla ex eu mauris. Nullam eleifend tortor nec purus mattis, sit amet pharetra magna mollis. Donec in nulla in leo posuere tristique. Praesent ac odio arcu. Nam at velit pulvinar, vehicula orci id, gravida mauris. Fusce ac purus nec sapien semper congue. Mauris blandit nunc eget leo blandit, nec bibendum ipsum ornare. Sed in elementum lacus. Cras eget metus pellentesque, scelerisque libero sit amet, accumsan dolor. Donec a euismod mi, non elementum lectus. Vestibulum ac nisl fringilla, mattis magna sed, tincidunt magna. Proin quis lacus vitae magna tempor iaculis. Curabitur maximus cursus diam, eu lacinia sapien pharetra id. Ut erat sapien, elementum ac eros eget, ullamcorper porta orci. Ut consequat est ante, at commodo elit vehicula at. Morbi dignissim, tellus quis imperdiet vulputate, elit odio blandit lectus, finibus ultrices lorem mauris at augue. Fusce eros ante, egestas sed varius eu, hendrerit id ipsum. Donec aliquet porttitor mi, iaculis interdum neque. Aliquam scelerisque at sapien placerat euismod. Integer molestie arcu vitae justo tristique, nec blandit diam porta. Nullam sapien lacus, aliquam et dui in, fringilla luctus mi. Nullam ligula dolor, faucibus et arcu feugiat, sagittis dictum ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent cursus, metus vitae finibus ultricies, dolor mi auctor tortor, eu gravida nulla ex eu mauris. Nullam eleifend tortor nec purus mattis, sit amet pharetra magna mollis. Donec in nulla in leo posuere tristique. Praesent ac odio arcu. Nam at velit pulvinar, vehicula orci id, gravida mauris. Fusce ac purus nec sapien semper congue. Mauris blandit nunc eget leo blandit, nec bibendum ipsum ornare. Sed in elementum lacus. Cras eget metus pellentesque, scelerisque libero sit amet, accumsan dolor. Donec a euismod mi, non elementum lectus. Vestibulum ac nisl fringilla, mattis magna sed, tincidunt magna. Proin quis lacus vitae magna tempor iaculis. Curabitur maximus cursus diam, eu lacinia sapien pharetra id. Ut erat sapien, elementum ac eros eget, ullamcorper porta orci."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Social Media Marketing",
+      "value": "social-media",
+      "socialMedia": [
+        {
+          "id": 1,
+          "video": "https://docs.material-tailwind.com/demo.mp4",
+          "caption": "Ut consequat est ante, at commodo elit vehicula at. Morbi dignissim, tellus quis imperdiet vulputate, elit odio blandit lectus, finibus ultrices lorem mauris at augue. Fusce eros ante, egestas sed varius eu, hendrerit id ipsum. Donec aliquet porttitor mi, iaculis interdum neque. Aliquam scelerisque at sapien placerat euismod. Integer molestie arcu vitae justo tristique, nec blandit diam porta. Nullam sapien lacus, aliquam et dui in, fringilla luctus mi. Nullam ligula dolor, faucibus et arcu feugiat, sagittis dictum ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent cursus, metus vitae finibus ultricies, dolor mi auctor tortor, eu gravida nulla ex eu mauris. Nullam eleifend tortor nec purus mattis, sit amet pharetra magna mollis. Donec in nulla in leo posuere tristique. Praesent ac odio arcu. Nam at velit pulvinar, vehicula orci id, gravida mauris. Fusce ac purus nec sapien semper congue. Mauris blandit nunc eget leo blandit, nec bibendum ipsum ornare. Sed in elementum lacus. Cras eget metus pellentesque, scelerisque libero sit amet, accumsan dolor. Donec a euismod mi, non elementum lectus. Vestibulum ac nisl fringilla, mattis magna sed, tincidunt magna. Proin quis lacus vitae magna tempor iaculis. Curabitur maximus cursus diam, eu lacinia sapien pharetra id. Ut erat sapien, elementum ac eros eget, ullamcorper porta orci. Ut consequat est ante, at commodo elit vehicula at. Morbi dignissim, tellus quis imperdiet vulputate, elit odio blandit lectus, finibus ultrices lorem mauris at augue. Fusce eros ante, egestas sed varius eu, hendrerit id ipsum. Donec aliquet porttitor mi, iaculis interdum neque. Aliquam scelerisque at sapien placerat euismod. Integer molestie arcu vitae justo tristique, nec blandit diam porta. Nullam sapien lacus, aliquam et dui in, fringilla luctus mi. Nullam ligula dolor, faucibus et arcu feugiat, sagittis dictum ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent cursus, metus vitae finibus ultricies, dolor mi auctor tortor, eu gravida nulla ex eu mauris. Nullam eleifend tortor nec purus mattis, sit amet pharetra magna mollis. Donec in nulla in leo posuere tristique. Praesent ac odio arcu. Nam at velit pulvinar, vehicula orci id, gravida mauris. Fusce ac purus nec sapien semper congue. Mauris blandit nunc eget leo blandit, nec bibendum ipsum ornare. Sed in elementum lacus. Cras eget metus pellentesque, scelerisque libero sit amet, accumsan dolor. Donec a euismod mi, non elementum lectus. Vestibulum ac nisl fringilla, mattis magna sed, tincidunt magna. Proin quis lacus vitae magna tempor iaculis. Curabitur maximus cursus diam, eu lacinia sapien pharetra id. Ut erat sapien, elementum ac eros eget, ullamcorper porta orci."
+        }
+      ]
     }
   ]
 }
