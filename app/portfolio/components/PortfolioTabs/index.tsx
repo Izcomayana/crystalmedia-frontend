@@ -1,121 +1,12 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Loader from "@/components/Loader";
-
-type Portfolio = {
-  id: number;
-  name: string;
-  value: string;
-};
-
-type Designs = {
-  id: number;
-  name: string;
-  value: string;
-};
-
-type SMDesigns = {
-  id: number;
-  src: string;
-};
-
-type Brand = {
-  id: number;
-  src: string;
-};
-
-type WebDesign = {
-  id: number;
-  src: string;
-};
-
-type InfluencerMarketing = {
-  id: number;
-  name: string;
-  value: string;
-};
-
-type TwitterTrend = {
-  id: number;
-  src: string;
-};
-
-type TwitterCampaign = {
-  id: number;
-  src: string;
-};
-
-type TiktokCampaign = {
-  id: number;
-  image: string;
-  name: string;
-  role: string;
-};
-
-type PublicRelation = {
-  id: number;
-  video: string;
-  caption: string;
-};
-
-type SocialMedia = {
-  id: number;
-  video: string;
-  caption: string;
-};
-
-type State = {
-  portfolios: Portfolio[];
-  designs: Designs[];
-  SMDesigns: SMDesigns[];
-  brands: Brand[];
-  webDesigns: WebDesign[];
-  influencerMarketing: InfluencerMarketing[];
-  twitterTrends: TwitterTrend[];
-  twitterCampaigns: TwitterCampaign[];
-  tiktokCampaigns: TiktokCampaign[];
-  publicRelations: PublicRelation[];
-  socialMedias: SocialMedia[];
-};
+import usePortfolioState, { TiktokCampaign } from "../usePortfolioState";
 
 const PortfolioTabs = () => {
-  const [state, setState] = useState<State>({
-    portfolios: [],
-    designs: [],
-    SMDesigns: [],
-    brands: [],
-    webDesigns: [],
-    influencerMarketing: [],
-    twitterTrends: [],
-    twitterCampaigns: [],
-    tiktokCampaigns: [],
-    publicRelations: [],
-    socialMedias: [],
-  });
-
-  useEffect(() => {
-    const fetchPortfolios = async () => {
-      const response = await fetch("/data/data.json");
-      const data = await response.json();
-      setState({
-        portfolios: data.portfolio,
-        designs: data.portfolio[0].designs,
-        SMDesigns: data.portfolio[0].designs[0].SMDesigns,
-        brands: data.portfolio[0].designs[1].brandIdentity,
-        webDesigns: data.portfolio[0].designs[2].webDesigns,
-        influencerMarketing: data.portfolio[1].influencerMarketing,
-        twitterTrends: data.portfolio[1].influencerMarketing[0].twitterTrends,
-        twitterCampaigns: data.portfolio[1].influencerMarketing[1].twitterCampaigns,
-        tiktokCampaigns: data.portfolio[1].influencerMarketing[2].tiktokCampaigns,
-        publicRelations: data.portfolio[2].publicRelation,
-        socialMedias: data.portfolio[3].socialMedia,
-      });
-    };
-
-    fetchPortfolios();
-  }, []);
+  const state = usePortfolioState();
 
   if (!state.portfolios.length) {
     return <Loader />;
@@ -234,3 +125,5 @@ const PortfolioTabs = () => {
 };
 
 export default PortfolioTabs;
+
+
