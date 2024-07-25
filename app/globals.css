@@ -68,6 +68,26 @@
   }
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 25px;
+  border-radius: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 15px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(21, 21, 21);
+  border-radius: 14px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(62, 62, 62);
+}
+
 nav {
   position: absolute;
   top: 0;

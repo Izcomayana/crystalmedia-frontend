@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const Board = () => {
   return (
     <section>
-      <div className="container mx-auto my-20">
+      <div className="container mx-auto my-20" id="whatwedo">
         <div className="hidden justify-center items-center text-center flex-col xl:flex">
           <h3 className="font-semibold text-primaryBlue mb-4 text-lg lg:text-2xl">what we do</h3>
           <p className="font-bold text-4xl">Here are ways we can help <br /> you grow your business.</p>
