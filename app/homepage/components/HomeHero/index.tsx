@@ -10,6 +10,13 @@ const itemVariants = {
   visible
 };
 
+const scrollDown = () => {
+  const nextSection = document.getElementById('whatwedo');
+  if (nextSection) {
+    nextSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 const HomeHero = () => {
   return (
     <div className="p-8 bg-[#000309] mt-[-4px]">
@@ -34,7 +41,7 @@ const HomeHero = () => {
 
         <div className='flex flex-col justify-center items-center mt-48'>
           <div className="animate-bounce w-20 h-20 text-white">
-            <Image src={circledown} alt={'circle down'} className='cursor-pointer' />
+            <Image src={circledown} alt={'circle down'} className='cursor-pointer' onClick={scrollDown} />
           </div>
         </div>
       </motion.div>
