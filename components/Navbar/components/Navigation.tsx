@@ -21,7 +21,7 @@ const variants = {
 };
 
 const style = { color: 'white' };
-const itemIds = [0, 1, 2, 3, 4];
+const itemIds = [0, 1, 2, 3, 4, 5];
 
 export const Navigation = ({ toggleOpen }: { toggleOpen: () => void }) => (
   <div>

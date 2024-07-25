@@ -61,32 +61,32 @@ const Blog = () => {
         <div className="my-8 flex flex-col justify-between gap-8 lg:flex-row  ">
           {posts.map((post) => (
             <div
-              className="border border-black p-6 rounded-2xl transition-all hover:border-2"
+              className="border border-black p-4 rounded-2xl transition-all hover:border-2"
               key={post.id}
             >
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <div>
                   <div>
                     <Image
                       src={post.image}
-                      width={400}
-                      height={300}
+                      width={300}
+                      height={200}
                       alt="blogpost"
                       className="w-full"
                     />
-                    <p className="text-primaryBlue text-sm mt-3 font-semibold">
+                    <p className="text-primaryBlue text-[8px] mt-2 lg:text-sm">
                       {post.date}
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h2 className="font-semibold text-lg text-black">
+                  <h2 className="font-semibold text-sm text-black lg:text-2xl">
                     {post.topic}
                   </h2>
-                  <p className="text-black">{post.post.substring(0, 200)}...</p>
+                  <p className="text-black text-[8px] lg:text-sm">{post.post.substring(0, 200)}...</p>
                   <Link
                     href={`/blogs/blog?id=${post.id}`}
-                    className="flex items-center font-semibold rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all"
+                    className="flex items-center font-semibold text-[8px] rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all lg:text-sm"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                   >

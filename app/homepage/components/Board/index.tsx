@@ -7,17 +7,16 @@ const Board = () => {
     <section>
       <div className="container mx-auto my-20" id="whatwedo">
         <div className="hidden justify-center items-center text-center flex-col xl:flex">
-          <h3 className="font-semibold text-primaryBlue mb-4 text-lg lg:text-2xl">what we do</h3>
+          <h3 className="font-semibold text-primaryBlue mb-4 text-base">what we do</h3>
           <p className="font-bold text-4xl">Here are ways we can help <br /> you grow your business.</p>
         </div>
         <div className="xl:flex xl:flex-row-reverse xl:mt-10">
           <div className="mt-10 border-black border-2 xl:mt-0 xl:w-[60%]">
-            <Image src={board} alt="boardroom" />
+            <Image src={board} alt="boardroom" className="mx-auto" />
           </div>
           <div className="bg-primaryBlue flex justify-center items-center mb-10 p-4 xl:mb-0 xl:px-16 xl:w-[40%]">
-            <p className="font-bold text-center text-white md:text-2xl xl:text-3xl">
-              <span className="xl:hidden">Your Brand’s Story, our <br /> digital canvas.</span>
-              <span className="hidden xl:block">Your Brand’s Story, Our <br /> Digital Canvas.</span>
+            <p className="font-bold text-center text-white text-base md:text-2xl xl:text-3xl">
+              Your Brand’s Story, Our <br /> Digital Canvas.
             </p>
           </div>
         </div>

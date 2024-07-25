@@ -69,23 +69,22 @@
 }
 
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 7.5px;
   height: 25px;
   border-radius: 15px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 15px;
+  background: rgb(27, 27, 27);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgb(21, 21, 21);
+  background-color: rgb(255, 255, 255);
   border-radius: 14px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(62, 62, 62);
+  background-color: rgb(206, 206, 206);
 }
 
 nav {
@@ -172,6 +171,15 @@ li {
   --slide-spacing: 1.5rem;
   --slide-size: 100%;
 }
+
+.video-embla {
+  max-width: 100%;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1.5rem;
+  --slide-size: 100%;
+}
+
 .embla__viewport {
   overflow: hidden;
 }
@@ -180,10 +188,17 @@ li {
   display: flex;
   touch-action: pan-y pinch-zoom;
 }
+
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
 }
+
+.video__slide {
+  flex: 0 0 22%;
+  min-width: 0;
+}
+
 .embla__slide__number {
   display: flex;
   flex-direction: column;
