@@ -33,7 +33,7 @@ const variants = {
   },
 };
 
-const href = ["/", "/whoweare", "/whatwedo", "/portfolio", "/blogs"];
+const href = ["/", "/whoweare", "/whatwedo", "/portfolio", "/blogs", "contactus"];
 const name = [
   "Home",
   "Who we are",
@@ -44,7 +44,7 @@ const name = [
 ];
 
 // eslint-disable-next-line react/jsx-key
-const icons = [ <RiHomeLine />, <PiUsersThree />, <RiAppsLine />, <BiNews />, <BsCalendarDate />, ];
+const icons = [ <RiHomeLine />, <PiUsersThree />, <PiUsersThree />, <RiAppsLine />, <BiNews />, <BsCalendarDate />, ];
 
 const MenuItem: React.FC<MenuItemProps> = ({ i, toggleOpen }) => {
   const style = { color: "white" };

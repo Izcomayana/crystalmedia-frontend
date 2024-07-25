@@ -9,9 +9,9 @@ const Footer = () => {
     <footer>
       <div>
         <div className='bg-primaryBlue flex flex-col justify-center items-center p-20'>
-          <h2 className='font-extrabold text-white text-3xl xl:text-5xl'>5x more reach</h2>
-          <h2 className='font-extrabold text-white text-3xl mt-2 xl:text-5xl'>5x more sales.</h2>
-          <p className='mt-4 text-center text-white'>
+          <h2 className='font-extrabold text-white text-base lg:text-3xl xl:text-[56px]'>5x more reach</h2>
+          <h2 className='font-extrabold text-white text-base mt-2 lg:text-3xl xl:text-[56px] xl:mt-8'>5x more sales.</h2>
+          <p className='mt-4 text-center text-white text-[4.5px] md:text-xs xl:text-base xl:mt-8'>
             We share tips and strategies for growing your business and standing out in today’s <br />
             competitive market in our weekly newsletters.  We know scaling isn’t always easy, so we’re <br />
             here to support you through every phase. You can opt out of our newsletter anytime.

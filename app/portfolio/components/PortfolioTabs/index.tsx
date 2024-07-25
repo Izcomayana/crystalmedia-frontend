@@ -48,7 +48,7 @@ const PortfolioTabs = () => {
           </video>
         </div>
         <div className="mt-4">
-          <p className="font-medium text-black">{item.caption}</p>
+          <p className="font-medium text-black text-base">{item.caption}</p>
         </div>
       </div>
     ))
@@ -59,7 +59,7 @@ const PortfolioTabs = () => {
       <Tabs defaultValue="design" className="my-10 lg:my-20">
         <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-4 justify-start lg:gap-6">
           {state.portfolios.map((portfolio) => (
-            <TabsTrigger key={portfolio.id} value={portfolio.value} className="py-3 px-4 text-black border-black border rounded-lg hover:!bg-primaryBlue hover:!text-white hover:!border-white focus:!bg-primaryBlue focus:!text-white focus:!border-white active:!bg-primaryBlue active:!text-white active:!border-white transition-all">
+            <TabsTrigger key={portfolio.id} value={portfolio.value} className="py-3 px-4 text-[9px] text-black border-black border rounded-lg hover:!bg-primaryBlue hover:!text-white hover:!border-white focus:!bg-primaryBlue focus:!text-white focus:!border-white active:!bg-primaryBlue active:!text-white active:!border-white transition-all md:text-sm xl:text-xl">
               {portfolio.name}
             </TabsTrigger>
           ))}
@@ -70,7 +70,7 @@ const PortfolioTabs = () => {
             <Tabs defaultValue="sm-creatives">
               <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-4 justify-start">
                 {state.designs.map((design) => (
-                  <TabsTrigger key={design.id} value={design.value} className="!bg-transparent !px-2 !py-1 rounded-none !shadow-none !text-[#868786] border-b hover:!text-black hover:!border-b-black active:!text-black focus:!text-black focus:!border-b-black active:!border-b-black">
+                  <TabsTrigger key={design.id} value={design.value} className="!bg-transparent !text-[9px] xl:!text-base !px-2 !py-1 rounded-none !shadow-none !text-[#868786] border-b hover:!text-black hover:!border-b-black active:!text-black focus:!text-black focus:!border-b-black active:!border-b-black">
                     {design.name}
                   </TabsTrigger>
                 ))}
@@ -92,7 +92,7 @@ const PortfolioTabs = () => {
             <Tabs defaultValue="twitter-trends">
               <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-4 justify-start">
                 {state.influencerMarketing.map((influencer) => (
-                  <TabsTrigger key={influencer.id} value={influencer.value} className="!bg-transparent !px-2 !py-1 rounded-none !shadow-none !text-[#868786] border-b hover:!text-black hover:!border-b-black active:!text-black focus:!text-black focus:!border-b-black active:!border-b-black">
+                  <TabsTrigger key={influencer.id} value={influencer.value} className="!bg-transparent !text-[9px] xl:!text-base !px-2 !py-1 rounded-none !shadow-none !text-[#868786] border-b hover:!text-black hover:!border-b-black active:!text-black focus:!text-black focus:!border-b-black active:!border-b-black">
                     {influencer.name}
                   </TabsTrigger>
                 ))}

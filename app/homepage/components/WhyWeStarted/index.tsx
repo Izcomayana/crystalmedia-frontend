@@ -2,7 +2,7 @@ const WhyWeStarted = () => {
   return (
     <section>
       <div className="container mx-auto my-20">
-        <p className="font-semibold text-primaryBlue text-center mb-8 text-lg lg:font-bold lg:text-2xl">
+        <p className="font-semibold text-primaryBlue text-center mb-8 text-sm lg:font-bold lg:text-4xl">
           Why we started Crystal <br className="lg:hidden" /> Mediatech
         </p>
 

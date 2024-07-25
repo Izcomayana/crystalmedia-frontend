@@ -29,13 +29,13 @@ const HomeHero = () => {
       >
         <ul className='text-white w-fit mx-auto'>
           <motion.li variants={itemVariants}>
-            <span className='font-black text-4xl lg:text-7xl'>Be Seen</span>
+            <span className='font-black text-[41.7px] lg:text-7xl'>Be Seen</span>
           </motion.li>
           <motion.li variants={itemVariants} className='my-4'>
-            <span className='font-black text-4xl lg:text-7xl'>Be Heard</span>
+            <span className='font-black text-[41.7px] lg:text-7xl'>Be Heard</span>
           </motion.li>
           <motion.li variants={itemVariants}>
-            <span className='font-black text-4xl lg:text-7xl'>Make Sales</span>
+            <span className='font-black text-[41.7px] lg:text-7xl'>Make Sales</span>
           </motion.li>
         </ul>
 

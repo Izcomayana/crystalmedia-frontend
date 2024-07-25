@@ -10,7 +10,7 @@ const Testimonials = () => {
   return (
     <section>
       <div className="container mx-auto my-10">
-        <p className="font-semibold text-xs md:text-lg lg:text-xl">
+        <p className="font-semibold text-[7px] lg:text-xs">
           We are trusted by marketers and executives from these
         </p>
         <div className="flex justify-between items-center mt-4 md:w-[400px] lg:w-[600px]">
