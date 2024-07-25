@@ -76,7 +76,6 @@
 
 *::-webkit-scrollbar-track {
   background: rgb(27, 27, 27);
-  /* border-radius: 15px; */
 }
 
 *::-webkit-scrollbar-thumb {
@@ -172,6 +171,15 @@ li {
   --slide-spacing: 1.5rem;
   --slide-size: 100%;
 }
+
+.video-embla {
+  max-width: 100%;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1.5rem;
+  --slide-size: 100%;
+}
+
 .embla__viewport {
   overflow: hidden;
 }
@@ -180,10 +188,17 @@ li {
   display: flex;
   touch-action: pan-y pinch-zoom;
 }
+
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
 }
+
+.video__slide {
+  flex: 0 0 22%;
+  min-width: 0;
+}
+
 .embla__slide__number {
   display: flex;
   flex-direction: column;

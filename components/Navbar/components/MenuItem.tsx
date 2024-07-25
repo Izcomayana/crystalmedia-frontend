@@ -58,7 +58,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ i, toggleOpen }) => {
         onClick={toggleOpen}
         className="p-4 w-80 hover:bg-primaryBlue focus:bg-primaryBlue active:bg-primaryBlue rounded-xl mb-6"
       >
-        <Link href={href[i]} className="text-placeholder flex items-center text-2xl gap-6" style={style} >
+        <Link href={href[i]} className="text-placeholder flex items-center text-base gap-6" style={style} >
           <div style={style}>{icons[i]}</div>
           {name[i]}
         </Link>

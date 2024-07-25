@@ -6,6 +6,7 @@ import Board from "./components/Board";
 import Whatwedo from "./components/Whatwedo";
 import Blog from "./components/Blog";
 import HomeHero from "./components/HomeHero";
+import GrowthTips from "./components/GrowthTips";
 
 const HomePage = () => {
   return (
@@ -15,6 +16,7 @@ const HomePage = () => {
       <WhyWeStarted />
       <Board />
       <Whatwedo />
+      <GrowthTips />
       <Testimonials />
       <Blog />
       <CTA />

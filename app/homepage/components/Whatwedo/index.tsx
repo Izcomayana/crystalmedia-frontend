@@ -33,6 +33,7 @@ const WEDO = [
     index: 4
   }
 ]
+
 const Whatwedo = () => {
   return (
     <>
@@ -47,8 +48,8 @@ const Whatwedo = () => {
               <div>
                 <Image src={wedos.img} alt="social media marketing" className="mx-auto" />
               </div>
-              <div className={`bg-primaryBlue p-4 ${wedos.index === 1 ? 'p-2' : ''}`}>
-                <h1 className={`text-white font-bold text-lg ${wedos.index === 1 ? 'text-base' : ''}`}>{wedos.text}</h1>
+              <div className={`bg-primaryBlue p-4 ${wedos.index === 1 ? 'p-[8px]' : ''}`}>
+                <h1 className={`text-white font-bold text-lg ${wedos.index === 1 ? 'text-sm' : ''}`}>{wedos.text}</h1>
               </div>
             </div>
           </div>
