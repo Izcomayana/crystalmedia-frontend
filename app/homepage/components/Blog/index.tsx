@@ -31,7 +31,7 @@ const Blog = () => {
 
   if (posts.length === 0) {
     return (
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between lg:flex-row">
         <div className="flex flex-col space-y-4 my-20 mx-auto container">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
@@ -78,7 +78,7 @@ const Blog = () => {
           </div>
         </div>
 
-        <div className="my-8 flex flex-col justify-between gap-8 lg:flex-row  ">
+        <div className="my-8 flex flex-col justify-between gap-8 lg:flex-row">
           {posts.map((post) => (
             <div
               className="border border-black p-4 rounded-2xl transition-all hover:border-2"
