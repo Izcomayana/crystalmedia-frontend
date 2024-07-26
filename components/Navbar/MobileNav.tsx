@@ -7,6 +7,7 @@ import { Navigation } from "./components/Navigation";
 import Image from "next/image";
 
 import CMT from "@/public/images/cmt-full-logo.svg";
+import Link from "next/link";
 
 const sidenavbar = {
   open: (height = 1000) => ({
@@ -14,7 +15,7 @@ const sidenavbar = {
     transition: {
       type: "spring",
       stiffness: 20,
-      restDelta: 2
+      restDelta: 2,
     },
   }),
   closed: {
@@ -23,25 +24,22 @@ const sidenavbar = {
       delay: 0.5,
       type: "spring",
       stiffness: 400,
-      damping: 40
+      damping: 40,
     },
   },
 };
 
 const MobileNav = () => {
   const [isOpen, toggleOpen] = useCycle(false, true);
-  const containerRef = useRef(null);
-
   return (
     <div className="nav lg:hidden">
-      <motion.nav
-        initial={false}
-        animate={isOpen ? "open" : "closed"}
-      >
+      <motion.nav initial={false} animate={isOpen ? "open" : "closed"}>
         <motion.div className="background" variants={sidenavbar} />
         <div className="flex justify-between items-center m-4">
           <div className="w-40 md:w-48">
-            <Image src={CMT} alt={"cmt log"} className="w-full" />
+            <Link href="/">
+              <Image src={CMT} alt={"cmt log"} className="w-full" />
+            </Link>
           </div>
           <MenuToggle toggle={() => toggleOpen()} />
         </div>

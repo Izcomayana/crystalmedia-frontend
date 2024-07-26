@@ -8,7 +8,7 @@ const GrowthCompass = () => {
         <div className="container mx-auto flex justify-between items-center gap-8 py-10 lg:py-20">
           <div className="relative flex flex-col justify-center overflow-hidden">
             <div className="w-full max-w-6xl mx-auto py-24">
-              <div className="">
+              <div className=""  data-aos="fade-right">
                 <div className="font-bold text-sm [text-wrap:balance] bg-clip-text md:text-3xl xl:text-5xl">
                   We help brands grow <br /> and increase their <br /> revenue
                   through <br />{" "}
@@ -26,7 +26,7 @@ const GrowthCompass = () => {
               </div>
             </div>
           </div>
-          <div className="w-[40%]">
+          <div className="w-[40%]" data-aos="fade-left">
             <Image
               src={GrowthCompassImg}
               alt={"GrowthCompassImg"}

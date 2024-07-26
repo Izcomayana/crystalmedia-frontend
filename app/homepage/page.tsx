@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <>
       <HomeHero />
-      <GrowthCompass />
+      <GrowthCompass/>
       <WhyWeStarted />
       <Board />
       <Whatwedo />
