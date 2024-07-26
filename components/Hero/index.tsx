@@ -15,7 +15,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ title }) => {
   return (
     <section>
-      <div className="py-8 bg-[#000309] mt-[-4px]">
+      <div className="py-8 bg-[#000000] mt-[-4px]">
         <div className="container mx-auto my-32 mb-44">
         <motion.div
             initial="hidden"
