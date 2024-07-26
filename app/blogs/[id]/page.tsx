@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FaLessThanEqual } from "react-icons/fa6";
 
 type Post = {
   id: number;
@@ -18,30 +19,45 @@ const Page: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
 
     const fetchPost = async () => {
-      const response = await fetch("/data/data.json");
-      const data = await response.json();
-      console.log("Data:", data);
-      const foundPost = data.blogs.find(
-        (post: Post) => post.id === parseInt(id, 10)
-      );
-      setPost(foundPost);
+      try {
+        const response = await fetch("/data/data.json");
+        if(!response.ok) {
+          throw new Error("Failed to fetch data")
+        }
+
+        const data = await response.json();
+        console.log("Data:", data);
+        const foundPost = data.blogs.find(
+          (post: Post) => post.id === parseInt(id, 10)
+        );
+
+        setTimeout(() => {
+          setPost(foundPost);
+          setLoading(false);
+        }, 3500);
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false)
+      }
     };
 
     fetchPost();
   }, [id]);
 
-  if (!post) {
+  if (loading || !post) {
     return (
       <div className="flex flex-col space-y-10 my-20 mx-auto container">
         <Skeleton className="h-20 w-full rounded-xl" />
         <div className="space-y-8">
           <Skeleton className="h-80 w-full" />
-          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-5 w-full" />
         </div>
       </div>
     )

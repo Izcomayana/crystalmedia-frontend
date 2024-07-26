@@ -18,21 +18,35 @@ type Post = {
 const Blog = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("/data/data.json");
-      const data = await response.json();
-      setPosts(data.blogs.slice(0, 2));
+      try {
+        const response = await fetch("/data/data.json");
+        if(!response.ok) {
+          throw new Error("Oops! there seems to be an error.")
+        }
+        const data = await response.json();
+        setTimeout(() => {
+          setPosts(data.blogs.slice(0, 2));
+          setLoading(false);
+        }, 5000);
+      }
+      catch(err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
     };
 
     fetchPosts();
   }, []);
 
-  if (posts.length === 0) {
+  if (loading) {
     return (
-      <div className="flex flex-col justify-between lg:flex-row">
-        <div className="flex flex-col space-y-4 my-20 mx-auto container">
+      <div className=" mx-auto container flex flex-col justify-between lg:flex-row">
+        <div className="flex flex-col space-y-4 my-20 w-[47.5%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
@@ -41,7 +55,7 @@ const Blog = () => {
             <Skeleton className="h-4 w-full" />
           </div>
         </div>
-        <div className="flex flex-col space-y-4 my-20 mx-auto container">
+        <div className="flex flex-col space-y-4 my-20 w-[47.5%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
@@ -139,8 +153,6 @@ const Blog = () => {
             </Link>
           </div>
         </div>
-
-        <div></div>
       </div>
     </section>
   );
