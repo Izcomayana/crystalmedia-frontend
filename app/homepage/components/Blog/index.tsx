@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 import slantarrow from "@/public/images/slant-arrow.png";
 import arrow from "@/public/images/arrow.png";
-import Loader from "@/components/Loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Post = {
   id: number;
@@ -30,8 +29,29 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
-  if (!posts) {
-    return <Loader />
+  if (posts.length === 0) {
+    return (
+      <div className="flex justify-between">
+        <div className="flex flex-col space-y-4 my-20 mx-auto container">
+          <Skeleton className="h-60 w-full rounded-xl" />
+          <div className="space-y-4">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-4 w-full" />
+          </div>
+        </div>
+        <div className="flex flex-col space-y-4 my-20 mx-auto container">
+          <Skeleton className="h-60 w-full rounded-xl" />
+          <div className="space-y-4">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-4 w-full" />
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (

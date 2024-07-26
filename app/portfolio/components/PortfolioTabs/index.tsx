@@ -48,7 +48,7 @@ const PortfolioTabs = () => {
           </video>
         </div>
         <div className="mt-4">
-          <p className="font-medium text-black text-base">{item.caption}</p>
+          <p className="font-medium text-black text-base" data-aos="fade-up" data-aos-anchor-placement="center-center">{item.caption}</p>
         </div>
       </div>
     ))

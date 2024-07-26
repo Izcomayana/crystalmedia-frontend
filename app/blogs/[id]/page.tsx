@@ -1,9 +1,9 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Testimonials from '@/components/Testimonials';
-import CTA from '@/components/CTA';
-import Loader from "@/components/Loader";
+"use client";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Testimonials from "@/components/Testimonials";
+import CTA from "@/components/CTA";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Post = {
   id: number;
@@ -17,7 +17,7 @@ type Post = {
 const Page: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
 
   useEffect(() => {
     if (!id) return;
@@ -25,9 +25,10 @@ const Page: React.FC = () => {
     const fetchPost = async () => {
       const response = await fetch("/data/data.json");
       const data = await response.json();
-      console.log('Data:', data);
-      const foundPost = data.blogs.find((post: Post) => post.id === parseInt(id, 10));
-      console.log('Found Post:', foundPost);
+      console.log("Data:", data);
+      const foundPost = data.blogs.find(
+        (post: Post) => post.id === parseInt(id, 10)
+      );
       setPost(foundPost);
     };
 
@@ -35,29 +36,34 @@ const Page: React.FC = () => {
   }, [id]);
 
   if (!post) {
-    return <Loader />
+    return (
+      <div className="flex flex-col space-y-10 my-20 mx-auto container">
+        <Skeleton className="h-20 w-full rounded-xl" />
+        <div className="space-y-8">
+          <Skeleton className="h-80 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+      </div>
+    )
   }
 
   return (
     <section>
-      <div>
-        {/* <Hero title="Our blog" /> */}
-        <div className="container mx-auto">
-          <div className="my-20 mb-40">
-            <h1 className="font-bold text-3xl mb-4 lg:text-5xl lg:mb-8 xl:text-[54px]">
-              {post.topic}
-            </h1>
+      <div className="container mx-auto">
+        <div className="my-20 mb-40">
+          <h1 className="font-bold text-3xl mb-4 lg:text-5xl lg:mb-8 xl:text-[54px]">
+            {post.topic}
+          </h1>
 
-            <p className="text-black font-medium">
-              {post.post}
-            </p>
+          <p className="text-black font-medium">{post.post}</p>
 
-            <p className='mt-10'>by {post.writer} on {post.date}</p>
-          </div>
+          <p className="mt-10">
+            by {post.writer} on {post.date}
+          </p>
         </div>
-        <Testimonials />
-        <CTA />
       </div>
+      <Testimonials />
+      <CTA />
     </section>
   );
 };

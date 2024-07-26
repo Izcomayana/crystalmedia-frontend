@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AOSInit } from './aos';
+import Providers from '../components/Providers.tsx';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,12 +45,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <AOSInit />
       <body className={inter.className}>
         <div className="bg-[#000309]">
           <Header />
         </div>
         <div>
-          {children}
+        <Providers>{children}</Providers>
         </div>
         <Footer />
       </body>

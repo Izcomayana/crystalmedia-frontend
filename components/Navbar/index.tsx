@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <header className="hidden justify-between items-center lg:flex">
       <div className="w-32 md:w-48">
-        <Image src={CMT} alt={"cmt log"} className="w-full" />
+        <Link href="/"><Image src={CMT} alt={"cmt log"} className="w-full" /></Link>
       </div>
 
       <div className="hidden w-[450px] lg:block xl:w-[600px]">

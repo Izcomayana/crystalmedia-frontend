@@ -7,10 +7,18 @@ const Board = () => {
     <section>
       <div className="container mx-auto my-20" id="whatwedo">
         <div className="hidden justify-center items-center text-center flex-col xl:flex">
-          <h3 className="font-semibold text-primaryBlue mb-4 text-base">what we do</h3>
-          <p className="font-bold text-4xl">Here are ways we can help <br /> you grow your business.</p>
+          <h3 className="font-semibold text-primaryBlue mb-4 text-base">
+            what we do
+          </h3>
+          <p className="font-bold text-4xl">
+            Here are ways we can help <br /> you grow your business.
+          </p>
         </div>
-        <div className="xl:flex xl:flex-row-reverse xl:mt-10">
+        <div
+          className="xl:flex xl:flex-row-reverse xl:mt-10"
+          data-aos="fade-up"
+          data-aos-anchor-placement="center-center"
+        >
           <div className="mt-10 border-black border-2 xl:mt-0 xl:w-[60%]">
             <Image src={board} alt="boardroom" className="mx-auto" />
           </div>
@@ -21,11 +29,13 @@ const Board = () => {
           </div>
         </div>
         <div className="hidden xl:block">
-          <Button className="bg-black rounded-none mt-5 py-8 w-full text-lg">HIRE THE AGENCY</Button>
+          <Button className="bg-black rounded-none mt-5 py-8 w-full text-lg">
+            HIRE THE AGENCY
+          </Button>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Board;
