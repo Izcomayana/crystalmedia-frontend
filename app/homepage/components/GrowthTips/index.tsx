@@ -68,7 +68,7 @@ const GrowthTips = () => {
           <p className='text-sm xl:mt-2 xl:text-base'>By Crystalmediatech</p>
         </div>
 
-        <div className="mt-4 w-full flex flex-col gap-4 xl:hidden">
+        {/* <div className="mt-4 w-full flex flex-col gap-4 xl:hidden">
           {Tips.map((Tip) => (
             <div className="relative h-[444px] rounded-3xl mx-auto loop md:w-[333px]" key={Tip.id}>
               <video className="w-full h-full rounded-3xl cursor-pointer object-cover"  loop controls muted>
@@ -81,9 +81,9 @@ const GrowthTips = () => {
               <p className="absolute bottom-20 left-4 text-base p-4 bg-gray-900 text-white font-bold">{Tip.caption}</p>
             </div>
           ))}
-        </div>
+        </div> */}
 
-        <div className="hidden xl:block">
+        <div className="">
           <VideoCarousel slides={Tips} options={OPTIONS} />
         </div>
       </div>

@@ -24,7 +24,7 @@ const VideoCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container mt-4">
           {slides.map((slide) => (
             <div className="video__slide" key={slide.id}>
-              <div className="relative w-[270px] h-[458px] rounded-3xl mx-auto loop embla__slide__number">
+              <div className="relative w-[290px] h-[458px] rounded-3xl mx-auto loop embla__slide__number">
               <video className="w-full h-full rounded-3xl cursor-pointer object-cover"  loop controls muted>
                 <source
                   src={slide.src}
