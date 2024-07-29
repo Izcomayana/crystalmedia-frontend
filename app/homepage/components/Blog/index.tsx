@@ -46,7 +46,7 @@ const Blog = () => {
   if (loading) {
     return (
       <div className=" mx-auto container flex flex-col justify-between lg:flex-row">
-        <div className="flex flex-col space-y-4 my-20 w-[47.5%]">
+        <div className="flex flex-col space-y-4 my-20 w-full lg:w-[47.5%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
@@ -55,7 +55,7 @@ const Blog = () => {
             <Skeleton className="h-4 w-full" />
           </div>
         </div>
-        <div className="flex flex-col space-y-4 my-20 w-[47.5%]">
+        <div className="flex flex-col space-y-4 my-20 w-full lg:w-[47.5%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
