@@ -23,9 +23,10 @@ const variants = {
 const style = { color: 'white' };
 const itemIds = [0, 1, 2, 3, 4, 5];
 
-export const Navigation = ({ toggleOpen }: { toggleOpen: () => void }) => (
+export const Navigation = ({ toggleOpen, isOpen }: { toggleOpen: () => void, isOpen: boolean }) => (
   <div>
-    <motion.ul variants={variants}>
+    <motion.ul variants={variants} initial="closed" animate={isOpen ? "open" : "closed"}
+      style={{ display: isOpen ? "block" : "none" }}>
       <div className="w-80 mb-16" style={style}>
         <Image src={CMT} alt={"cmt-log"} className="w-full" />
       </div>

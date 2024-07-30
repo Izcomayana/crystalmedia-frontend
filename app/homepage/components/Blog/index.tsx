@@ -114,13 +114,13 @@ const Blog = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h2 className="font-semibold text-sm text-black lg:text-2xl">
+                  <h2 className="font-semibold text-base text-black lg:text-2xl">
                     {post.topic}
                   </h2>
-                  <p className="text-black text-[8px] lg:text-sm">{post.post.substring(0, 200)}...</p>
+                  <p className="text-black text-xs lg:text-base">{post.post.substring(0, 200)}...</p>
                   <Link
                     href={`/blogs/blog?id=${post.id}`}
-                    className="flex items-center font-semibold text-[8px] rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all lg:text-sm"
+                    className="flex items-center font-semibold text-[10px] rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all lg:text-xs"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                   >

@@ -11,7 +11,7 @@ const itemVariants = {
 };
 
 const scrollDown = () => {
-  const nextSection = document.getElementById('whatwedo');
+  const nextSection = document.getElementById('growthCompass');
   if (nextSection) {
     nextSection.scrollIntoView({ behavior: 'smooth' });
   }
@@ -35,7 +35,7 @@ const HomeHero = () => {
             <span className='font-black text-[41.7px] lg:text-7xl'>Be Heard</span>
           </motion.li>
           <motion.li variants={itemVariants}>
-            <span className='font-black text-[41.7px] lg:text-7xl'>Make Sales</span>
+            <span className='font-black text-[41.7px] lg:text-7xl'>Make Sales.</span>
           </motion.li>
         </ul>
 
