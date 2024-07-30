@@ -40,7 +40,7 @@ const MobileNav = () => {
         window.pageYOffset || document.documentElement.scrollTop;
 
       if (currentScrollTop === 0) {
-        setIsScrollingDown(true); // Show navbar when at the top
+        setIsScrollingDown(true); 
       } else if (currentScrollTop > lastScrollTop) {
         setIsScrollingDown(true);
       } else {

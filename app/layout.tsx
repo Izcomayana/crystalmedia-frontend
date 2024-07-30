@@ -47,12 +47,12 @@ export default function RootLayout({
     <html lang="en">
       <AOSInit />
       <body className={inter.className}>
-        <div className="bg-[#000309]">
+        <div className="bg-[#000309] pb-16 lg:pb-28">
           <Header />
         </div>
-        <div>
-        <Providers>{children}</Providers>
-        </div>
+        <>
+          <Providers>{children}</Providers>
+        </>
         <Footer />
       </body>
     </html>
