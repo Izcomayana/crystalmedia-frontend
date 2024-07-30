@@ -4,11 +4,11 @@ import GrowthCompassImg from "@/public/images/growth-compass.png";
 const GrowthCompass = () => {
   return (
     <section>
-      <div className="bg-[#F1F6FF]">
+      <div className="bg-[#F1F6FF]" id="growthCompass">
         <div className="container mx-auto flex justify-between items-center gap-4 py-10 lg:py-20">
           <div className="relative flex flex-col justify-center overflow-hidden">
             <div className="w-full max-w-6xl mx-auto py-24">
-              <div className=""  data-aos="fade-right">
+              <div data-aos="fade-right">
                 <div className="font-bold text-base [text-wrap:balance] bg-clip-text md:text-3xl xl:text-5xl">
                   We help brands grow <br /> and increase their <br /> revenue
                   through <br />{" "}
@@ -26,7 +26,7 @@ const GrowthCompass = () => {
               </div>
             </div>
           </div>
-          <div className="w-[40%]" data-aos="fade-left">
+          <div className="w-[40%]" data-aos="zoom-out">
             <Image
               src={GrowthCompassImg}
               alt={"GrowthCompassImg"}

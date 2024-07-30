@@ -29,7 +29,7 @@ const variants = {
     opacity: 0,
     transition: {
       y: { stiffness: 1000 }
-    },
+    }
   },
 };
 
