@@ -16,7 +16,12 @@ const PortfolioTabs = () => {
     items: { id: number; src: string }[],
     altPrefix: string
   ) => (
-    <div className="flex flex-wrap gap-2 justify-start">
+    <div
+      className="flex flex-wrap gap-2 justify-start"
+      data-aos="fade-down"
+      data-aos-easing="linear"
+      data-aos-duration="1500"
+    >
       {items.map((item) => (
         <div key={item.id}>
           <Image
@@ -34,7 +39,13 @@ const PortfolioTabs = () => {
   const renderTiktokCampaigns = (items: TiktokCampaign[]) => (
     <div className="flex flex-wrap gap-2 justify-start">
       {items.map((item) => (
-        <div key={item.id} className="md:w-1/2 md:mx-auto lg:w-fit">
+        <div
+          key={item.id}
+          className="md:w-1/2 md:mx-auto lg:w-fit"
+          data-aos="fade-down"
+          data-aos-easing="linear"
+          data-aos-duration="1500"
+        >
           <div className="w-fit mx-auto">
             <Image src={item.image} alt={item.name} width={400} height={300} />
           </div>
@@ -78,7 +89,7 @@ const PortfolioTabs = () => {
   return (
     <div className="container mx-auto">
       <Tabs defaultValue="design" className="my-10 lg:my-20">
-        <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-4 justify-start lg:gap-6">
+        <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-2 justify-start lg:gap-4">
           {state.portfolios.map((portfolio) => (
             <TabsTrigger
               key={portfolio.id}
