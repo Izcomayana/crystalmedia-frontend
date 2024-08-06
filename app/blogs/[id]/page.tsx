@@ -4,52 +4,31 @@ import { useSearchParams } from "next/navigation";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FaLessThanEqual } from "react-icons/fa6";
+import { format } from "date-fns"; 
+import useFetch from "@/lib/api";
 
-type Post = {
+interface Post {
   id: number;
-  topic: string;
-  post: string;
-  writer: string;
-  date: string;
-  image: string;
-};
+  attributes: {
+    date: Date;
+    title: string;
+    post: string;
+    writer: string;
+    publishedAt: string; 
+  };
+}
 
 const Page: React.FC = () => {
-  const [post, setPost] = useState<Post | null>(null);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { loading, error, data } = useFetch<{ data: Post; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}`);
+  const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
-    if (!id) return;
-
-    const fetchPost = async () => {
-      try {
-        const response = await fetch("/data/data.json");
-        if(!response.ok) {
-          throw new Error("Failed to fetch data")
-        }
-
-        const data = await response.json();
-        console.log("Data:", data);
-        const foundPost = data.blogs.find(
-          (post: Post) => post.id === parseInt(id, 10)
-        );
-
-        setTimeout(() => {
-          setPost(foundPost);
-          setLoading(false);
-        }, 3500);
-      } catch (err: any) {
-        setError(err.message);
-        setLoading(false)
-      }
-    };
-
-    fetchPost();
-  }, [id]);
+    if (data && data.data) {
+      setPost(data.data);
+    }
+  }, [data]);
 
   if (loading || !post) {
     return (
@@ -63,18 +42,22 @@ const Page: React.FC = () => {
     )
   }
 
+  if (error) {
+    return <p>Error :(</p>;
+  }
+
   return (
     <section>
       <div className="container mx-auto">
         <div className="my-20 mb-40">
           <h1 className="font-bold text-3xl mb-4 lg:text-5xl lg:mb-8 xl:text-[54px]">
-            {post.topic}
+            {post.attributes.title}
           </h1>
 
-          <p className="text-black font-medium">{post.post}</p>
+          <p className="text-black font-medium">{post.attributes.post}</p>
 
           <p className="mt-10">
-            by {post.writer} on {post.date}
+            by {post.attributes.writer} on {format(new Date(post.attributes.publishedAt), 'MMMM d, yyyy, h:mm a')}
           </p>
         </div>
       </div>

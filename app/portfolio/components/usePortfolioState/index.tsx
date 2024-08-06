@@ -1,114 +1,67 @@
-"use-client"
+"use-client";
 import { useState, useEffect } from "react";
 
 export type Portfolio = {
   id: number;
-  name: string;
-  value: string;
+  attributes: {
+    caption: string;
+    name: string;
+    subtabs: {
+      data: SubTab[];
+    };
+    value: string;
+    video: {
+      data: Video[];
+    };
+  };
 };
 
-export type Designs = {
+export type Video = {
   id: number;
-  name: string;
-  value: string;
+  attributes: {
+    mime: string;
+    name: string;
+    url: string;
+  };
 };
 
-export type SMDesigns = {
+export type SubTab = {
   id: number;
-  src: string;
+  attributes: {
+    name: string;
+    images: Image[];
+    value: string;
+  };
 };
 
-export type Brand = {
+export type Image = {
   id: number;
-  src: string;
-};
-
-export type WebDesign = {
-  id: number;
-  src: string;
-};
-
-export type InfluencerMarketing = {
-  id: number;
-  name: string;
-  value: string;
-};
-
-export type TwitterTrend = {
-  id: number;
-  src: string;
-};
-
-export type TwitterCampaign = {
-  id: number;
-  src: string;
-};
-
-export type TiktokCampaign = {
-  id: number;
-  image: string;
-  name: string;
-  role: string;
-};
-
-export type PublicRelation = {
-  id: number;
-  video: string;
-  caption: string;
-};
-
-export type SocialMedia = {
-  id: number;
-  video: string;
-  caption: string;
+  url: string;
 };
 
 export type State = {
-  portfolios: Portfolio[];
-  designs: Designs[];
-  SMDesigns: SMDesigns[];
-  brands: Brand[];
-  webDesigns: WebDesign[];
-  influencerMarketing: InfluencerMarketing[];
-  twitterTrends: TwitterTrend[];
-  twitterCampaigns: TwitterCampaign[];
-  tiktokCampaigns: TiktokCampaign[];
-  publicRelations: PublicRelation[];
-  socialMedias: SocialMedia[];
+  portfoliosData: Portfolio[];
 };
 
 const usePortfolioState = () => {
   const [state, setState] = useState<State>({
-    portfolios: [],
-    designs: [],
-    SMDesigns: [],
-    brands: [],
-    webDesigns: [],
-    influencerMarketing: [],
-    twitterTrends: [],
-    twitterCampaigns: [],
-    tiktokCampaigns: [],
-    publicRelations: [],
-    socialMedias: [],
+    portfoliosData: []
   });
 
   useEffect(() => {
     const fetchPortfolios = async () => {
-      const response = await fetch("/data/data.json");
-      const data = await response.json();
-      setState({
-        portfolios: data.portfolio,
-        designs: data.portfolio[0].designs,
-        SMDesigns: data.portfolio[0].designs[0].SMDesigns,
-        brands: data.portfolio[0].designs[1].brandIdentity,
-        webDesigns: data.portfolio[0].designs[2].webDesigns,
-        influencerMarketing: data.portfolio[1].influencerMarketing,
-        twitterTrends: data.portfolio[1].influencerMarketing[0].twitterTrends,
-        twitterCampaigns: data.portfolio[1].influencerMarketing[1].twitterCampaigns,
-        tiktokCampaigns: data.portfolio[1].influencerMarketing[2].tiktokCampaigns,
-        publicRelations: data.portfolio[2].publicRelation,
-        socialMedias: data.portfolio[3].socialMedia,
-      });
+      try {
+        const portfoliosResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate=*`);
+        const portfolios = await portfoliosResponse.json();
+        const portfoliosData = portfolios.data;
+        console.log("portfolios:", portfoliosData);
+
+        setState({
+          portfoliosData
+        });
+      } catch (error) {
+        console.error("Failed to fetch portfolios:", error);
+      }
     };
 
     fetchPortfolios();
@@ -118,3 +71,115 @@ const usePortfolioState = () => {
 };
 
 export default usePortfolioState;
+
+
+
+// // usePortfolioState.ts
+// "use-client";
+// import { useState, useEffect } from "react";
+// import useFetch from "@/lib/api";
+
+// export type Portfolio = {
+//   id: number;
+//   attributes: {
+//     caption: string;
+//     name: string;
+//     subtabs: {
+//       data: SubTab[];
+//     };
+//     value: string;
+//     video: {
+//       data: Video[];
+//     }
+//   };
+// };
+
+// export type Video = {
+//   id: number;
+//   attributes: {
+//     mime: string;
+//     name: string;
+//     url: string;
+//   }
+// }
+
+// export type SubTab = {
+//   id: number;
+//   attributes: {
+//     name: string;
+//     images: Image[];
+//     value: string;
+//   }
+// };
+
+// export type Image = {
+//   id: number;
+//   url: string;
+// };
+
+// export type PublicRelation = {
+//   id: number;
+//   video: string;
+//   caption: string;
+// };
+
+// export type SocialMedia = {
+//   id: number;
+//   video: string;
+//   caption: string;
+// };
+
+// export type State = {
+//   portfoliosData: Portfolio[];
+//   publicRelations: PublicRelation[];
+//   socialMedias: SocialMedia[];
+// };
+
+// const usePortfolioState = () => {
+//   const [state, setState] = useState<State>({
+//     portfoliosData: [],
+//     publicRelations: [],
+//     socialMedias: [],
+//   });
+
+//   useEffect(() => {
+//     const fetchPortfolios = async () => {
+//       const portfoliosResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate=*`);
+//       const portfolios = await portfoliosResponse.json();
+//       const portfoliosData = portfolios.data;
+//       console.log("portfolios:", portfoliosData);
+
+//       const subTabResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/subtabs`);
+//       const subTab = await subTabResponse.json();
+//       const subTabData = subTab.data
+//       console.log("subTab:", subTabData);
+
+//       const subTabImgsResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/images`);
+//       const subTabImgs = await subTabImgsResponse.json();
+//       console.log("subTabImgs:", subTabImgs)
+
+//       const publicRelationsResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/public-relations`);
+//       const publicRelations = await publicRelationsResponse.json();
+//       console.log("publicRelations:", publicRelations);
+
+//       const socialMediasResponse = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/social-medias`);
+//       const socialMedias = await socialMediasResponse.json();
+//       console.log("socialMedias:", socialMedias)
+
+
+//       setState({
+//         portfoliosData,
+//         publicRelations,
+//         socialMedias,
+//       });
+//     };
+
+//     fetchPortfolios();
+//   }, []);
+
+//   return state;
+// };
+
+// export default usePortfolioState;
+
+

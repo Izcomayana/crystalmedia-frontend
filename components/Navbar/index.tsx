@@ -11,9 +11,9 @@ import CMT from "@/public/images/cmt-full-logo.svg";
 const links = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "Who we are", href: "/whoweare" },
-  { id: 3, name: "What we do", href: "/whatwedo" },
+  { id: 3, name: "What we do", href: "/#" },
   { id: 4, name: "Our Portfolio", href: "/portfolio" },
-  { id: 5, name: "Our Blog", href: "/blogs" },
+  { id: 5, name: "Our Blog", href: "/#" },
 ];
 
 const Navbar = () => {
