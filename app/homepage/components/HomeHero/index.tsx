@@ -19,13 +19,13 @@ const scrollDown = () => {
 
 const HomeHero = () => {
   return (
-    <div className="p-8 bg-[#000309] mt-[-4px]">
+    <div className="p-8 bg-[#000309] mt-[-4px] h-screen">
       <motion.div
         initial="hidden"
         animate="visible"
         exit={{ opacity: 0, transition: { duration: 1 } }}
         variants={{ visible: { transition: { staggerChildren: 1 } } }}
-        className='mt-40 lg:mb-8'
+        className='pt-36 lg:mb-8'
       >
         <ul className='text-white w-fit mx-auto'>
           <motion.li variants={itemVariants}>
