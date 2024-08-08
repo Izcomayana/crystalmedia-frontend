@@ -17,14 +17,25 @@ interface Blog {
     post: string;
     date: string;
     publishedAt: string;
-    img: string;
+    img: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string;
+          width: number;
+          height: number;
+          url: string;
+        }
+      }
+    }
   };
 }
 
 const Blog = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { loading, error, data } = useFetch<{ data: Blog[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*`
   );
   const [latestPosts, setLatestPosts] = useState<Blog[] | null>(null);
 
@@ -44,7 +55,7 @@ const Blog = () => {
     }
   }, [data]);
 
-  // console.log(latestPosts);
+  console.log(latestPosts);
 
   if (!latestPosts) {
     return (
@@ -103,10 +114,10 @@ const Blog = () => {
                 <div>
                   <div>
                     <Image
-                      src={post.attributes.img}
-                      width={300}
-                      height={200}
-                      alt="blogpost"
+                      src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                      width={post.attributes.img.data.attributes.width}
+                      height={post.attributes.img.data.attributes.height}
+                      alt={post.attributes.img.data.attributes.alternativeText}
                       className="w-full"
                     />
                     <p className="text-primaryBlue text-[8px] mt-2 lg:text-sm">

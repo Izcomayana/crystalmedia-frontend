@@ -3,18 +3,30 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loader from "@/components/Loader";
 import useFetch from "@/lib/api";
+// import strapiImageLoader from "@/lib/strapiImageLoader";
 
 type Team = {
   id: number;
   attributes: {
     name: string;
     role: string;
-    image: string;
+    image: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string;
+          width: number;
+          height: number;
+          url: string;
+        }
+      }
+    }
   }
 };
 
 const TheTeam = () => {
-  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/teams`);
+  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`);
   
   console.log(data)
   if (loading) {
@@ -39,10 +51,10 @@ const TheTeam = () => {
               >
                 <div className="w-fit mx-auto">
                   <Image
-                    src={team.attributes.image}
-                    alt={team.attributes.name}
-                    width={400}
-                    height={300}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI}${team.attributes.image.data.attributes.url}`}
+                    alt={team.attributes.image.data.attributes.alternativeText}
+                    width={team.attributes.image.data.attributes.width}
+                    height={team.attributes.image.data.attributes.height}
                   />
                 </div>
                 <div className="bg-primaryBlue p-4 mt-1 text-white">
