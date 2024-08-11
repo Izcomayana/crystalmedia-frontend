@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loader from "@/components/Loader";
 import useFetch from "@/lib/api";
-// import strapiImageLoader from "@/lib/strapiImageLoader";
 
 type Team = {
   id: number;

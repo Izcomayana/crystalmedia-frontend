@@ -165,7 +165,7 @@ const Blog = () => {
           ))}
 
           <div className="text-center lg:hidden">
-            <Link href="/blogs" className="">
+            <Link href="/#" className="">
               View all
             </Link>
           </div>
