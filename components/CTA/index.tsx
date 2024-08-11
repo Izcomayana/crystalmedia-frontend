@@ -15,7 +15,7 @@ const CTA = () => {
       <div className='container mx-auto my-20'>
         <p className='mb-2 text-sm lg:mb-4'>Ready to grow?</p>
         <Link 
-          href={'/contactus'} className='flex justify-between border-b border-black pb-2 w-fit transition-all md:w-2/3 lg:pb-6'           
+          href={'/#'} className='flex justify-between border-b border-black pb-2 w-fit transition-all md:w-2/3 lg:pb-6'           
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >

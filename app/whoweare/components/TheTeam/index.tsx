@@ -2,32 +2,37 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loader from "@/components/Loader";
+import useFetch from "@/lib/api";
 
 type Team = {
   id: number;
-  name: string;
-  role: string;
-  image: string;
+  attributes: {
+    name: string;
+    role: string;
+    image: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string;
+          width: number;
+          height: number;
+          url: string;
+        }
+      }
+    }
+  }
 };
 
 const TheTeam = () => {
-  const [teams, setTeams] = useState<Team[]>([]);
-
-  useEffect(() => {
-    const fetchTeam = async () => {
-      const response = await fetch("/data/data.json");
-      const data = await response.json();
-      console.log(data);
-      console.log(data.team);
-      setTeams(data.team);
-    };
-
-    fetchTeam();
-  }, []);
-
-  if (!teams) {
+  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`);
+  
+  console.log(data)
+  if (loading) {
     return <Loader />;
   }
+
+  if (error) return <p>Error :(</p>
 
   return (
     <section>
@@ -36,7 +41,7 @@ const TheTeam = () => {
           Meet the <br /> remarkable brains
         </h3>
         <div className="mt-4 flex flex-col justify-between gap-6 lg:flex-row">
-          {teams.map((team) => (
+          {data?.data.map((team) => (
             <div key={team.id} className="md:w-1/2 md:mx-auto lg:w-fit">
               <div
                 data-aos="fade-down"
@@ -45,16 +50,16 @@ const TheTeam = () => {
               >
                 <div className="w-fit mx-auto">
                   <Image
-                    src={team.image}
-                    alt={team.name}
-                    width={400}
-                    height={300}
+                    src={`${process.env.NEXT_PUBLIC_STRAPI}${team.attributes.image.data.attributes.url}`}
+                    alt={team.attributes.image.data.attributes.alternativeText}
+                    width={team.attributes.image.data.attributes.width}
+                    height={team.attributes.image.data.attributes.height}
                   />
                 </div>
                 <div className="bg-primaryBlue p-4 mt-1 text-white">
-                  <h4 className="font-bold text-lg xl:text-xl">{team.name}</h4>
+                  <h4 className="font-bold text-lg xl:text-xl">{team.attributes.name}</h4>
                   <p className="font-semibold text-xs xl:text-sm">
-                    {team.role}
+                    {team.attributes.role}
                   </p>
                 </div>
               </div>
