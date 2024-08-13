@@ -43,7 +43,11 @@ const Page: React.FC = () => {
   }
 
   if (error) {
-    return <p>Error :(</p>;
+    return (
+      <div className="mx-auto container">
+        <p>Error :(</p>;
+      </div>
+    )
   }
 
   return (

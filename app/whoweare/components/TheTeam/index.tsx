@@ -27,7 +27,6 @@ type Team = {
 const TheTeam = () => {
   const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`);
   
-  console.log(data)
   if (loading) {
     return <Loader />;
   }

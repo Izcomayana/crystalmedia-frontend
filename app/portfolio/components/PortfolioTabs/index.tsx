@@ -8,7 +8,6 @@ import usePortfolioState, {
   Portfolio,
   Image as PortfolioImage,
 } from "../usePortfolioState";
-import ReactMarkdown from "react-markdown"; 
 
 const PortfolioTabs = () => {
   const state = usePortfolioState();
@@ -134,56 +133,12 @@ const PortfolioTabs = () => {
       </div>
     );
   };
-  
-
-  // const renderMedia = (portfolio: Portfolio) => (
-  //   <div>
-  //     {portfolio.attributes.video?.data ? (
-  //       <div key={portfolio.attributes.video.data.id}>
-  //         <div className="w-full h-min mx-auto my-10 loop md:mb-20">
-  //           <video
-  //             className="h-full w-full rounded-3xl cursor-pointer"
-  //             loop
-  //             controls
-  //             muted
-  //           >
-  //             <source
-  //               src={`${process.env.NEXT_PUBLIC_STRAPI}${portfolio.attributes.video.data.attributes.url}`}
-  //               type="video/mp4"
-  //             />
-  //             Your browser does not support the video tag.
-  //           </video>
-  //         </div>
-  //         {portfolio.attributes.caption && (
-  //         <div className="mt-4">
-  //           <ReactMarkdown
-  //             className="font-medium text-black text-base"
-  //             data-aos="fade-up"
-  //             data-aos-anchor-placement="center-center"
-  //           >
-  //             {portfolio.attributes.caption.map((block: { children: any[]; }) => 
-  //               block.children.map((child: { text: any; }) => child.text).join(" ")
-  //             ).join(" ")}
-  //           </ReactMarkdown>
-  //         </div>
-  //         )}
-  //       </div>
-  //     ) : (
-  //       renderImages(
-  //         portfolio.attributes.subtabs.data.flatMap((subtab) =>
-  //           subtab.attributes.images.data ? subtab.attributes.images.data : []
-  //         ),
-  //         portfolio.attributes.name
-  //       )
-  //     )}
-  //   </div>
-  // );
 
   return (
     <div className="container mx-auto">
       <Tabs
         value={activeTab}
-        onValueChange={handleTabClick} // Ensure state updates immediately on tab click
+        onValueChange={handleTabClick}
         className="my-10 lg:my-20"
       >
         <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-2 justify-start lg:gap-4">
@@ -214,7 +169,7 @@ const PortfolioTabs = () => {
                   value={activeSubTabs[portfolio.id]}
                   onValueChange={(value) =>
                     handleSubTabClick(portfolio.id, value)
-                  } // Ensure state updates immediately on subtab click
+                  }
                   className="w-full"
                 >
                   <TabsList className="bg-transparent h-fit px-0 gap-4">

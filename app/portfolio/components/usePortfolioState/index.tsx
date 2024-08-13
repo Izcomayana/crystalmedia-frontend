@@ -77,8 +77,6 @@ const usePortfolioState = () => {
         );
         const portfolios = await portfoliosResponse.json();
         const portfoliosData = portfolios.data;
-        console.log("portfolios:", portfoliosData);
-
         setState({
           portfoliosData,
         });

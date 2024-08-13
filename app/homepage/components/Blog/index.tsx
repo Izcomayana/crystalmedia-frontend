@@ -55,8 +55,6 @@ const Blog = () => {
     }
   }, [data]);
 
-  console.log(latestPosts);
-
   if (!latestPosts) {
     return (
       <div className="mx-auto container flex flex-col justify-between lg:flex-row">
