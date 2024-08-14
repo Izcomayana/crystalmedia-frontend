@@ -22,9 +22,9 @@ type Videos = {
             caption: string;
             mime: string;
           };
-        }
-      }
-    }
+        };
+      };
+    };
   };
 };
 
@@ -45,11 +45,15 @@ const VideoCarousel: React.FC<PropType> = (props) => {
                   controls
                   muted
                 >
-                  <source src={video.data.attributes.video.data.attributes.url} type={video.data.attributes.video.data.attributes.mime} />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_STRAPI}${video.data.attributes.video.data.attributes.url}`}
+                    type={video.data.attributes.video.data.attributes.mime}
+                  />
                   Your browser does not support the video tag.
                 </video>
                 <p className="absolute bottom-20 left-4 text-base p-4 bg-gray-900 text-white font-bold">
-                  {video.data.attributes.video.data.attributes.caption} {video.data.id}
+                  {video.data.attributes.video.data.attributes.caption}{" "}
+                  {video.data.id}
                 </p>
               </div>
             </div>

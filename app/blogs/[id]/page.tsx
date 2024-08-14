@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format } from "date-fns"; 
+import { format } from "date-fns";
 import useFetch from "@/lib/api";
 
 interface Post {
@@ -12,16 +12,33 @@ interface Post {
   attributes: {
     date: Date;
     title: string;
-    post: string;
+    post: Blogpost[];
     writer: string;
-    publishedAt: string; 
+    publishedAt: string;
   };
 }
+
+type Blogpost = {
+  type: string;
+  children: Children[];
+};
+
+type Children = {
+  type: string;
+  text: string;
+  bold?: boolean;
+  italics?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  url?: string;
+};
 
 const Page: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const { loading, error, data } = useFetch<{ data: Post; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}`);
+  const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}`
+  );
   const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
@@ -39,7 +56,7 @@ const Page: React.FC = () => {
           <Skeleton className="h-5 w-full" />
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -47,8 +64,44 @@ const Page: React.FC = () => {
       <div className="mx-auto container">
         <p>Error :(</p>;
       </div>
-    )
+    );
   }
+
+  const renderRichText = (content: Blogpost[]) => {
+    return content.map((block, index) => {
+      return (
+        <p key={index} className="my-2">
+          {block.children.map((child, childIndex) => {
+            if (child.url) {
+              return (
+                <a
+                  key={childIndex}
+                  href={child.url}
+                  className="text-blue-600 underline"
+                >
+                  {child.text}
+                </a>
+              );
+            }
+            return (
+              <span
+                key={childIndex}
+                style={{
+                  fontWeight: child.bold ? "bold" : "normal",
+                  fontStyle: child.italics ? "italic" : "normal",
+                  textDecoration: `${child.underline ? "underline" : ""} ${
+                    child.strikethrough ? "line-through" : ""
+                  }`,
+                }}
+              >
+                {child.text}
+              </span>
+            );
+          })}
+        </p>
+      );
+    });
+  };
 
   return (
     <section>
@@ -58,10 +111,16 @@ const Page: React.FC = () => {
             {post.attributes.title}
           </h1>
 
-          <p className="text-black font-medium">{post.attributes.post}</p>
+          <p className="text-black font-medium">
+            {renderRichText(post.attributes.post)}
+          </p>
 
           <p className="mt-10">
-            by {post.attributes.writer} on {format(new Date(post.attributes.publishedAt), 'MMMM d, yyyy, h:mm a')}
+            by {post.attributes.writer} on{" "}
+            {format(
+              new Date(post.attributes.publishedAt),
+              "MMMM d, yyyy, h:mm a"
+            )}
           </p>
         </div>
       </div>
