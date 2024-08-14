@@ -43,7 +43,6 @@ const name = [
   "Contact Us",
 ];
 
-// eslint-disable-next-line react/jsx-key
 const icons = [ <RiHomeLine />, <PiUsersThree />, <PiUsersThree />, <RiAppsLine />, <BiNews />, <BsCalendarDate />, ];
 
 const MenuItem: React.FC<MenuItemProps> = ({ i, toggleOpen }) => {

@@ -26,7 +26,12 @@ const GrowthCompass = () => {
               </div>
             </div>
           </div>
-          <div className="w-[40%]" data-aos="zoom-out">
+          <div
+            className="w-[40%]"
+            data-aos="fade-down"
+            data-aos-easing="linear"
+            data-aos-duration="1500"
+          >
             <Image
               src={GrowthCompassImg}
               alt={"GrowthCompassImg"}

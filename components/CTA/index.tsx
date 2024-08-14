@@ -2,8 +2,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-
-// image
 import slantarrow from '@/public/images/slant-arrow.png';
 import arrow from '@/public/images/arrow.png';
 

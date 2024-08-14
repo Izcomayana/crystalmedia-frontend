@@ -1,11 +1,10 @@
-// usePortfolioState.ts
 "use-client";
 import { useState, useEffect } from "react";
 
 export type Portfolio = {
   id: number;
   attributes: {
-    caption: string;
+    caption: Caption[];
     name: string;
     subtabs: {
       data: SubTab[];
@@ -14,16 +13,6 @@ export type Portfolio = {
     video: {
       data?: Video;
     };
-  };
-};
-
-export type Video = {
-  id: number;
-  attributes: {
-    altText: string;
-    mime: string;
-    name: string;
-    url: string;
   };
 };
 
@@ -49,6 +38,28 @@ export type Image = {
   };
 };
 
+export type Video = {
+  id: number;
+  attributes: {
+    altText: string;
+    mime: string;
+    name: string;
+    url: string;
+  };
+};
+
+export type Caption = {
+  type: string;
+  children: Children[];
+}
+
+export type Children = {
+  type: string;
+  text: string;
+  bold: boolean;
+  italics: boolean
+}
+
 export type State = {
   portfoliosData: Portfolio[];
 };
@@ -66,8 +77,6 @@ const usePortfolioState = () => {
         );
         const portfolios = await portfoliosResponse.json();
         const portfoliosData = portfolios.data;
-        console.log("portfolios:", portfoliosData);
-
         setState({
           portfoliosData,
         });
