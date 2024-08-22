@@ -51,14 +51,17 @@ export type Video = {
 export type Caption = {
   type: string;
   children: Children[];
-}
+};
 
-export type Children = {
+type Children = {
   type: string;
   text: string;
-  bold: boolean;
-  italics: boolean
-}
+  bold?: boolean;
+  italics?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  url?: string;
+};
 
 export type State = {
   portfoliosData: Portfolio[];

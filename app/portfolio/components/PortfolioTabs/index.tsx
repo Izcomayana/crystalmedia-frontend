@@ -12,7 +12,9 @@ import usePortfolioState, {
 const PortfolioTabs = () => {
   const state = usePortfolioState();
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
-  const [activeSubTabs, setActiveSubTabs] = useState<{ [key: number]: string }>({});
+  const [activeSubTabs, setActiveSubTabs] = useState<{ [key: number]: string }>(
+    {}
+  );
 
   useEffect(() => {
     if (state.portfoliosData.length > 0) {
@@ -21,7 +23,8 @@ const PortfolioTabs = () => {
 
       const initialSubTabs = state.portfoliosData.reduce((acc, portfolio) => {
         if (portfolio.attributes.subtabs.data.length > 0) {
-          acc[portfolio.id] = portfolio.attributes.subtabs.data[0].attributes.value;
+          acc[portfolio.id] =
+            portfolio.attributes.subtabs.data[0].attributes.value;
         }
         return acc;
       }, {} as { [key: number]: string });
@@ -40,20 +43,20 @@ const PortfolioTabs = () => {
       [portfolioId]: subtabValue,
     }));
   };
-  
+
   if (!state.portfoliosData.length) {
     return <Loader />;
   }
 
   const renderImages = (data: PortfolioImage[], name: string) => (
-    <div
-      className="flex flex-wrap gap-2 justify-start"
-      data-aos="fade-down"
-      data-aos-easing="linear"
-      data-aos-duration="1500"
-    >
+    <div className="flex flex-wrap gap-2 justify-start">
       {data.map((image) => (
-        <div key={image.id}>
+        <div
+          key={image.id}
+          data-aos="fade-down"
+          data-aos-easing="linear"
+          data-aos-duration="1500"
+        >
           <Image
             src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
             alt={image.attributes.altText}
@@ -70,32 +73,32 @@ const PortfolioTabs = () => {
     const renderRichText = (caption: Caption[]) => {
       return caption.map((block, index) => {
         switch (block.type) {
-          case 'paragraph':
+          case "paragraph":
             return (
-              <p key={index} style={{ marginBottom: '1.5em' }}>
-              {block.children.map((child, idx) => {
-                let element: React.ReactNode = child.text; // Start with the text
+              <p key={index} style={{ marginBottom: "1.5em" }}>
+                {block.children.map((child, idx) => {
+                  let element: React.ReactNode = child.text; // Start with the text
 
-                // Wrap in <strong> if bold
-                if (child.bold) {
-                  element = <strong key={idx}>{element}</strong>;
-                }
+                  // Wrap in <strong> if bold
+                  if (child.bold) {
+                    element = <strong key={idx}>{element}</strong>;
+                  }
 
-                // Wrap in <em> if italic
-                if (child.italics) {
-                  element = <em key={idx}>{element}</em>;
-                }
+                  // Wrap in <em> if italic
+                  if (child.italics) {
+                    element = <em key={idx}>{element}</em>;
+                  }
 
-                return <React.Fragment key={idx}>{element}</React.Fragment>; // Ensure the correct type is returned
-              })}
-            </p>
+                  return <React.Fragment key={idx}>{element}</React.Fragment>; // Ensure the correct type is returned
+                })}
+              </p>
             );
           default:
             return null;
         }
       });
     };
-  
+
     return (
       <div>
         {portfolio.attributes.video?.data ? (
@@ -116,7 +119,11 @@ const PortfolioTabs = () => {
             </div>
             {portfolio.attributes.caption && (
               <div className="mt-4">
-                <div className="font-medium text-black text-base" data-aos="fade-up" data-aos-anchor-placement="center-center">
+                <div
+                  className="font-medium text-black text-base"
+                  data-aos="fade-up"
+                  data-aos-anchor-placement="center-center"
+                >
                   {renderRichText(portfolio.attributes.caption)}
                 </div>
               </div>
@@ -178,7 +185,8 @@ const PortfolioTabs = () => {
                         key={subtab.id}
                         value={subtab.attributes.value}
                         className={`!text-[9px] xl:!text-base !px-2 !py-1 rounded-none !shadow-none ${
-                          activeSubTabs[portfolio.id] === subtab.attributes.value
+                          activeSubTabs[portfolio.id] ===
+                          subtab.attributes.value
                             ? "!text-black !border-b !border-b-black focus:!text-black focus:!border-b-black"
                             : "!bg-transparent !text-[#868786]"
                         } hover:!text-black hover:!border-b-black`}
@@ -189,7 +197,10 @@ const PortfolioTabs = () => {
                   </TabsList>
 
                   {portfolio.attributes.subtabs.data.map((subtab) => (
-                    <TabsContent key={subtab.id} value={subtab.attributes.value}>
+                    <TabsContent
+                      key={subtab.id}
+                      value={subtab.attributes.value}
+                    >
                       {renderImages(
                         subtab.attributes.images.data
                           ? subtab.attributes.images.data

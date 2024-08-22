@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import slantarrow from "@/public/images/slant-arrow.png";
 import arrow from "@/public/images/arrow.png";
@@ -14,7 +14,7 @@ interface Blog {
     id: number;
     title: string;
     writer: string;
-    post: string;
+    post: Blogpost[];
     date: string;
     publishedAt: string;
     img: {
@@ -26,11 +26,26 @@ interface Blog {
           width: number;
           height: number;
           url: string;
-        }
-      }
-    }
+        };
+      };
+    };
   };
 }
+
+type Blogpost = {
+  type: string;
+  children: Children[];
+};
+
+type Children = {
+  type: string;
+  text: string;
+  bold?: boolean;
+  italics?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  url?: string;
+};
 
 const Blog = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -82,6 +97,17 @@ const Blog = () => {
 
   if (error) return <p>Error :(</p>;
 
+  const extractText = (content: Blogpost[]): string => {
+    return content
+      .map((block) => block.children.map((child) => child.text).join(""))
+      .join(" ");
+  };
+
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
   return (
     <section>
       <div className="container mx-auto">
@@ -131,7 +157,7 @@ const Blog = () => {
                     {post.attributes.title}
                   </h2>
                   <p className="text-black text-xs lg:text-base">
-                    {post.attributes.post.substring(0, 200)}...
+                    {/* {truncateText(extractText(post.attributes.post), 200)} */}
                   </p>
                   <Link
                     href={`/blogs/blog?id=${post.id}`}
