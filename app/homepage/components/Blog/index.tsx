@@ -157,7 +157,7 @@ const Blog = () => {
                     {post.attributes.title}
                   </h2>
                   <p className="text-black text-xs lg:text-base">
-                    {/* {truncateText(extractText(post.attributes.post), 200)} */}
+                    {truncateText(extractText(post.attributes.post), 200)}
                   </p>
                   <Link
                     href={`/blogs/blog?id=${post.id}`}
