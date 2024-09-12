@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="p-8 bg-[#000309] mt-[-4px]">
         <div className="container mx-auto">
           <div className="border-b-2 w-full border-white pb-2">
-            <p className="font-medium text-white text-sm lg:text-xl lg:font-semibold xl:text-2xl">
+            <p className="font-medium text-white text-sm lg:text-lg lg:font-semibold xl:text-2xl">
               We are
             </p>
           </div>

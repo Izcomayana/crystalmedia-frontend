@@ -10,7 +10,7 @@ const Board = () => {
           <h3 className="font-semibold text-primaryBlue mb-4 text-base">
             what we do
           </h3>
-          <p className="font-bold text-xl lg:text-4xl">
+          <p className="font-bold text-lg lg:text-4xl">
             Here are ways we can help <br /> you grow your business.
           </p>
         </div>

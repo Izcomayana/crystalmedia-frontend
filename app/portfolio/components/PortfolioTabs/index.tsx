@@ -8,6 +8,8 @@ import usePortfolioState, {
   Portfolio,
   Image as PortfolioImage,
 } from "../usePortfolioState";
+import Link from "next/link";
+import { MdOutlineArrowOutward } from "react-icons/md";
 
 const PortfolioTabs = () => {
   const state = usePortfolioState();
@@ -44,11 +46,15 @@ const PortfolioTabs = () => {
     }));
   };
 
-  if (!state.portfoliosData.length) {
-    return <Loader />;
-  }
+  // if (!state.portfoliosData.length) {
+  //   return <Loader />;
+  // }
 
-  const renderImages = (data: PortfolioImage[], name: string) => (
+  const renderImages = (
+    data: PortfolioImage[],
+    name: string,
+    subtabValue: string
+  ) => (
     <div className="flex flex-wrap gap-2 justify-start">
       {data.map((image) => (
         <div
@@ -57,13 +63,41 @@ const PortfolioTabs = () => {
           data-aos-easing="linear"
           data-aos-duration="1500"
         >
-          <Image
-            src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
-            alt={image.attributes.altText}
-            width={image.attributes.width}
-            height={image.attributes.height}
-            className="mx-auto"
-          />
+          <div
+            className={`relative ${
+              subtabValue === "brand-identity" ? "group" : ""
+            }`}
+          >
+            <Image
+              src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
+              alt={image.attributes.altText}
+              width={image.attributes.width}
+              height={image.attributes.height}
+              className={`mx-auto ${
+                subtabValue === "brand-identity"
+                  ? "transition-all duration-300 group-hover:opacity-80"
+                  : ""
+              }`}
+            />
+
+            {subtabValue === "brand-identity" && (
+              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            )}
+          </div>
+
+          {subtabValue === "brand-identity" && (
+            <div className="my-2 flex justify-center items-center">
+              <Link
+                href={"/#"}
+                className="flex gap-2 text-xs border-b border-b-slate-900 hover:border-b-slate-600 hover:text-slate-600 transition-all"
+              >
+                <span>View case study</span>
+                <span>
+                  <MdOutlineArrowOutward />
+                </span>
+              </Link>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -134,7 +168,8 @@ const PortfolioTabs = () => {
             portfolio.attributes.subtabs.data.flatMap((subtab) =>
               subtab.attributes.images.data ? subtab.attributes.images.data : []
             ),
-            portfolio.attributes.name
+            portfolio.attributes.name,
+            activeSubTabs[portfolio.id]
           )
         )}
       </div>
@@ -153,7 +188,7 @@ const PortfolioTabs = () => {
             <TabsTrigger
               key={portfolio.id}
               value={portfolio.attributes.value}
-              className={`py-2 px-3 text-xs border rounded-3xl transition-all md:text-sm xl:text-xl ${
+              className={`py-2 px-3 text-xs border rounded-3xl transition-all md:text-sm xl:text-lg ${
                 activeTab === portfolio.attributes.value
                   ? "!bg-primaryBlue !text-white !border-white focus:!bg-primaryBlue focus:!text-white focus:!border-white"
                   : "bg-transparent text-black border-black"
@@ -179,7 +214,7 @@ const PortfolioTabs = () => {
                   }
                   className="w-full"
                 >
-                  <TabsList className="bg-transparent h-fit px-0 gap-4">
+                  <TabsList className="bg-transparent h-fit px-0 gap-3 flex-wrap justify-start">
                     {portfolio.attributes.subtabs.data.map((subtab) => (
                       <TabsTrigger
                         key={subtab.id}
@@ -205,7 +240,8 @@ const PortfolioTabs = () => {
                         subtab.attributes.images.data
                           ? subtab.attributes.images.data
                           : [],
-                        subtab.attributes.name
+                        subtab.attributes.name,
+                        subtab.attributes.value
                       )}
                     </TabsContent>
                   ))}
