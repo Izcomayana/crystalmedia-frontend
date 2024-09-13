@@ -1,15 +1,9 @@
 "use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Loader from "@/components/Loader";
-import usePortfolioState, {
-  Caption,
-  Portfolio,
-  Image as PortfolioImage,
-} from "../usePortfolioState";
-import Link from "next/link";
-import { MdOutlineArrowOutward } from "react-icons/md";
+import usePortfolioState from "../usePortfolioState";
+import TabsLayout from "../TabsLayout";
 
 const PortfolioTabs = () => {
   const state = usePortfolioState();
@@ -46,143 +40,13 @@ const PortfolioTabs = () => {
     }));
   };
 
-  // if (!state.portfoliosData.length) {
-  //   return <Loader />;
-  // }
-
-  const renderImages = (
-    data: PortfolioImage[],
-    name: string,
-    subtabValue: string
-  ) => (
-    <div className="flex flex-wrap gap-2 justify-start">
-      {data.map((image) => (
-        <div
-          key={image.id}
-          data-aos="fade-down"
-          data-aos-easing="linear"
-          data-aos-duration="1500"
-        >
-          <div
-            className={`relative ${
-              subtabValue === "brand-identity" ? "group" : ""
-            }`}
-          >
-            <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
-              alt={image.attributes.altText}
-              width={image.attributes.width}
-              height={image.attributes.height}
-              className={`mx-auto ${
-                subtabValue === "brand-identity"
-                  ? "transition-all duration-300 group-hover:opacity-80"
-                  : ""
-              }`}
-            />
-
-            {subtabValue === "brand-identity" && (
-              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-            )}
-          </div>
-
-          {subtabValue === "brand-identity" && (
-            <div className="my-2 flex justify-center items-center">
-              <Link
-                href={"/#"}
-                className="flex gap-2 text-xs border-b border-b-slate-900 hover:border-b-slate-600 hover:text-slate-600 transition-all"
-              >
-                <span>View case study</span>
-                <span>
-                  <MdOutlineArrowOutward />
-                </span>
-              </Link>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-
-  const renderMedia = (portfolio: Portfolio) => {
-    const renderRichText = (caption: Caption[]) => {
-      return caption.map((block, index) => {
-        switch (block.type) {
-          case "paragraph":
-            return (
-              <p key={index} style={{ marginBottom: "1.5em" }}>
-                {block.children.map((child, idx) => {
-                  let element: React.ReactNode = child.text; // Start with the text
-
-                  // Wrap in <strong> if bold
-                  if (child.bold) {
-                    element = <strong key={idx}>{element}</strong>;
-                  }
-
-                  // Wrap in <em> if italic
-                  if (child.italics) {
-                    element = <em key={idx}>{element}</em>;
-                  }
-
-                  return <React.Fragment key={idx}>{element}</React.Fragment>; // Ensure the correct type is returned
-                })}
-              </p>
-            );
-          default:
-            return null;
-        }
-      });
-    };
-
-    return (
-      <div>
-        {portfolio.attributes.video?.data ? (
-          <div key={portfolio.attributes.video.data.id}>
-            <div className="w-full h-min mx-auto my-10 loop md:mb-20">
-              <video
-                className="h-full w-full rounded-3xl cursor-pointer"
-                loop
-                controls
-                muted
-              >
-                <source
-                  src={`${process.env.NEXT_PUBLIC_STRAPI}${portfolio.attributes.video.data.attributes.url}`}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            {portfolio.attributes.caption && (
-              <div className="mt-4">
-                <div
-                  className="font-medium text-black text-base"
-                  data-aos="fade-up"
-                  data-aos-anchor-placement="center-center"
-                >
-                  {renderRichText(portfolio.attributes.caption)}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          renderImages(
-            portfolio.attributes.subtabs.data.flatMap((subtab) =>
-              subtab.attributes.images.data ? subtab.attributes.images.data : []
-            ),
-            portfolio.attributes.name,
-            activeSubTabs[portfolio.id]
-          )
-        )}
-      </div>
-    );
-  };
+  if (!state.portfoliosData.length) {
+    return <Loader />;
+  }
 
   return (
     <div className="container mx-auto">
-      <Tabs
-        value={activeTab}
-        onValueChange={handleTabClick}
-        className="my-10 lg:my-20"
-      >
+      <Tabs value={activeTab} onValueChange={handleTabClick} className="my-10 lg:my-20">
         <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-2 justify-start lg:gap-4">
           {state.portfoliosData.map((portfolio) => (
             <TabsTrigger
@@ -201,54 +65,12 @@ const PortfolioTabs = () => {
 
         <div className="mt-5">
           {state.portfoliosData.map((portfolio) => (
-            <TabsContent
-              key={portfolio.id}
-              value={portfolio.attributes.value}
-              className="flex flex-wrap gap-4 justify-start"
-            >
-              {portfolio.attributes.subtabs.data.length ? (
-                <Tabs
-                  value={activeSubTabs[portfolio.id]}
-                  onValueChange={(value) =>
-                    handleSubTabClick(portfolio.id, value)
-                  }
-                  className="w-full"
-                >
-                  <TabsList className="bg-transparent h-fit px-0 gap-3 flex-wrap justify-start">
-                    {portfolio.attributes.subtabs.data.map((subtab) => (
-                      <TabsTrigger
-                        key={subtab.id}
-                        value={subtab.attributes.value}
-                        className={`!text-[9px] xl:!text-base !px-2 !py-1 rounded-none !shadow-none ${
-                          activeSubTabs[portfolio.id] ===
-                          subtab.attributes.value
-                            ? "!text-black !border-b !border-b-black focus:!text-black focus:!border-b-black"
-                            : "!bg-transparent !text-[#868786]"
-                        } hover:!text-black hover:!border-b-black`}
-                      >
-                        {subtab.attributes.name}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-
-                  {portfolio.attributes.subtabs.data.map((subtab) => (
-                    <TabsContent
-                      key={subtab.id}
-                      value={subtab.attributes.value}
-                    >
-                      {renderImages(
-                        subtab.attributes.images.data
-                          ? subtab.attributes.images.data
-                          : [],
-                        subtab.attributes.name,
-                        subtab.attributes.value
-                      )}
-                    </TabsContent>
-                  ))}
-                </Tabs>
-              ) : (
-                renderMedia(portfolio)
-              )}
+            <TabsContent key={portfolio.id} value={portfolio.attributes.value} className="flex flex-wrap gap-4 justify-start">
+              <TabsLayout
+                portfolio={portfolio}
+                activeSubTabs={activeSubTabs}
+                handleSubTabClick={handleSubTabClick}
+              />
             </TabsContent>
           ))}
         </div>
