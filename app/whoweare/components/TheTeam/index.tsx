@@ -36,7 +36,7 @@ const TheTeam = () => {
   return (
     <section>
       <div className="container mx-auto">
-        <h3 className="font-semibold text-xl lg:text-3xl xl:font-bold xl:text-5xl">
+        <h3 className="font-semibold text-lg lg:text-3xl xl:font-bold xl:text-5xl">
           Meet the <br /> remarkable brains
         </h3>
         <div className="mt-4 flex flex-col justify-between gap-6 lg:flex-row">
@@ -56,7 +56,7 @@ const TheTeam = () => {
                   />
                 </div>
                 <div className="bg-primaryBlue p-4 mt-1 text-white">
-                  <h4 className="font-bold text-lg xl:text-xl">{team.attributes.name}</h4>
+                  <h4 className="font-bold text-lg xl:text-lg">{team.attributes.name}</h4>
                   <p className="font-semibold text-xs xl:text-sm">
                     {team.attributes.role}
                   </p>

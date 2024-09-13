@@ -56,7 +56,7 @@ const Blog = () => {
 
   useEffect(() => {
     if (data?.data) {
-      const timer = setTimeout(() => {
+      const fetchBlogs = () => {
         const sortedData = data.data.sort(
           (a, b) =>
             new Date(b.attributes.publishedAt).getTime() -
@@ -64,9 +64,9 @@ const Blog = () => {
         );
         const recentPosts = sortedData.slice(0, 2);
         setLatestPosts(recentPosts);
-      }, 5000);
+      }
 
-      return () => clearTimeout(timer);
+      fetchBlogs ();
     }
   }, [data]);
 
