@@ -1,5 +1,5 @@
-// blogs.tsx
 "use client";
+import { useState } from "react";
 import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { TbPointFilled } from "react-icons/tb";
+import { PaginationComponent } from "@/components/ui/pagination";
 
 interface Blog {
   id: number;
@@ -48,11 +49,31 @@ type Children = {
 };
 
 const Blogs = () => {
-  const { loading, error, data } = useFetch<{ data: Blog[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*`
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Fetch the most recent 2 blogs
+  const {
+    loading: recentLoading,
+    error: recentError,
+    data: recentData,
+  } = useFetch<{ data: Blog[]; meta: any }>(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=1&pagination[pageSize]=2&sort=publishedAt:desc`
   );
 
-  console.log("blogs:", data?.data);
+  // Extract the IDs of the first two blog posts to exclude them later
+  const excludedIds = recentData?.data.map((blog) => blog.id) || [];
+
+  // Convert the excluded IDs into a query filter string
+  const excludeFilter = excludedIds.map((id) => `filters[id][$ne]=${id}`).join("&");
+
+  // Fetch paginated blogs (excluding the first 2 blogs)
+  const {
+    loading: paginatedLoading,
+    error: paginatedError,
+    data: paginatedData,
+  } = useFetch<{ data: Blog[]; meta: any }>(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc&${excludeFilter}`
+  );
 
   const extractText = (content: Blogpost[]): string => {
     return content
@@ -65,21 +86,15 @@ const Blogs = () => {
     return text.substring(0, maxLength) + "...";
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (recentLoading || paginatedLoading) return <p>Loading...</p>;
+  if (recentError || paginatedError) return <p>Error :(</p>;
 
-  // Sort blogs by published date in descending order (most recent first)
-  const sortedBlogs = data?.data.sort(
-    (a, b) =>
-      new Date(b.attributes.publishedAt).getTime() -
-      new Date(a.attributes.publishedAt).getTime()
-  );
+  // Pagination data from Strapi API
+  const pagination = paginatedData?.meta.pagination;
 
-  // Get the first 2 most recent blogs
-  const recentBlogs = sortedBlogs?.slice(0, 2);
-
-  // Get the rest of the blogs
-  const remainingBlogs = sortedBlogs?.slice(2);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
     <>
@@ -87,32 +102,42 @@ const Blogs = () => {
         <Hero title="Our blog" />
         <div className="container mx-auto">
           <div className="my-10 mb-40">
-            <h1 className="font-semibold text-2xl mb-8">Recent blog posts</h1>
+            <h1 className="font-semibold text-2xl mb-8 lg:text-3xl">
+              Recent blog posts
+            </h1>
 
             {/* Display the first 2 most recent blogs */}
             <div>
-              {recentBlogs?.map((blog, index) => (
+              {recentData?.data.map((blog, index) => (
                 <div
                   key={blog.id}
                   className={`${
-                    index === 1 ? "lg:flex justify-between items-center my-8 gap-5 lg:my-16" : ""
+                    index === 1
+                      ? "lg:flex justify-between items-center my-8 gap-5 lg:my-16"
+                      : ""
                   }`}
                 >
-                    <div className={`md:h-[228px] ${index === 1 ? "lg:w-1/2" : ""}`}>
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
-                        width={blog.attributes.img.data.attributes.width}
-                        height={blog.attributes.img.data.attributes.height}
-                        alt={
-                          blog.attributes.img.data.attributes.alternativeText
-                        }
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  <div
+                    className={`md:h-[228px] ${index === 1 ? "lg:w-1/2" : ""}`}
+                  >
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
+                      width={blog.attributes.img.data.attributes.width}
+                      height={blog.attributes.img.data.attributes.height}
+                      alt={blog.attributes.img.data.attributes.alternativeText}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
                   <div className={index === 1 ? "lg:w-1/2" : ""}>
                     <div>
-                      <p className="flex gap-2 text-gray-900 font-semibold text-sm my-3 lg:text-gray-700">
+                      <p
+                        className={`flex gap-2 font-semibold text-sm my-3 ${
+                          index === 0
+                            ? "text-gray-900 lg:text-gray-500"
+                            : "text-gray-900"
+                        }`}
+                      >
                         <span className="hidden lg:flex gap-2 justify-center items-center">
                           {blog.attributes.writer}
                           <TbPointFilled />
@@ -153,7 +178,7 @@ const Blogs = () => {
                       </div>
                     </div>
                     <p className="text-sm text-[#667085] my-3">
-                      {truncateText(extractText(blog.attributes.post), 200)}
+                      {truncateText(extractText(blog.attributes.post), 500)}
                     </p>
                     <div className="flex gap-2">
                       <Badge variant={"secondary"}>Badge</Badge>
@@ -165,23 +190,26 @@ const Blogs = () => {
               ))}
             </div>
 
-            {/* Display the rest of the blogs */}
+            {/* Display the paginated blogs */}
             <h2 className="font-semibold text-xl my-12 lg:text-3xl lg:mb-8 xl:text-[32px]">
               All blog posts
             </h2>
-            <div className="flex flex-wrap gap-4 justify-between">
-              {remainingBlogs?.map((blog) => (
+            <div className="flex flex-wrap gap-4 justify-betwee">
+              {paginatedData?.data.map((blog) => (
                 <div key={blog.id} className="mb-8 lg:w-[48.5%]">
                   <div>
                     <div className="md:h-[240px]">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
-                      width={blog.attributes.img.data.attributes.width}
-                      height={blog.attributes.img.data.attributes.height}
-                      alt={blog.attributes.img.data.attributes.alternativeText}
-                      className="w-full h-full object-cover"
-                    />
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
+                        width={blog.attributes.img.data.attributes.width}
+                        height={blog.attributes.img.data.attributes.height}
+                        alt={
+                          blog.attributes.img.data.attributes.alternativeText
+                        }
+                        className="w-full h-full object-cover"
+                      />
                     </div>
+
                     <div>
                       <p className="flex gap-2 text-gray-900 font-semibold text-sm my-3 lg:text-gray-700">
                         <span className="hidden lg:flex gap-2 justify-center items-center">
@@ -225,7 +253,7 @@ const Blogs = () => {
                     </div>
                   </div>
                   <p className="text-sm text-[#667085] my-3">
-                    {truncateText(extractText(blog.attributes.post), 200)}
+                    {truncateText(extractText(blog.attributes.post), 400)}
                   </p>
                   <div className="flex gap-2">
                     <Badge variant={"secondary"}>Badge</Badge>
@@ -235,7 +263,14 @@ const Blogs = () => {
                 </div>
               ))}
             </div>
-          </div>
+
+            {/* Pagination controls */}
+              <PaginationComponent
+                currentPage={currentPage}
+                totalPages={pagination?.pageCount || 1}
+                onPageChange={handlePageChange}
+              />
+            </div>
         </div>
         <Testimonials />
         <CTA />

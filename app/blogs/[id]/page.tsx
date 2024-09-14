@@ -37,7 +37,7 @@ const Page: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`
   );
   const [post, setPost] = useState<Post | null>(null);
 
