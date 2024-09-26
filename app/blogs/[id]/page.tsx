@@ -6,6 +6,7 @@ import CTA from "@/components/CTA";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import useFetch from "@/lib/api";
+import Image from "next/image";
 
 interface Post {
   id: number;
@@ -15,6 +16,18 @@ interface Post {
     post: Blogpost[];
     writer: string;
     publishedAt: string;
+    img: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string;
+          width: number;
+          height: number;
+          url: string;
+        };
+      };
+    };
   };
 }
 
@@ -37,7 +50,7 @@ const Page: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`
   );
   const [post, setPost] = useState<Post | null>(null);
 
@@ -49,11 +62,14 @@ const Page: React.FC = () => {
 
   if (loading || !post) {
     return (
-      <div className="flex flex-col space-y-10 my-20 mx-auto container">
-        <Skeleton className="h-20 w-full rounded-xl" />
+      <div className="flex flex-col space-y-6 my-20 mx-auto container">
+        <Skeleton className="h-4 w-full rounded-xl" />
+        <Skeleton className="h-16 w-full rounded-xl" />
         <div className="space-y-8">
           <Skeleton className="h-80 w-full" />
-          <Skeleton className="h-5 w-full" />
+          <Skeleton className="h-80 w-full" />
+          <Skeleton className="h-80 w-full" />
+          {/* <Skeleton className="h-5 w-full" /> */}
         </div>
       </div>
     );
@@ -106,26 +122,38 @@ const Page: React.FC = () => {
   return (
     <section>
       <div className="container mx-auto">
-        <div className="my-20 mb-40">
-          <h1 className="font-bold text-3xl mb-4 lg:text-5xl lg:mb-8 xl:text-[54px]">
+        <div className="my-10 mb-40">
+          <p className="text-xs font-semibold lg:text-sm">
+            {format(
+              new Date(post.attributes.publishedAt),
+              "EEEE, MMMM d, yyyy"
+            )}
+          </p>
+          <h1 className="font-semibold text-xl my-4 lg:text-2xl lg:my-8">
             {post.attributes.title}
           </h1>
+
+          <div
+                    className="my-8 md:h-[412px]"
+                  >
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                      width={post.attributes.img.data.attributes.width}
+                      height={post.attributes.img.data.attributes.height}
+                      alt={post.attributes.img.data.attributes.alternativeText}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
           <p className="text-black font-medium">
             {renderRichText(post.attributes.post)}
           </p>
 
-          <p className="mt-10">
-            by {post.attributes.writer} on{" "}
-            {format(
-              new Date(post.attributes.publishedAt),
-              "MMMM d, yyyy, h:mm a"
-            )}
-          </p>
+          <p className="mt-10">{/* by {post.attributes.writer} on{" "} */}</p>
         </div>
       </div>
-      <Testimonials />
-      <CTA />
+      {/* <Testimonials />
+      <CTA /> */}
     </section>
   );
 };

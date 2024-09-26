@@ -64,9 +64,9 @@ const Blog = () => {
         );
         const recentPosts = sortedData.slice(0, 2);
         setLatestPosts(recentPosts);
-      }
+      };
 
-      fetchBlogs ();
+      fetchBlogs();
     }
   }, [data]);
 
@@ -135,24 +135,22 @@ const Blog = () => {
               key={post.id}
             >
               <div className="flex flex-col gap-2">
-                <div>
-                  <div>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
-                      width={post.attributes.img.data.attributes.width}
-                      height={post.attributes.img.data.attributes.height}
-                      alt={post.attributes.img.data.attributes.alternativeText}
-                      className="w-full"
-                    />
-                    <p className="text-primaryBlue text-[8px] mt-2 lg:text-sm">
-                      {format(
-                        new Date(post.attributes.publishedAt),
-                        "MMMM d, yyyy, h:mm a"
-                      )}
-                    </p>
-                  </div>
+                <div className="h-[167px] lg:h-[290px]">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                    width={post.attributes.img.data.attributes.width}
+                    height={post.attributes.img.data.attributes.height}
+                    alt={post.attributes.img.data.attributes.alternativeText}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                  <p className="text-primaryBlue text-[8px] mt-2 lg:text-sm">
+                    {format(
+                      new Date(post.attributes.publishedAt),
+                      "MMMM d, yyyy, h:mm a"
+                    )}
+                  </p>
                   <h2 className="font-semibold text-base text-black lg:text-2xl">
                     {post.attributes.title}
                   </h2>
