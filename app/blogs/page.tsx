@@ -118,7 +118,7 @@ const Blogs = () => {
                   }`}
                 >
                   <div
-                    className={`md:h-[228px] ${index === 1 ? "lg:w-1/2" : ""}`}
+                    className={`h-[228px] ${index === 1 ? "lg:w-1/2" : ""}`}
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
