@@ -13,7 +13,7 @@ const WhoWeAre = () => {
       <CTA />
       <Testimonials />
     </>
-  )
-}
+  );
+};
 
 export default WhoWeAre;

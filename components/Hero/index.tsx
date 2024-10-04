@@ -17,7 +17,7 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
     <section>
       <div className="py-8 bg-[#000000] mt-[-4px]">
         <div className="container mx-auto my-32 mb-44">
-        <motion.div
+          <motion.div
             initial="hidden"
             animate="visible"
             exit={{ opacity: 0, transition: { duration: 1 } }}
@@ -26,14 +26,16 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
           >
             <ul className="text-white w-fit">
               <motion.li variants={itemVariants}>
-                <h1 className="text-white font-black text-4xl lg:text-7xl">{title}</h1>
+                <h1 className="text-white font-black text-4xl lg:text-7xl">
+                  {title}
+                </h1>
               </motion.li>
             </ul>
           </motion.div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Hero;

@@ -9,7 +9,11 @@ interface TabsLayoutProps {
   handleSubTabClick: (portfolioId: number, subtabValue: string) => void;
 }
 
-const TabsLayout: React.FC<TabsLayoutProps> = ({ portfolio, activeSubTabs, handleSubTabClick }) => {
+const TabsLayout: React.FC<TabsLayoutProps> = ({
+  portfolio,
+  activeSubTabs,
+  handleSubTabClick,
+}) => {
   if (!portfolio.attributes.subtabs.data.length) {
     return <RenderMedia portfolio={portfolio} activeSubTabs={activeSubTabs} />;
   }

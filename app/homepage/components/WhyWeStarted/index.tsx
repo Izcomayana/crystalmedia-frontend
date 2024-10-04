@@ -7,7 +7,12 @@ const WhyWeStarted = () => {
         </p>
 
         <div className="max-w-[756px] max-h-[456px] mx-auto loop">
-          <video className="h-full w-full rounded-3xl cursor-pointer" loop controls muted>
+          <video
+            className="h-full w-full rounded-3xl cursor-pointer"
+            loop
+            controls
+            muted
+          >
             <source
               src="https://docs.material-tailwind.com/demo.mp4"
               type="video/mp4"

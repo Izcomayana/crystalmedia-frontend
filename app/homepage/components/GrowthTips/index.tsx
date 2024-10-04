@@ -8,7 +8,7 @@ const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 
 const GrowthTips = () => {
   const { loading, error, data } = useFetch<{ data: any; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/tips-videos?populate=*`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/tips-videos?populate=*`,
   );
 
   if (loading)

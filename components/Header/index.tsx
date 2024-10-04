@@ -7,7 +7,7 @@ const Header = () => {
       <Navbar />
       <MobileNav />
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

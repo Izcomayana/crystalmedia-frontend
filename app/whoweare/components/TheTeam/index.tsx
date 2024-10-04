@@ -18,20 +18,22 @@ type Team = {
           width: number;
           height: number;
           url: string;
-        }
-      }
-    }
-  }
+        };
+      };
+    };
+  };
 };
 
 const TheTeam = () => {
-  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`);
-  
+  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`,
+  );
+
   if (loading) {
     return <Loader />;
   }
 
-  if (error) return <p>Error :(</p>
+  if (error) return <p>Error :(</p>;
 
   return (
     <section>
@@ -56,7 +58,9 @@ const TheTeam = () => {
                   />
                 </div>
                 <div className="bg-primaryBlue p-4 mt-1 text-white">
-                  <h4 className="font-bold text-lg xl:text-lg">{team.attributes.name}</h4>
+                  <h4 className="font-bold text-lg xl:text-lg">
+                    {team.attributes.name}
+                  </h4>
                   <p className="font-semibold text-xs xl:text-sm">
                     {team.attributes.role}
                   </p>

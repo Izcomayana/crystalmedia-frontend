@@ -9,7 +9,7 @@ const PortfolioTabs = () => {
   const state = usePortfolioState();
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
   const [activeSubTabs, setActiveSubTabs] = useState<{ [key: number]: string }>(
-    {}
+    {},
   );
 
   useEffect(() => {
@@ -17,13 +17,16 @@ const PortfolioTabs = () => {
       const initialTab = state.portfoliosData[0].attributes.value;
       setActiveTab(initialTab);
 
-      const initialSubTabs = state.portfoliosData.reduce((acc, portfolio) => {
-        if (portfolio.attributes.subtabs.data.length > 0) {
-          acc[portfolio.id] =
-            portfolio.attributes.subtabs.data[0].attributes.value;
-        }
-        return acc;
-      }, {} as { [key: number]: string });
+      const initialSubTabs = state.portfoliosData.reduce(
+        (acc, portfolio) => {
+          if (portfolio.attributes.subtabs.data.length > 0) {
+            acc[portfolio.id] =
+              portfolio.attributes.subtabs.data[0].attributes.value;
+          }
+          return acc;
+        },
+        {} as { [key: number]: string },
+      );
 
       setActiveSubTabs(initialSubTabs);
     }
@@ -46,7 +49,11 @@ const PortfolioTabs = () => {
 
   return (
     <div className="container mx-auto">
-      <Tabs value={activeTab} onValueChange={handleTabClick} className="my-10 lg:my-20">
+      <Tabs
+        value={activeTab}
+        onValueChange={handleTabClick}
+        className="my-10 lg:my-20"
+      >
         <TabsList className="bg-transparent h-fit px-0 flex flex-wrap gap-2 justify-start lg:gap-4">
           {state.portfoliosData.map((portfolio) => (
             <TabsTrigger
@@ -65,7 +72,11 @@ const PortfolioTabs = () => {
 
         <div className="mt-5">
           {state.portfoliosData.map((portfolio) => (
-            <TabsContent key={portfolio.id} value={portfolio.attributes.value} className="flex flex-wrap gap-4 justify-start">
+            <TabsContent
+              key={portfolio.id}
+              value={portfolio.attributes.value}
+              className="flex flex-wrap gap-4 justify-start"
+            >
               <TabsLayout
                 portfolio={portfolio}
                 activeSubTabs={activeSubTabs}

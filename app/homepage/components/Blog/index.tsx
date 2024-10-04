@@ -7,6 +7,7 @@ import arrow from "@/public/images/arrow.png";
 import { Skeleton } from "@/components/ui/skeleton";
 import useFetch from "@/lib/api";
 import { format } from "date-fns";
+import ReactMarkdown from "react-markdown";
 
 interface Blog {
   id: number;
@@ -14,7 +15,7 @@ interface Blog {
     id: number;
     title: string;
     writer: string;
-    post: Blogpost[];
+    post: string;
     date: string;
     publishedAt: string;
     img: {
@@ -32,25 +33,10 @@ interface Blog {
   };
 }
 
-type Blogpost = {
-  type: string;
-  children: Children[];
-};
-
-type Children = {
-  type: string;
-  text: string;
-  bold?: boolean;
-  italics?: boolean;
-  underline?: boolean;
-  strikethrough?: boolean;
-  url?: string;
-};
-
 const Blog = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { loading, error, data } = useFetch<{ data: Blog[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*`,
   );
   const [latestPosts, setLatestPosts] = useState<Blog[] | null>(null);
 
@@ -60,7 +46,7 @@ const Blog = () => {
         const sortedData = data.data.sort(
           (a, b) =>
             new Date(b.attributes.publishedAt).getTime() -
-            new Date(a.attributes.publishedAt).getTime()
+            new Date(a.attributes.publishedAt).getTime(),
         );
         const recentPosts = sortedData.slice(0, 2);
         setLatestPosts(recentPosts);
@@ -96,17 +82,6 @@ const Blog = () => {
   }
 
   if (error) return <p>Error :(</p>;
-
-  const extractText = (content: Blogpost[]): string => {
-    return content
-      .map((block) => block.children.map((child) => child.text).join(""))
-      .join(" ");
-  };
-
-  const truncateText = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
 
   return (
     <section>
@@ -148,14 +123,18 @@ const Blog = () => {
                   <p className="text-primaryBlue text-[8px] mt-2 lg:text-sm">
                     {format(
                       new Date(post.attributes.publishedAt),
-                      "MMMM d, yyyy, h:mm a"
+                      "MMMM d, yyyy, h:mm a",
                     )}
                   </p>
                   <h2 className="font-semibold text-base text-black lg:text-2xl">
                     {post.attributes.title}
                   </h2>
                   <p className="text-black text-xs lg:text-base">
-                    {truncateText(extractText(post.attributes.post), 200)}
+                    <ReactMarkdown>
+                      {post.attributes.post.length > 300
+                        ? `${post.attributes.post.slice(0, 300)}...`
+                        : post.attributes.post}
+                    </ReactMarkdown>
                   </p>
                   <Link
                     href={`/blogs/blog?id=${post.id}`}

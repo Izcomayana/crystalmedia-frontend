@@ -1,7 +1,7 @@
-import Blogs from './page'
+import Blogs from "./page";
 
 function page() {
-  return <Blogs />
+  return <Blogs />;
 }
 
 export default page;

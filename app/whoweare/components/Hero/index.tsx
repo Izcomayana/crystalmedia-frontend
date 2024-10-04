@@ -33,7 +33,9 @@ const Hero = () => {
                 </span>
               </motion.li>
               <motion.li variants={itemVariants} className="my-4 ">
-                <span className="font-bold text-5xl lg:text-7xl xl:text-[120px]">GROWTH</span>
+                <span className="font-bold text-5xl lg:text-7xl xl:text-[120px]">
+                  GROWTH
+                </span>
               </motion.li>
               <motion.li variants={itemVariants}>
                 <span className="font-bold text-5xl ml-[-4rem] lg:text-7xl lg:ml-[-7rem] xl:text-[120px]">

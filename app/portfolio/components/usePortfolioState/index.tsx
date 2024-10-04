@@ -79,7 +79,7 @@ const usePortfolioState = () => {
     const fetchPortfolios = async () => {
       try {
         const portfoliosResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate[1]=subtabs&populate[2]=subtabs.images&populate[0]=video&populate[3]=images`
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate[1]=subtabs&populate[2]=subtabs.images&populate[0]=video&populate[3]=images`,
         );
         const portfolios = await portfoliosResponse.json();
         const portfoliosData = portfolios.data;

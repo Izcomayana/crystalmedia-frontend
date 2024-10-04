@@ -7,7 +7,11 @@ interface RenderRichTextProps {
 
 const RenderRichText: React.FC<RenderRichTextProps> = ({ caption }) => {
   return (
-    <div className="font-medium text-black text-base" data-aos="fade-up" data-aos-anchor-placement="center-center">
+    <div
+      className="font-medium text-black text-base"
+      data-aos="fade-up"
+      data-aos-anchor-placement="center-center"
+    >
       {caption.map((block, index) => (
         <p key={index} style={{ marginBottom: "1.5em" }}>
           {block.children.map((child, idx) => {

@@ -7,7 +7,7 @@ const Portfolio = () => {
       <Hero title="Our Portfolio" />
       <PortfolioTabs />
     </>
-  )
-}
+  );
+};
 
-export default Portfolio
+export default Portfolio;
