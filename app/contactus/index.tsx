@@ -1,7 +1,7 @@
-import Contact from './page'
+import Contact from "./page";
 
 function page() {
-  return <Contact />
+  return <Contact />;
 }
 
 export default page;

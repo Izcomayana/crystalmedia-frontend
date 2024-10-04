@@ -1,7 +1,7 @@
-import Portfolio from './page'
+import Portfolio from "./page";
 
 function page() {
-  return <Portfolio />
+  return <Portfolio />;
 }
 
-export default page
+export default page;

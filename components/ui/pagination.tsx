@@ -79,7 +79,7 @@ export function PaginationComponent({
             >
               {pageNumber}
             </Button>
-          )
+          ),
         )}
       </div>
 

@@ -1,8 +1,8 @@
 "use client";
 import React, { useCallback } from "react";
-import { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
+import { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import { DotButton, useDotButton } from '../ui/emblaCarouselBtn';
+import { DotButton, useDotButton } from "../ui/emblaCarouselBtn";
 
 type PropType = {
   Videos: Array<Videos>;
@@ -33,13 +33,11 @@ const VideoCarousel: React.FC<PropType> = (props) => {
   const { Videos, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
-    emblaApi,
-  )
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
 
   return (
     <section className="video-embla">
-      
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container mt-4">
           {Videos.map((video) => (
@@ -73,8 +71,10 @@ const VideoCarousel: React.FC<PropType> = (props) => {
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={'embla__dot !w-3 !h-3'.concat(
-                index === selectedIndex ? ' embla__dot--selected !w-5 !h-5' : ''
+              className={"embla__dot !w-3 !h-3".concat(
+                index === selectedIndex
+                  ? " embla__dot--selected !w-5 !h-5"
+                  : "",
               )}
             />
           ))}

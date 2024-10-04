@@ -1,43 +1,43 @@
-"use client"
+"use client";
 
-import React, { useCallback } from 'react'
-import { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
-import { DotButton, useDotButton } from './emblaCarouselBtn';
-import Autoplay from 'embla-carousel-autoplay'
-import useEmblaCarousel from 'embla-carousel-react'
+import React, { useCallback } from "react";
+import { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
+import { DotButton, useDotButton } from "./emblaCarouselBtn";
+import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
 import Image, { StaticImageData } from "next/image";
 
 type PropType = {
-  slides: Array<SLIDES>,
-  options?: EmblaOptionsType
-}
+  slides: Array<SLIDES>;
+  options?: EmblaOptionsType;
+};
 
 type SLIDES = {
-  img: StaticImageData,
-  text: string,
-  index: number
-}
+  img: StaticImageData;
+  text: string;
+  index: number;
+};
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
+  const { slides, options } = props;
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
-    const autoplay = emblaApi?.plugins()?.autoplay
-    if (!autoplay) return
+    const autoplay = emblaApi?.plugins()?.autoplay;
+    if (!autoplay) return;
 
     const resetOrStop =
       autoplay.options.stopOnInteraction === false
         ? autoplay.reset
-        : autoplay.stop
+        : autoplay.stop;
 
-    resetOrStop()
-  }, [])
+    resetOrStop();
+  }, []);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
     emblaApi,
-    onNavButtonClick
-  )
+    onNavButtonClick,
+  );
 
   return (
     <section className="embla">
@@ -47,7 +47,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div className="container mx-auto embla__slide" key={slide.index}>
               <div className="border-4 border-primaryBlue embla__slide__number">
                 <div>
-                  <Image src={slide.img} alt="social media marketing" className="mx-auto" />
+                  <Image
+                    src={slide.img}
+                    alt="social media marketing"
+                    className="mx-auto"
+                  />
                 </div>
                 <div className="bg-primaryBlue text-center p-4">
                   <h1 className="text-white font-bold text-lg">{slide.text}</h1>
@@ -64,15 +68,15 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={'embla__dot'.concat(
-                index === selectedIndex ? ' embla__dot--selected' : ''
+              className={"embla__dot".concat(
+                index === selectedIndex ? " embla__dot--selected" : "",
               )}
             />
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default EmblaCarousel
+export default EmblaCarousel;

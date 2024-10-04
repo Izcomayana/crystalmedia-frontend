@@ -1,7 +1,7 @@
-import WhoWeAre from './page'
+import WhoWeAre from "./page";
 
 const page = () => {
-  return <WhoWeAre />
-}
+  return <WhoWeAre />;
+};
 
-export default page
+export default page;
