@@ -59,7 +59,7 @@ const Blog = () => {
   if (!latestPosts) {
     return (
       <div className="mx-auto container flex flex-col justify-between lg:flex-row">
-        <div className="flex flex-col space-y-4 my-20 w-full lg:w-[47.5%]">
+        <div className="border border-black p-4 rounded-2xl flex flex-col space-y-4 my-20 w-full lg:w-[49%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
@@ -68,7 +68,7 @@ const Blog = () => {
             <Skeleton className="h-4 w-full" />
           </div>
         </div>
-        <div className="flex flex-col space-y-4 my-20 w-full lg:w-[47.5%]">
+        <div className="border border-black p-4 rounded-2xl flex flex-col space-y-4 my-20 w-full lg:w-[49%]">
           <Skeleton className="h-60 w-full rounded-xl" />
           <div className="space-y-4">
             <Skeleton className="h-4 w-full" />
@@ -103,10 +103,10 @@ const Blog = () => {
           </div>
         </div>
 
-        <div className="my-8 flex flex-col justify-between gap-8 lg:flex-row">
+        <div className="my-8 flex flex-col justify-between lg:flex-row">
           {latestPosts?.map((post) => (
             <div
-              className="border border-black p-4 rounded-2xl transition-all hover:border-2"
+              className="border border-black p-4 rounded-2xl transition-all hover:border-2 hover:shadow-xl w-full lg:w-[49%]"
               key={post.id}
             >
               <div className="flex flex-col gap-2">
@@ -126,9 +126,12 @@ const Blog = () => {
                       "MMMM d, yyyy, h:mm a",
                     )}
                   </p>
+                  <Link href={`/blogs/blog?id=${post.id}`} className="hover:underline">
                   <h2 className="font-semibold text-base text-black lg:text-2xl">
                     {post.attributes.title}
                   </h2>
+                  </Link>
+                  
                   <p className="text-black text-xs lg:text-base">
                     <ReactMarkdown>
                       {post.attributes.post.length > 300
@@ -166,7 +169,7 @@ const Blog = () => {
           ))}
 
           <div className="text-center lg:hidden">
-            <Link href="/#" className="">
+            <Link href="/blogs" className="">
               View all
             </Link>
           </div>

@@ -89,11 +89,10 @@ const BlogList: React.FC<BlogListProps> = ({
                 </p>
               </div>
             </div>
+                <Link href={`/blogs/blog?id=${blog.id}`}>
             <div className="flex justify-between hover:underline">
               <h2 className="text-base font-semibold lg:text-lg">
-                <Link href={`/blogs/blog?id=${blog.id}`}>
                   {blog.attributes.title}
-                </Link>
               </h2>
               <div>
                 <svg
@@ -112,6 +111,7 @@ const BlogList: React.FC<BlogListProps> = ({
                 </svg>
               </div>
             </div>
+                </Link>
             <p className="text-sm text-[#667085] my-3">
               <ReactMarkdown>
                 {blog.attributes.post.length > 300
