@@ -39,7 +39,7 @@ const Page: React.FC = () => {
   const id = searchParams.get("id");
 
   const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`,
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`
   );
 
   const {
@@ -47,7 +47,7 @@ const Page: React.FC = () => {
     error: paginatedError,
     data: paginatedData,
   } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc`,
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc`
   );
 
   const pagination = paginatedData?.meta.pagination;
@@ -64,16 +64,56 @@ const Page: React.FC = () => {
 
   if (loading || !post) {
     return (
-      <div className="flex flex-col space-y-4 my-10 mx-auto container">
-        <Skeleton className="h-2 w-full rounded-xl" />
-        <Skeleton className="h-12 my-4 w-full rounded-xl lg:my-8" />
-        <div className="space-y-8">
-          <Skeleton className="h-80 my-8 w-full" />
-          <Skeleton className="h-80 w-full" />
-          <Skeleton className="h-80 w-full" />
-          {/* <Skeleton className="h-5 w-full" /> */}
+      <div className="mx-auto container">
+        <div className="lg:flex lg:gap-6 lg:justify-between">
+        <div className="flex flex-col my-10 lg:w-[70%]">
+          <Skeleton className="h-3 w-48 rounded-lg" />
+          <Skeleton className="h-10 my-4 w-full rounded-lg md:w-96 lg:mt-8" />
+          <div className="space-y-4">
+            <Skeleton className="mt-4 w-full h-[300px] md:h-[412px]" />
+            <Skeleton className="h-[600px] w-full" />
+            <Skeleton className="h-[600px] w-full" />
+          </div>
+        </div>
+        <div className="flex flex-col my-12 lg:w-[30%]">
+          <Skeleton className="h-10 w-48 rounded-lg mb-6 lg:mt-10" />
+          <div>
+            <Skeleton className="h-40 w-full md:h-[240px]" />
+            <Skeleton className="h-3 w-48 my-3" />
+            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+            <Skeleton className="h-40 w-full my-3" />
+            <div className="flex gap-2">
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            </div>
+          </div>
+          <div className="mt-12">
+            <Skeleton className="h-40 w-full md:h-[240px]" />
+            <Skeleton className="h-3 w-48 my-3" />
+            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+            <Skeleton className="h-40 w-full my-3" />
+            <div className="flex gap-2">
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            </div>
+          </div>
+          <div className="mt-12">
+            <Skeleton className="h-40 w-full md:h-[240px]" />
+            <Skeleton className="h-3 w-48 my-3" />
+            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+            <Skeleton className="h-40 w-full my-3" />
+            <div className="flex gap-2">
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            <Skeleton className="h-4 w-10 rounded-xl" />
+            </div>
+          </div>
         </div>
       </div>
+      </div>
+      
     );
   }
 
@@ -93,7 +133,7 @@ const Page: React.FC = () => {
             <p className="text-xs font-semibold lg:text-sm">
               {format(
                 new Date(post.attributes.publishedAt),
-                "EEEE, MMMM d, yyyy",
+                "EEEE, MMMM d, yyyy"
               )}
             </p>
 
@@ -146,7 +186,7 @@ const Page: React.FC = () => {
             </p>
           </div>
 
-          <div className="mb-10 lg:mt-10 lg:w-[30%]">
+          <div className="mb-10 lg:mt-12 lg:w-[30%]">
             <BlogList
               blogs={
                 Array.isArray(paginatedData?.data) ? paginatedData.data : []
