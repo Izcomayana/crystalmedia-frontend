@@ -11,14 +11,14 @@ const CTA = () => {
   return (
     <section>
       <div className="container mx-auto my-20">
-        <p className="mb-2 text-sm lg:mb-4">Ready to grow?</p>
+        <p className="mb-2 text-base lg:mb-4 lg:text-lg">Ready to grow?</p>
         <Link
           href={"/#"}
           className="flex justify-between border-b border-black pb-2 w-fit transition-all md:w-2/3 lg:pb-6"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <span className="mr-8 font-semibold text-lg lg:text-3xl xl:text-[56px]">
+          <span className="mr-8 font-semibold text-lg lg:text-2xl xl:text-[48px]">
             Let’s start a project together
           </span>
           <div className="relative w-8 h-6">
