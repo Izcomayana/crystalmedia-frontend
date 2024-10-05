@@ -106,7 +106,7 @@ const Blog = () => {
         <div className="my-8 flex flex-col justify-between lg:flex-row">
           {latestPosts?.map((post) => (
             <div
-              className="border border-black p-4 rounded-2xl transition-all hover:border-2 hover:shadow-xl w-full lg:w-[49%]"
+              className="border border-black p-4 rounded-2xl transition-all hover:border-2 hover:shadow-2xl w-full lg:w-[49%]"
               key={post.id}
             >
               <div className="flex flex-col gap-2">
