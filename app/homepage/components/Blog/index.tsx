@@ -126,12 +126,15 @@ const Blog = () => {
                       "MMMM d, yyyy, h:mm a",
                     )}
                   </p>
-                  <Link href={`/blogs/blog?id=${post.id}`} className="hover:underline">
-                  <h2 className="font-semibold text-base text-black lg:text-2xl">
-                    {post.attributes.title}
-                  </h2>
+                  <Link
+                    href={`/blogs/blog?id=${post.id}`}
+                    className="hover:underline"
+                  >
+                    <h2 className="font-semibold text-base text-black lg:text-2xl">
+                      {post.attributes.title}
+                    </h2>
                   </Link>
-                  
+
                   <p className="text-black text-xs lg:text-base">
                     <ReactMarkdown>
                       {post.attributes.post.length > 300

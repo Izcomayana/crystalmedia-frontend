@@ -132,29 +132,29 @@ const Blogs = () => {
                         </span>
                       </p>
                     </div>
-                        <Link href={`/blogs/blog?id=${blog.id}`}>
-                    <div className="flex justify-between hover:underline">
-                      <h2 className="text-lg font-semibold">
+                    <Link href={`/blogs/blog?id=${blog.id}`}>
+                      <div className="flex justify-between hover:underline">
+                        <h2 className="text-lg font-semibold">
                           {blog.attributes.title}
-                      </h2>
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="3"
-                          stroke="currentColor"
-                          className="size-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                          />
-                        </svg>
+                        </h2>
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="3"
+                            stroke="currentColor"
+                            className="size-5"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                        </Link>
+                    </Link>
                     <p className="text-sm text-[#667085] my-3">
                       <ReactMarkdown>
                         {blog.attributes.post.length > 300
