@@ -132,11 +132,10 @@ const Blogs = () => {
                         </span>
                       </p>
                     </div>
+                        <Link href={`/blogs/blog?id=${blog.id}`}>
                     <div className="flex justify-between hover:underline">
                       <h2 className="text-lg font-semibold">
-                        <Link href={`/blogs/blog?id=${blog.id}`}>
                           {blog.attributes.title}
-                        </Link>
                       </h2>
                       <div>
                         <svg
@@ -155,6 +154,7 @@ const Blogs = () => {
                         </svg>
                       </div>
                     </div>
+                        </Link>
                     <p className="text-sm text-[#667085] my-3">
                       <ReactMarkdown>
                         {blog.attributes.post.length > 300
