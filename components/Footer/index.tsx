@@ -27,10 +27,20 @@ const Footer = () => {
             Get Started
           </Button>
         </div>
-        <div className="bg-black flex justify-center items-center p-16">
-          <FaTiktok className="text-white w-6 h-6" />
-          <FaXTwitter className="text-white w-6 h-6 mx-4" />
-          <PiInstagramLogoFill className="text-white w-6 h-6" />
+        <div className="bg-black flex justify-center gap-2 items-center p-16">
+          <div className="hover:mt-[-1rem] transition-all">
+            <FaTiktok className="text-white w-6 h-6" />
+          </div>
+          <div className="hover:mt-[-1rem] transition-all">
+            <a target="_blank" href="https://x.com/crystalmtech">
+              <FaXTwitter className="text-white w-6 h-6 mx-4" />
+            </a>
+          </div>
+          <div className="hover:mt-[-1rem] transition-all">
+            <a target="_blank" href="https://www.instagram.com/crystalmediatech/">
+              <PiInstagramLogoFill className="text-white w-6 h-6" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

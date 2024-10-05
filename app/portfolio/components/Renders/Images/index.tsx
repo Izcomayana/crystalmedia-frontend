@@ -23,23 +23,34 @@ const RenderImages: React.FC<RenderImagesProps> = ({
           data-aos="fade-down"
           data-aos-easing="linear"
           data-aos-duration="1500"
+          className={`p-4 rounded-2xl ${
+            subtabValue === "twitter-campaigns" ? "border border-black" : ""
+          }`}
         >
           <div
-            className={`relative ${subtabValue === "brand-identity" ? "group" : ""}`}
+            className={`relative ${
+              subtabValue === "brand-identity" ? "group" : ""
+            }`}
           >
             <Image
               src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
               alt={image.attributes.altText}
               width={image.attributes.width}
               height={image.attributes.height}
-              className={`mx-auto ${subtabValue === "brand-identity" ? "transition-all duration-300 group-hover:opacity-80" : ""}`}
+              className={`mx-auto ${
+                subtabValue === "brand-identity"
+                  ? "transition-all duration-300 group-hover:opacity-80"
+                  : ""
+              } `}
             />
 
+            {/* Overlay for brand-identity */}
             {subtabValue === "brand-identity" && (
               <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             )}
           </div>
 
+          {/* Link for brand-identity */}
           {subtabValue === "brand-identity" && (
             <div className="my-2 flex justify-center items-center">
               <Link
@@ -49,6 +60,13 @@ const RenderImages: React.FC<RenderImagesProps> = ({
                 <span>View case study</span>
                 <MdOutlineArrowOutward />
               </Link>
+            </div>
+          )}
+
+          {/* Add different UI conditions for other tabs */}
+          {subtabValue === "twitter-campaigns" && (
+            <div className="flex justify-between">
+              <p className="text-sm text-gray-800">Twitter Trends Image</p>
             </div>
           )}
         </div>
