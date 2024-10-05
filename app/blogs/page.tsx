@@ -64,7 +64,7 @@ const Blogs = () => {
     `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc&${excludeFilter}`,
   );
 
-  if (recentLoading || paginatedLoading) return <p>Loading...</p>;
+  // if (recentLoading || paginatedLoading) return <p>Loading...</p>;
   if (recentError || paginatedError) return <p>Error :(</p>;
 
   // Pagination data from Strapi API

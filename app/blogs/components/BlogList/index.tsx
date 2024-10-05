@@ -49,7 +49,7 @@ const BlogList: React.FC<BlogListProps> = ({
   return (
     <>
       {/* Display the title prop */}
-      <h2 className="font-semibold text-xl my-12 lg:text-3xl lg:mb-8 xl:text-[32px]">
+      <h2 className="font-semibold text-xl my-12 lg:text-2xl lg:mb-8">
         {title}
       </h2>
       <div className="flex flex-wrap gap-4 justify-between">
@@ -90,7 +90,7 @@ const BlogList: React.FC<BlogListProps> = ({
               </div>
             </div>
             <div className="flex justify-between hover:underline">
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-base font-semibold lg:text-lg">
                 <Link href={`/blogs/blog?id=${blog.id}`}>
                   {blog.attributes.title}
                 </Link>
