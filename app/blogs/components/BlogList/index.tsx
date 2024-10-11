@@ -61,7 +61,7 @@ const BlogList: React.FC<BlogListProps> = ({
             <div>
               <div className="md:h-[240px]">
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
+                  src={`${blog.attributes.img.data.attributes.url}`}
                   width={blog.attributes.img.data.attributes.width}
                   height={blog.attributes.img.data.attributes.height}
                   alt={blog.attributes.img.data.attributes.alternativeText}
@@ -89,29 +89,29 @@ const BlogList: React.FC<BlogListProps> = ({
                 </p>
               </div>
             </div>
-                <Link href={`/blogs/blog?id=${blog.id}`}>
-            <div className="flex justify-between hover:underline">
-              <h2 className="text-base font-semibold lg:text-lg">
+            <Link href={`/blogs/blog?id=${blog.id}`}>
+              <div className="flex justify-between hover:underline">
+                <h2 className="text-base font-semibold lg:text-lg">
                   {blog.attributes.title}
-              </h2>
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="3"
-                  stroke="currentColor"
-                  className="size-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                  />
-                </svg>
+                </h2>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="3"
+                    stroke="currentColor"
+                    className="size-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-                </Link>
+            </Link>
             <p className="text-sm text-[#667085] my-3">
               <ReactMarkdown>
                 {blog.attributes.post.length > 300

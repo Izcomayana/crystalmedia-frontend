@@ -7,22 +7,23 @@ import { AOSInit } from "./aos";
 import Providers from "../components/Providers.tsx";
 
 const montserrat = Montserrat({
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-})
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const poppins = Poppins({
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
-})
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "CrystalMediatech",
   description: "A media agency",
-  keywords: "design, public relations, social media marketing, influencer marketing, campaign management, content strategy creation",
+  keywords:
+    "design, public relations, social media marketing, influencer marketing, campaign management, content strategy creation",
   robots: "index, follow",
   icons: {
     icon: "/favicon.ico",

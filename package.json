@@ -10,6 +10,7 @@
     "prettier": "npx prettier --write ./components/**/*.{ts,tsx} ./app/**/*.{ts,tsx}"
   },
   "dependencies": {
+    "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "aos": "^2.3.4",

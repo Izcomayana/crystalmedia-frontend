@@ -51,7 +51,7 @@ const TheTeam = () => {
               >
                 <div className="w-fit mx-auto">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI}${team.attributes.image.data.attributes.url}`}
+                    src={`${team.attributes.image.data.attributes.url}`}
                     alt={team.attributes.image.data.attributes.alternativeText}
                     width={team.attributes.image.data.attributes.width}
                     height={team.attributes.image.data.attributes.height}

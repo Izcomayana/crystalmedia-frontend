@@ -37,7 +37,10 @@ const Footer = () => {
             </a>
           </div>
           <div className="hover:mt-[-1rem] transition-all">
-            <a target="_blank" href="https://www.instagram.com/crystalmediatech/">
+            <a
+              target="_blank"
+              href="https://www.instagram.com/crystalmediatech/"
+            >
               <PiInstagramLogoFill className="text-white w-6 h-6" />
             </a>
           </div>

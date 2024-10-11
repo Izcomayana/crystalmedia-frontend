@@ -39,7 +39,7 @@ const Page: React.FC = () => {
   const id = searchParams.get("id");
 
   const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`,
   );
 
   const {
@@ -47,7 +47,7 @@ const Page: React.FC = () => {
     error: paginatedError,
     data: paginatedData,
   } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc`,
   );
 
   const pagination = paginatedData?.meta.pagination;
@@ -66,54 +66,53 @@ const Page: React.FC = () => {
     return (
       <div className="mx-auto container">
         <div className="lg:flex lg:gap-6 lg:justify-between">
-        <div className="flex flex-col my-10 lg:w-[70%]">
-          <Skeleton className="h-3 w-48 rounded-lg" />
-          <Skeleton className="h-10 my-4 w-full rounded-lg md:w-96 lg:mt-8" />
-          <div className="space-y-4">
-            <Skeleton className="mt-4 w-full h-[300px] md:h-[412px]" />
-            <Skeleton className="h-[600px] w-full" />
-            <Skeleton className="h-[600px] w-full" />
-          </div>
-        </div>
-        <div className="flex flex-col my-12 lg:w-[30%]">
-          <Skeleton className="h-10 w-48 rounded-lg mb-6 lg:mt-10" />
-          <div>
-            <Skeleton className="h-40 w-full md:h-[240px]" />
-            <Skeleton className="h-3 w-48 my-3" />
-            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
-            <Skeleton className="h-40 w-full my-3" />
-            <div className="flex gap-2">
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
+          <div className="flex flex-col my-10 lg:w-[70%]">
+            <Skeleton className="h-3 w-48 rounded-lg" />
+            <Skeleton className="h-10 my-4 w-full rounded-lg md:w-96 lg:mt-8" />
+            <div className="space-y-4">
+              <Skeleton className="mt-4 w-full h-[300px] md:h-[412px]" />
+              <Skeleton className="h-[600px] w-full" />
+              <Skeleton className="h-[600px] w-full" />
             </div>
           </div>
-          <div className="mt-12">
-            <Skeleton className="h-40 w-full md:h-[240px]" />
-            <Skeleton className="h-3 w-48 my-3" />
-            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
-            <Skeleton className="h-40 w-full my-3" />
-            <div className="flex gap-2">
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
+          <div className="flex flex-col my-12 lg:w-[30%]">
+            <Skeleton className="h-10 w-48 rounded-lg mb-6 lg:mt-10" />
+            <div>
+              <Skeleton className="h-40 w-full md:h-[240px]" />
+              <Skeleton className="h-3 w-48 my-3" />
+              <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+              <Skeleton className="h-40 w-full my-3" />
+              <div className="flex gap-2">
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+              </div>
             </div>
-          </div>
-          <div className="mt-12">
-            <Skeleton className="h-40 w-full md:h-[240px]" />
-            <Skeleton className="h-3 w-48 my-3" />
-            <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
-            <Skeleton className="h-40 w-full my-3" />
-            <div className="flex gap-2">
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
-            <Skeleton className="h-4 w-10 rounded-xl" />
+            <div className="mt-12">
+              <Skeleton className="h-40 w-full md:h-[240px]" />
+              <Skeleton className="h-3 w-48 my-3" />
+              <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+              <Skeleton className="h-40 w-full my-3" />
+              <div className="flex gap-2">
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+              </div>
+            </div>
+            <div className="mt-12">
+              <Skeleton className="h-40 w-full md:h-[240px]" />
+              <Skeleton className="h-3 w-48 my-3" />
+              <Skeleton className="h-5 w-full rounded-lg lg:my-8" />
+              <Skeleton className="h-40 w-full my-3" />
+              <div className="flex gap-2">
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+                <Skeleton className="h-4 w-10 rounded-xl" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-      
     );
   }
 
@@ -133,7 +132,7 @@ const Page: React.FC = () => {
             <p className="text-xs font-semibold lg:text-sm">
               {format(
                 new Date(post.attributes.publishedAt),
-                "EEEE, MMMM d, yyyy"
+                "EEEE, MMMM d, yyyy",
               )}
             </p>
 
@@ -143,7 +142,7 @@ const Page: React.FC = () => {
 
             <div className="mt-8 h-[300px] md:h-[412px]">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                src={`${post.attributes.img.data.attributes.url}`}
                 width={post.attributes.img.data.attributes.width}
                 height={post.attributes.img.data.attributes.height}
                 alt={post.attributes.img.data.attributes.alternativeText}

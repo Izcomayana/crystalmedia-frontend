@@ -40,7 +40,7 @@ const RenderMedia: React.FC<RenderMediaProps> = ({
             muted
           >
             <source
-              src={`${process.env.NEXT_PUBLIC_STRAPI}${portfolio.attributes.video.data.attributes.url}`}
+              src={`${portfolio.attributes.video.data.attributes.url}`}
               type="video/mp4"
             />
             Your browser does not support the video tag.
