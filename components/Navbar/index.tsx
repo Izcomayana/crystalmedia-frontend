@@ -51,7 +51,7 @@ const Navbar = () => {
     },
     {
       title: "Influencer Marketing",
-      href: "#",
+      href: "/whatwedo/influencermarketing",
     },
     {
       title: "Public Relation",
@@ -99,7 +99,7 @@ const Navbar = () => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger className="p-0 text-white bg-transparent hover:!bg-transparent hover:!text-[#4173CB] active:text-[#4173CB] focus:!text-[#4173CB] focus:!bg-transparent transition-all">
-                Components
+                What We Do
               </NavigationMenuTrigger>
               <NavigationMenuContent className="">
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[350px] md:grid-cols-1">
@@ -127,7 +127,7 @@ const Navbar = () => {
 
             <NavigationMenuItem className="text-white">
               <Link
-                href="/blog"
+                href="/blogs"
                 className="hover:text-[#4173CB] active:text-[#4173CB] focus:text-[#4173CB] transition-all"
               >
                 Our Blog

@@ -33,7 +33,7 @@ const RenderImages: React.FC<RenderImagesProps> = ({
             }`}
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI}${image.attributes.url}`}
+              src={`${image.attributes.url}`}
               alt={image.attributes.altText}
               width={image.attributes.width}
               height={image.attributes.height}

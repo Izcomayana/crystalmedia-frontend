@@ -50,7 +50,7 @@ const VideoCarousel: React.FC<PropType> = (props) => {
                   muted
                 >
                   <source
-                    src={`${process.env.NEXT_PUBLIC_STRAPI}${video.data.attributes.video.data.attributes.url}`}
+                    src={`${video.data.attributes.video.data.attributes.url}`}
                     type={video.data.attributes.video.data.attributes.mime}
                   />
                   Your browser does not support the video tag.

@@ -1,7 +1,11 @@
-import React from "react";
+import Hero from "@/components/Hero";
 
 const WhatWeDo = () => {
-  return <div>WhatWeDo</div>;
+  return (
+  <>
+   <Hero title="What We Do" subtitle="Influencer Marketing" />
+  </>
+ )
 };
 
 export default WhatWeDo;

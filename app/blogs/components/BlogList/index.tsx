@@ -61,7 +61,7 @@ const BlogList: React.FC<BlogListProps> = ({
             <div>
               <div className="md:h-[240px]">
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_STRAPI}${blog.attributes.img.data.attributes.url}`}
+                  src={`${blog.attributes.img.data.attributes.url}`}
                   width={blog.attributes.img.data.attributes.width}
                   height={blog.attributes.img.data.attributes.height}
                   alt={blog.attributes.img.data.attributes.alternativeText}

@@ -112,7 +112,7 @@ const Blog = () => {
               <div className="flex flex-col gap-2">
                 <div className="h-[167px] lg:h-[290px]">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                    src={`${post.attributes.img.data.attributes.url}`}
                     width={post.attributes.img.data.attributes.width}
                     height={post.attributes.img.data.attributes.height}
                     alt={post.attributes.img.data.attributes.alternativeText}

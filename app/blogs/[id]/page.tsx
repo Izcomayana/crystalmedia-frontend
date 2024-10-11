@@ -142,7 +142,7 @@ const Page: React.FC = () => {
 
             <div className="mt-8 h-[300px] md:h-[412px]">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI}${post.attributes.img.data.attributes.url}`}
+                src={`${post.attributes.img.data.attributes.url}`}
                 width={post.attributes.img.data.attributes.width}
                 height={post.attributes.img.data.attributes.height}
                 alt={post.attributes.img.data.attributes.alternativeText}

@@ -10,9 +10,10 @@ const itemVariants = {
 
 interface HeroProps {
   title: string;
+  subtitle?: string
 }
 
-const Hero: React.FC<HeroProps> = ({ title }) => {
+const Hero: React.FC<HeroProps> = ({ title, subtitle }) => {
   return (
     <section>
       <div className="py-8 bg-[#000000] mt-[-4px]">
@@ -26,9 +27,14 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
           >
             <ul className="text-white w-fit">
               <motion.li variants={itemVariants}>
-                <h1 className="text-white font-black text-4xl lg:text-7xl">
+                <h1 className="text-white font-bold text-4xl lg:text-7xl">
                   {title}
                 </h1>
+              </motion.li>
+              <motion.li variants={itemVariants}>
+                <h6 className="text-white font-medium mt-2 text-xl lg:text-2xl">
+                  {subtitle}
+                </h6>
               </motion.li>
             </ul>
           </motion.div>
