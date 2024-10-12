@@ -10,7 +10,7 @@ const itemVariants = {
 
 interface HeroProps {
   title: string;
-  subtitle?: string
+  subtitle?: string;
 }
 
 const Hero: React.FC<HeroProps> = ({ title, subtitle }) => {

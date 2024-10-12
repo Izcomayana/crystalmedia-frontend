@@ -6,18 +6,18 @@ import Hero from "@/components/Hero";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-interface Influencer {
+interface SMMMM {
   id: number;
   attributes: {
     contents: string;
   };
 }
 
-const InfluencerMarketing: React.FC = () => {
-  const [pageData, setPageData] = useState<Influencer | null>(null);
+const SMMMM = () => {
+  const [pageData, setPageData] = useState<SMMMM | null>(null);
 
-  const { loading, error, data } = useFetch<{ data: Influencer; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/1`,
+  const { loading, error, data } = useFetch<{ data: SMMMM; meta: any }>(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/2`,
   );
 
   useEffect(() => {
@@ -29,7 +29,10 @@ const InfluencerMarketing: React.FC = () => {
 
   return (
     <>
-      <Hero title="What We Do" subtitle="Influencer Marketing" />
+      <Hero
+        title="What We Do"
+        subtitle="Social Media Management and Marketing"
+      />
 
       <div className="container mx-auto my-10">
         <p className="text-black text-sm mb-10 font-light lg:text-base">
@@ -59,4 +62,4 @@ const InfluencerMarketing: React.FC = () => {
   );
 };
 
-export default InfluencerMarketing;
+export default SMMMM;

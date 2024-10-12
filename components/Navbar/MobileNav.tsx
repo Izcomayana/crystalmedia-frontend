@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, useCycle } from "framer-motion";
 import { MenuToggle } from "./components/MenuToggle";
 import { Navigation } from "./components/Navigation";

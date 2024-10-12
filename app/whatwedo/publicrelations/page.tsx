@@ -6,19 +6,20 @@ import Hero from "@/components/Hero";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-interface Influencer {
+interface PublicRelation {
   id: number;
   attributes: {
     contents: string;
   };
 }
 
-const InfluencerMarketing: React.FC = () => {
-  const [pageData, setPageData] = useState<Influencer | null>(null);
+const PublicRelation: React.FC = () => {
+  const [pageData, setPageData] = useState<PublicRelation | null>(null);
 
-  const { loading, error, data } = useFetch<{ data: Influencer; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/1`,
-  );
+  const { loading, error, data } = useFetch<{
+    data: PublicRelation;
+    meta: any;
+  }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/3`);
 
   useEffect(() => {
     if (data && data.data) {
@@ -29,7 +30,7 @@ const InfluencerMarketing: React.FC = () => {
 
   return (
     <>
-      <Hero title="What We Do" subtitle="Influencer Marketing" />
+      <Hero title="What We Do" subtitle="Public Relations and Services" />
 
       <div className="container mx-auto my-10">
         <p className="text-black text-sm mb-10 font-light lg:text-base">
@@ -59,4 +60,4 @@ const InfluencerMarketing: React.FC = () => {
   );
 };
 
-export default InfluencerMarketing;
+export default PublicRelation;

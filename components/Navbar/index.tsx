@@ -47,19 +47,19 @@ const Navbar = () => {
   const whatwedos: { title: string; href: string }[] = [
     {
       title: "Social Media Marketing and Management",
-      href: "/#",
+      href: "/whatwedo/smmm",
     },
     {
       title: "Influencer Marketing",
-      href: "/#",
+      href: "/whatwedo/influencermarketing",
     },
     {
-      title: "Public Relation",
-      href: "/#",
+      title: "Public Relations",
+      href: "/whatwedo/publicrelations",
     },
     {
-      title: "Design",
-      href: "/#",
+      title: "Design Services",
+      href: "/whatwedo/design",
     },
   ];
 
@@ -157,7 +157,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >
