@@ -69,7 +69,7 @@ export const Navigation = ({
             toggleOpen={toggleOpen}
             activeDropdown={activeDropdown}
             onDropdownToggle={() => handleDropdownToggle(i)}
-            closeNav={closeNav} 
+            closeNav={closeNav}
           />
         ))}
       </motion.ul>
