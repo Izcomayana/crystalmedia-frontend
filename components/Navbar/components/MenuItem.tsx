@@ -67,11 +67,11 @@ const whatwedos = [
   },
   {
     name: "Public Relations",
-    href: "/publicrelations",
+    href: "/whatwedo/publicrelations",
   },
   {
     name: "Design Services",
-    href: "/design",
+    href: "/whatwedo/design",
   },
 ];
 
