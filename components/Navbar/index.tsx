@@ -44,22 +44,22 @@ const Navbar = () => {
     };
   }, [lastScrollTop]);
 
-  const components: { title: string; href: string }[] = [
+  const whatwedos: { title: string; href: string }[] = [
     {
       title: "Social Media Marketing and Management",
-      href: "#",
+      href: "/#",
     },
     {
       title: "Influencer Marketing",
-      href: "/whatwedo/influencermarketing",
+      href: "/#",
     },
     {
       title: "Public Relation",
-      href: "#",
+      href: "/#",
     },
     {
       title: "Design",
-      href: "#",
+      href: "/#",
     },
   ];
 
@@ -103,13 +103,13 @@ const Navbar = () => {
               </NavigationMenuTrigger>
               <NavigationMenuContent className="">
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[350px] md:grid-cols-1">
-                  {components.map((component) => (
+                  {whatwedos.map((whatwedo) => (
                     <ListItem
-                      key={component.title}
-                      href={component.href}
-                      title={component.title}
+                      key={whatwedo.title}
+                      href={whatwedo.href}
+                      title={whatwedo.title}
                     >
-                      {component.title}
+                      {whatwedo.title}
                     </ListItem>
                   ))}
                 </ul>

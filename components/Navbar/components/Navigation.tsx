@@ -1,9 +1,10 @@
 "use client";
 import * as React from "react";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 import MenuItem from "./MenuItem";
 import Image from "next/image";
 import CMT from "@/public/images/cmt-full-logo.svg";
+import { useState } from "react";
 
 const variants = {
   open: {
@@ -37,20 +38,41 @@ export const Navigation = ({
 }: {
   toggleOpen: () => void;
   isOpen: boolean;
-}) => (
-  <div>
-    <motion.ul
-      variants={variants}
-      initial="closed"
-      animate={isOpen ? "open" : "closed"}
-      style={{ display: isOpen ? "block" : "none" }}
-    >
-      <div className="w-80 mb-16" style={style}>
-        <Image src={CMT} alt={"cmt-log"} className="w-full" />
-      </div>
-      {itemIds.map((i) => (
-        <MenuItem i={i} key={i} toggleOpen={toggleOpen} />
-      ))}
-    </motion.ul>
-  </div>
-);
+}) => {
+  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+
+  const handleDropdownToggle = (index: number | null) => {
+    setActiveDropdown(index === activeDropdown ? null : index);
+  };
+
+  const closeNav = () => {
+    toggleOpen();
+    setActiveDropdown(null);
+  };
+
+  return (
+    <div>
+      <motion.ul
+        variants={variants}
+        initial="closed"
+        animate={isOpen ? "open" : "closed"}
+        style={{ display: isOpen ? "block" : "none" }}
+      >
+        <div className="w-80 mb-16" style={style}>
+          <Image src={CMT} alt={"cmt-log"} className="w-full" />
+        </div>
+        {itemIds.map((i) => (
+          <MenuItem
+            i={i}
+            key={i}
+            hasDropdown={i === 2}
+            toggleOpen={toggleOpen}
+            activeDropdown={activeDropdown}
+            onDropdownToggle={() => handleDropdownToggle(i)}
+            closeNav={closeNav} 
+          />
+        ))}
+      </motion.ul>
+    </div>
+  );
+};
