@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Navbar/components/MenuToggle.jsx", "lib/api.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Navbar/components/MenuToggle.jsx", "lib/api.ts", "lib/firebase.js"],
   "exclude": ["node_modules"]
 }
