@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import useEmblaCarousel from "embla-carousel-react";
 import { DotButton, useDotButton } from "../ui/emblaCarouselBtn";
+import { fetchVideos } from "@/lib/firebaseUtils";
 
 type VideoType = {
   id: string;
@@ -21,24 +20,18 @@ const VideoCarousel = () => {
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
 
   useEffect(() => {
-    const fetchVideos = async () => {
+    const loadVideos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "tipsvideos"));
-        const videoData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as VideoType[];
-
-        setVideos(videoData);
-        console.log("videos:", videos)
-        setLoading(false);
+        const videoData = await fetchVideos();
+        setVideos(videoData as VideoType[]);
       } catch (error) {
-        console.error("Error fetching videos:", error);
+        console.error(error);
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchVideos();
+    loadVideos();
   }, []);
 
   if (loading) {
@@ -77,9 +70,7 @@ const VideoCarousel = () => {
               key={index}
               onClick={() => onDotButtonClick(index)}
               className={"embla__dot !w-3 !h-3".concat(
-                index === selectedIndex
-                  ? " embla__dot--selected !w-5 !h-5"
-                  : ""
+                index === selectedIndex ? " embla__dot--selected !w-5 !h-5" : ""
               )}
             />
           ))}
