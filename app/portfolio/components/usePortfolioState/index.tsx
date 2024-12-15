@@ -27,6 +27,19 @@ export type SubTab = {
       data?: Image[];
     };
     value: string;
+    img_cons: {
+      data?: ImgCon[];
+    }
+  };
+};
+
+export type ImgCon = {
+  id: number;
+  attributes: {
+    client: string | null;
+    image: {
+      data: Image | null;
+    };
   };
 };
 
@@ -40,6 +53,7 @@ export type Image = {
     url: string;
   };
 };
+
 
 export type Video = {
   id: number;
@@ -79,7 +93,7 @@ const usePortfolioState = () => {
     const fetchPortfolios = async () => {
       try {
         const portfoliosResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate[1]=subtabs&populate[2]=subtabs.images&populate[0]=video&populate[3]=images`,
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/portfolios?populate[0]=subtabs&populate[1]=subtabs.images&populate[2]=subtabs.img_cons&populate[3]=subtabs.img_cons.image&populate[4]=video&populate[5]=images`
         );
         const portfolios = await portfoliosResponse.json();
         const portfoliosData = portfolios.data;

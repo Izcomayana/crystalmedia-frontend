@@ -2,38 +2,37 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loader from "@/components/Loader";
-import useFetch from "@/lib/api";
+import { fetchTeam } from "@/lib/firebaseUtils";
 
-type Team = {
-  id: number;
-  attributes: {
-    name: string;
-    role: string;
-    image: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-          alternativeText: string;
-          width: number;
-          height: number;
-          url: string;
-        };
-      };
-    };
-  };
+type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  img: string;
 };
 
 const TheTeam = () => {
-  const { loading, error, data } = useFetch<{ data: Team[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/teams?populate=*`,
-  );
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTeamData = async () => {
+      try {
+        const teamData = await fetchTeam();
+        setTeam(teamData as TeamMember[]);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTeamData();
+  }, []);
 
   if (loading) {
     return <Loader />;
   }
-
-  if (error) return <p>Error :(</p>;
 
   return (
     <section>
@@ -42,29 +41,27 @@ const TheTeam = () => {
           Meet the <br /> remarkable brains
         </h3>
         <div className="mt-4 flex flex-col justify-between gap-6 lg:flex-row">
-          {data?.data.map((team) => (
-            <div key={team.id} className="md:w-1/2 md:mx-auto lg:w-fit">
-              <div
-                data-aos="fade-down"
-                data-aos-easing="linear"
-                data-aos-duration="1500"
-              >
-                <div className="w-fit mx-auto">
-                  <Image
-                    src={`${team.attributes.image.data.attributes.url}`}
-                    alt={team.attributes.image.data.attributes.alternativeText}
-                    width={team.attributes.image.data.attributes.width}
-                    height={team.attributes.image.data.attributes.height}
-                  />
-                </div>
-                <div className="bg-primaryBlue p-4 mt-1 text-white">
-                  <h4 className="font-bold text-lg xl:text-lg">
-                    {team.attributes.name}
-                  </h4>
-                  <p className="font-semibold text-xs xl:text-sm">
-                    {team.attributes.role}
-                  </p>
-                </div>
+          {team.map((member) => (
+            <div
+              key={member.id}
+              className="md:w-1/2 md:mx-auto lg:w-fit"
+              data-aos="fade-down"
+              data-aos-easing="linear"
+              data-aos-duration="1500"
+            >
+              <div className="w-fit mx-auto">
+                <Image
+                  src={member.img}
+                  alt={member.name}
+                  width={200}
+                  height={200}
+                />
+              </div>
+              <div className="bg-primaryBlue p-4 mt-1 text-white">
+                <h4 className="font-bold text-lg xl:text-lg">{member.name || "Unknown"}</h4>
+                <p className="font-semibold text-xs xl:text-sm">
+                  {member.role || "No role specified"}
+                </p>
               </div>
             </div>
           ))}
