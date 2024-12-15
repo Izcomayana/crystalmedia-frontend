@@ -1,6 +1,5 @@
 "use client";
 import VideoCarousel from "@/components/VideoCarousel";
-import { EmblaOptionsType } from "embla-carousel";
 
 const GrowthTips = () => {
   return (
