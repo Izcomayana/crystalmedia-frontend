@@ -3,6 +3,8 @@ import {
   query,
   orderBy,
   limit,
+  doc,
+  getDoc,
   getDocs,
   startAfter,
   addDoc,
@@ -141,5 +143,30 @@ export const getTotalBlogsCount = async (): Promise<number> => {
   } catch (error) {
     console.error("Error fetching total blogs count:", error);
     throw new Error("Failed to fetch total blogs count.");
+  }
+};
+
+// Fetch single blog by ID
+export const fetchBlogById = async (id: string): Promise<Blog | null> => {
+  try {
+    const blogRef = doc(db, "blogs", id);
+    const docSnapshot = await getDoc(blogRef);
+
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+      return {
+        id: docSnapshot.id,
+        title: data.title || "",
+        author: data.author || "",
+        post: data.post || "",
+        img: data.img || "",
+        date: data.date instanceof Timestamp ? data.date : null,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error fetching blog by ID:", error);
+    throw new Error("Failed to fetch blog by ID.");
   }
 };

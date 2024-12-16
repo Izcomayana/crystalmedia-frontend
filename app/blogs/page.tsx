@@ -33,7 +33,6 @@ const Blogs = () => {
       try {
         const blogs = await fetchLatestBlogs();
         setLatestPosts(blogs);
-        console.log(blogs);
       } catch (error) {
         console.error(error);
         setError("Failed to load blogs. Please try again.");
