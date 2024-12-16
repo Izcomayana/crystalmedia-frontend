@@ -17,7 +17,8 @@ const VideoCarousel = () => {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [loading, setLoading] = useState(true);
   const [emblaRef, emblaApi] = useEmblaCarousel();
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
 
   useEffect(() => {
     const loadVideos = async () => {
@@ -70,7 +71,9 @@ const VideoCarousel = () => {
               key={index}
               onClick={() => onDotButtonClick(index)}
               className={"embla__dot !w-3 !h-3".concat(
-                index === selectedIndex ? " embla__dot--selected !w-5 !h-5" : ""
+                index === selectedIndex
+                  ? " embla__dot--selected !w-5 !h-5"
+                  : "",
               )}
             />
           ))}

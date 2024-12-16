@@ -186,7 +186,7 @@ const Page: React.FC = () => {
           </div>
 
           <div className="mb-10 lg:mt-12 lg:w-[30%]">
-            <BlogList
+            {/* <BlogList
               blogs={
                 Array.isArray(paginatedData?.data) ? paginatedData.data : []
               }
@@ -195,7 +195,7 @@ const Page: React.FC = () => {
               currentPage={currentPage}
               onPageChange={handlePageChange}
               fullWidth={true}
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -59,7 +59,9 @@ const Blog = () => {
   }
 
   if (!latestPosts.length) {
-    return <p className="text-center">No blog posts are available at the moment.</p>;
+    return (
+      <p className="text-center">No blog posts are available at the moment.</p>
+    );
   }
 
   return (
@@ -82,7 +84,7 @@ const Blog = () => {
               className="border border-black p-4 rounded-2xl transition-all hover:border-[2.5px] hover:shadow-2xl w-full lg:w-[49%]"
             >
               <div className="flex flex-col gap-2">
-              <div className="h-[167px] lg:h-[290px]">
+                <div className="h-[167px] lg:h-[290px]">
                   <Image
                     src={blog.img}
                     alt={blog.title}
@@ -110,29 +112,29 @@ const Blog = () => {
                   </ReactMarkdown>
                 </div>
                 <Link
-                    href={`/blogs/blog?id=${blog.id}`}
-                    className="flex items-center font-semibold text-xs rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all lg:text-sm"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                  >
-                    <span>Read more</span>
-                    <div className="relative w-3 h-1 ml-3">
-                      <Image
-                        src={slantarrow}
-                        alt={"arrow"}
-                        className={`absolute inset-0 transition-opacity duration-300 ${
-                          isHovered ? "opacity-0" : "opacity-100"
-                        }`}
-                      />
-                      <Image
-                        src={arrow}
-                        alt={"arrow"}
-                        className={`absolute inset-0 transition-opacity duration-300 ${
-                          isHovered ? "opacity-100" : "opacity-0"
-                        }`}
-                      />
-                    </div>
-                  </Link>
+                  href={`/blogs/blog?id=${blog.id}`}
+                  className="flex items-center font-semibold text-xs rounded-md hover:border hover:border-primaryBlue hover:p-2 hover:justify-between transition-all lg:text-sm"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <span>Read more</span>
+                  <div className="relative w-3 h-1 ml-3">
+                    <Image
+                      src={slantarrow}
+                      alt={"arrow"}
+                      className={`absolute inset-0 transition-opacity duration-300 ${
+                        isHovered ? "opacity-0" : "opacity-100"
+                      }`}
+                    />
+                    <Image
+                      src={arrow}
+                      alt={"arrow"}
+                      className={`absolute inset-0 transition-opacity duration-300 ${
+                        isHovered ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  </div>
+                </Link>
               </div>
             </div>
           ))}

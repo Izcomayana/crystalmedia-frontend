@@ -58,7 +58,9 @@ const TheTeam = () => {
                 />
               </div>
               <div className="bg-primaryBlue p-4 mt-1 text-white">
-                <h4 className="font-bold text-lg xl:text-lg">{member.name || "Unknown"}</h4>
+                <h4 className="font-bold text-lg xl:text-lg">
+                  {member.name || "Unknown"}
+                </h4>
                 <p className="font-semibold text-xs xl:text-sm">
                   {member.role || "No role specified"}
                 </p>

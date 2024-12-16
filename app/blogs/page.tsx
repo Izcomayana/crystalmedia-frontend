@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
-import useFetch from "@/lib/api";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
@@ -11,68 +10,118 @@ import { TbPointFilled } from "react-icons/tb";
 import ReactMarkdown from "react-markdown";
 import BlogList from "./components/BlogList";
 import Link from "next/link";
-
-interface Blog {
-  id: number;
-  attributes: {
-    date: Date;
-    title: string;
-    post: string;
-    writer: string;
-    publishedAt: string;
-    img: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-          alternativeText: string;
-          width: number;
-          height: number;
-          url: string;
-        };
-      };
-    };
-  };
-}
+import {
+  fetchLatestBlogs,
+  fetchPaginatedBlogs,
+  getTotalBlogsCount,
+} from "@/lib/firebaseUtils";
+import type { Blog } from "@/lib/firebaseUtils";
 
 const Blogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [latestPosts, setLatestPosts] = useState<Blog[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [lastDoc, setLastDoc] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const pageSize = 4;
+  const [totalPages, setTotalPages] = useState(1);
+  const [pagePointers, setPagePointers] = useState<any[]>([]);
 
-  // Fetch the most recent 2 blogs
-  const {
-    loading: recentLoading,
-    error: recentError,
-    data: recentData,
-  } = useFetch<{ data: Blog[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=1&pagination[pageSize]=2&sort=publishedAt:desc`,
-  );
+  useEffect(() => {
+    const loadBlogs = async () => {
+      try {
+        const blogs = await fetchLatestBlogs();
+        setLatestPosts(blogs);
+        console.log(blogs);
+      } catch (error) {
+        console.error(error);
+        setError("Failed to load blogs. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Extract the IDs of the first two blog posts to exclude them later
-  const excludedIds = recentData?.data.map((blog) => blog.id) || [];
+    loadBlogs();
+  }, []);
 
-  // Convert the excluded IDs into a query filter string
-  const excludeFilter = excludedIds
-    .map((id) => `filters[id][$ne]=${id}`)
-    .join("&");
+  const fetchAllPagePointers = async (pageSize: number) => {
+    const pagePointers: any[] = [];
+    let lastVisibleDoc: any = null;
 
-  // Fetch paginated blogs (excluding the first 2 blogs)
-  const {
-    loading: paginatedLoading,
-    error: paginatedError,
-    data: paginatedData,
-  } = useFetch<{ data: Blog[]; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc&${excludeFilter}`,
-  );
+    try {
+      while (true) {
+        const { blogs, lastDoc } = await fetchPaginatedBlogs(
+          pageSize,
+          lastVisibleDoc,
+        );
+        if (blogs.length === 0) break;
 
-  // if (recentLoading || paginatedLoading) return <p>Loading...</p>;
-  if (recentError || paginatedError) return <p>Error :(</p>;
+        pagePointers.push(lastDoc);
+        lastVisibleDoc = lastDoc;
 
-  // Pagination data from Strapi API
-  const pagination = paginatedData?.meta.pagination;
+        if (blogs.length < pageSize) break;
+      }
+    } catch (error) {
+      console.error("Failed to fetch page pointers:", error);
+      throw error;
+    }
+
+    return pagePointers;
+  };
+
+  const loadPaginatedBlogs = async (pageNumber: number) => {
+    setLoading(true);
+    try {
+      const startAfterPointer =
+        pageNumber > 1 ? pagePointers[pageNumber - 2] : null;
+
+      const { blogs, lastDoc } = await fetchPaginatedBlogs(
+        pageSize,
+        startAfterPointer,
+      );
+      setBlogs(blogs);
+      setLastDoc(lastDoc);
+    } catch (err) {
+      console.error("Error fetching blogs for page:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const totalBlogs = await getTotalBlogsCount();
+        const calculatedTotalPages = Math.ceil(totalBlogs / pageSize);
+        setTotalPages(calculatedTotalPages);
+
+        const pointers = await fetchAllPagePointers(pageSize);
+        setPagePointers(pointers);
+
+        // Load the first page
+        await loadPaginatedBlogs(1);
+      } catch (error) {
+        console.error("Failed to initialize data:", error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    if (page !== currentPage) {
+      setCurrentPage(page);
+      loadPaginatedBlogs(page);
+    }
   };
+
+  {
+    loading && <p>Loading...</p>;
+  }
+  {
+    error && <p className="text-red-500">{error}</p>;
+  }
 
   return (
     <>
@@ -86,7 +135,7 @@ const Blogs = () => {
 
             {/* Display the first 2 most recent blogs */}
             <div>
-              {recentData?.data.map((blog, index) => (
+              {latestPosts?.map((blog, index) => (
                 <div
                   key={blog.id}
                   className={`${
@@ -97,10 +146,10 @@ const Blogs = () => {
                 >
                   <div className={`h-[228px] ${index === 1 ? "lg:w-1/2" : ""}`}>
                     <Image
-                      src={`${blog.attributes.img.data.attributes.url}`}
-                      width={blog.attributes.img.data.attributes.width}
-                      height={blog.attributes.img.data.attributes.height}
-                      alt={blog.attributes.img.data.attributes.alternativeText}
+                      src={blog.img}
+                      alt={blog.title}
+                      width={300}
+                      height={200}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -115,28 +164,24 @@ const Blogs = () => {
                         }`}
                       >
                         <span className="hidden lg:flex gap-2 justify-center items-center">
-                          {blog.attributes.writer}
+                          {blog.author}
                           <TbPointFilled />
                         </span>
                         <span className="lg:hidden">
-                          {format(
-                            new Date(blog.attributes.publishedAt),
-                            "EEEE, MMMM d, yyyy",
-                          )}
+                          {blog.date
+                            ? format(blog.date.toDate(), "EEEE, MMMM d, yyyy")
+                            : ""}
                         </span>
                         <span className="hidden lg:block">
-                          {format(
-                            new Date(blog.attributes.publishedAt),
-                            "d MMMM, yyyy",
-                          )}
+                          {blog.date
+                            ? format(blog.date.toDate(), "d MMMM, yyyy")
+                            : ""}
                         </span>
                       </p>
                     </div>
                     <Link href={`/blogs/blog?id=${blog.id}`}>
                       <div className="flex justify-between hover:underline">
-                        <h2 className="text-lg font-semibold">
-                          {blog.attributes.title}
-                        </h2>
+                        <h2 className="text-lg font-semibold">{blog.title}</h2>
                         <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -155,13 +200,13 @@ const Blogs = () => {
                         </div>
                       </div>
                     </Link>
-                    <p className="text-sm text-[#667085] my-3">
+                    <div className="text-sm text-[#667085] my-3">
                       <ReactMarkdown>
-                        {blog.attributes.post.length > 300
-                          ? `${blog.attributes.post.slice(0, 300)}...`
-                          : blog.attributes.post}
+                        {blog.post.length > 300
+                          ? `${blog.post.slice(0, 300)}...`
+                          : blog.post}
                       </ReactMarkdown>
-                    </p>
+                    </div>
                     <div className="flex gap-2">
                       <Badge variant={"secondary"}>Badge</Badge>
                       <Badge variant={"secondary"}>Badge</Badge>
@@ -172,13 +217,17 @@ const Blogs = () => {
               ))}
             </div>
 
-            <BlogList
-              blogs={paginatedData?.data || []}
-              title="All blog posts"
-              pagination={pagination}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <BlogList
+                blogs={blogs}
+                title="All blog posts"
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            )}
           </div>
         </div>
         <Testimonials />
