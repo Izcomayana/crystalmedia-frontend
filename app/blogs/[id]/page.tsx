@@ -8,21 +8,19 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogList from "../components/BlogList";
+import { Blog, fetchBlogById } from "@/lib/firebaseUtils";
 import {
-  Blog,
-  fetchBlogById,
-  fetchPaginatedBlogs,
-  getTotalBlogsCount,
-} from "@/lib/firebaseUtils";
+  fetchInitialPaginationData,
+  loadPaginatedBlogsHelper,
+} from "@/lib/blogHelpers";
 
 const Page: React.FC = () => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pagePointers, setPagePointers] = useState<any[]>([]);
-  const [lastDoc, setLastDoc] = useState<any>(null);
   const [totalPages, setTotalPages] = useState(1);
 
   const searchParams = useSearchParams();
@@ -30,96 +28,60 @@ const Page: React.FC = () => {
   const pageSize = 4;
 
   useEffect(() => {
-    const loadBlog = async () => {
+    const loadBlogData = async () => {
       setLoading(true);
-      try {
-        if (!id) throw new Error("Blog ID is missing.");
+      setError(null);
 
-        const fetchedBlog = await fetchBlogById(id);
-        if (!fetchedBlog) {
-          throw new Error("Blog not found.");
+      try {
+        if (!id) {
+          throw new Error("Blog ID is missing.");
         }
 
-        setBlog(fetchedBlog);
-      } catch (err) {
-        console.error("Failed to fetch blog:", err);
-        setError(true);
+        const blogData = await fetchBlogById(id);
+        if (!blogData) {
+          throw new Error("Blog not found.");
+        }
+        setBlog(blogData);
+
+        const { totalPages, pagePointers } =
+          await fetchInitialPaginationData(pageSize);
+        setTotalPages(totalPages);
+        setPagePointers(pagePointers);
+
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          1,
+        );
+        setBlogs(blogs);
+      } catch (err: any) {
+        console.error("Failed to load blog data:", err);
+        setError(err.message || "An unexpected error occurred.");
       } finally {
         setLoading(false);
       }
     };
 
-    loadBlog();
+    loadBlogData();
   }, [id]);
 
-  const loadPaginatedBlogs = async (pageNumber: number) => {
-    setLoading(true);
-    try {
-      const startAfterPointer =
-        pageNumber > 1 ? pagePointers[pageNumber - 2] : null;
-
-      const { blogs, lastDoc } = await fetchPaginatedBlogs(
-        pageSize,
-        startAfterPointer,
-      );
-      setBlogs(blogs);
-      setLastDoc(lastDoc);
-    } catch (err) {
-      console.error("Error fetching blogs for page:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchAllPagePointers = async (pageSize: number) => {
-    const pagePointers: any[] = [];
-    let lastVisibleDoc: any = null;
-
-    try {
-      while (true) {
-        const { blogs, lastDoc } = await fetchPaginatedBlogs(
-          pageSize,
-          lastVisibleDoc,
-        );
-        if (blogs.length === 0) break;
-
-        pagePointers.push(lastDoc);
-        lastVisibleDoc = lastDoc;
-
-        if (blogs.length < pageSize) break;
-      }
-    } catch (error) {
-      console.error("Failed to fetch page pointers:", error);
-      throw error;
-    }
-
-    return pagePointers;
-  };
-
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const totalBlogs = await getTotalBlogsCount();
-        const calculatedTotalPages = Math.ceil(totalBlogs / pageSize);
-        setTotalPages(calculatedTotalPages);
-
-        const pointers = await fetchAllPagePointers(pageSize);
-        setPagePointers(pointers);
-
-        // Load the first page
-        await loadPaginatedBlogs(1);
-      } catch (error) {
-        console.error("Failed to initialize data:", error);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
-
-  const handlePageChange = (page: number) => {
+  const handlePageChange = async (page: number) => {
     if (page !== currentPage) {
-      setCurrentPage(page);
-      loadPaginatedBlogs(page);
+      setLoading(true);
+      try {
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          page,
+        );
+        setBlogs(blogs);
+        setCurrentPage(page);
+      } catch (err) {
+        console.error("Failed to fetch page data:", err);
+        setError("An error occurred while changing pages.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -180,7 +142,9 @@ const Page: React.FC = () => {
   if (error || !blog) {
     return (
       <div className="container mx-auto">
-        <p>Error loading blog. Please try again later.</p>
+        <p className="text-red-500">
+          {error || "Error loading blog. Please try again later."}
+        </p>
       </div>
     );
   }
@@ -215,19 +179,14 @@ const Page: React.FC = () => {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  p: ({ children }) => <p className="mb-4">{children}</p>, // Paragraph styling
+                  p: ({ children }) => <p className="mb-4">{children}</p>,
                   ul: ({ children }) => (
                     <ul className="list-disc ml-5">{children}</ul>
-                  ), // Unordered list
+                  ),
                   ol: ({ children }) => (
                     <ol className="list-decimal ml-5">{children}</ol>
-                  ), // Ordered list
-                  li: ({ children }) => (
-                    <li className="mb-2">
-                      <div>{children}</div>{" "}
-                      {/* Wrapping in a div to maintain numbering */}
-                    </li>
                   ),
+                  li: ({ children }) => <li className="mb-2">{children}</li>,
                   img: ({ src, alt }) => (
                     <div className="h-[300px] md:h-[412px]">
                       <Image
@@ -238,7 +197,7 @@ const Page: React.FC = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  ), // Custom image handling
+                  ),
                 }}
               >
                 {blog.post}
@@ -246,18 +205,14 @@ const Page: React.FC = () => {
             </div>
           </div>
           <div className="mb-10 lg:mt-12 lg:w-[30%]">
-            {loading ? (
-              <p>Loading...</p>
-            ) : (
-              <BlogList
-                blogs={blogs}
-                title="All blog posts"
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                fullWidth={true}
-              />
-            )}
+            <BlogList
+              blogs={blogs}
+              title="All blog posts"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              fullWidth={true}
+            />
           </div>
         </div>
       </div>

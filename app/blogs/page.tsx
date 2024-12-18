@@ -10,108 +10,71 @@ import { TbPointFilled } from "react-icons/tb";
 import ReactMarkdown from "react-markdown";
 import BlogList from "./components/BlogList";
 import Link from "next/link";
-import {
-  fetchLatestBlogs,
-  fetchPaginatedBlogs,
-  getTotalBlogsCount,
-} from "@/lib/firebaseUtils";
+import { fetchLatestBlogs } from "@/lib/firebaseUtils";
 import type { Blog } from "@/lib/firebaseUtils";
+import {
+  fetchInitialPaginationData,
+  loadPaginatedBlogsHelper,
+} from "@/lib/blogHelpers";
 
 const Blogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [latestPosts, setLatestPosts] = useState<Blog[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [lastDoc, setLastDoc] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const pageSize = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [pagePointers, setPagePointers] = useState<any[]>([]);
 
+  const pageSize = 4;
+
   useEffect(() => {
-    const loadBlogs = async () => {
+    const initializeData = async () => {
+      setLoading(true);
       try {
-        const blogs = await fetchLatestBlogs();
-        setLatestPosts(blogs);
+        // Fetch latest posts
+        const latest = await fetchLatestBlogs();
+        setLatestPosts(latest);
+
+        // Fetch pagination pointers
+        const { totalPages, pagePointers } =
+          await fetchInitialPaginationData(pageSize);
+        setTotalPages(totalPages);
+        setPagePointers(pagePointers);
+
+        // Load first page
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          1,
+        );
+        setBlogs(blogs);
       } catch (error) {
-        console.error(error);
-        setError("Failed to load blogs. Please try again.");
+        setError("Failed to initialize data. Please try again.");
       } finally {
         setLoading(false);
       }
     };
 
-    loadBlogs();
+    initializeData();
   }, []);
 
-  const fetchAllPagePointers = async (pageSize: number) => {
-    const pagePointers: any[] = [];
-    let lastVisibleDoc: any = null;
-
-    try {
-      while (true) {
-        const { blogs, lastDoc } = await fetchPaginatedBlogs(
-          pageSize,
-          lastVisibleDoc,
-        );
-        if (blogs.length === 0) break;
-
-        pagePointers.push(lastDoc);
-        lastVisibleDoc = lastDoc;
-
-        if (blogs.length < pageSize) break;
-      }
-    } catch (error) {
-      console.error("Failed to fetch page pointers:", error);
-      throw error;
-    }
-
-    return pagePointers;
-  };
-
-  const loadPaginatedBlogs = async (pageNumber: number) => {
-    setLoading(true);
-    try {
-      const startAfterPointer =
-        pageNumber > 1 ? pagePointers[pageNumber - 2] : null;
-
-      const { blogs, lastDoc } = await fetchPaginatedBlogs(
-        pageSize,
-        startAfterPointer,
-      );
-      setBlogs(blogs);
-      setLastDoc(lastDoc);
-    } catch (err) {
-      console.error("Error fetching blogs for page:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const totalBlogs = await getTotalBlogsCount();
-        const calculatedTotalPages = Math.ceil(totalBlogs / pageSize);
-        setTotalPages(calculatedTotalPages);
-
-        const pointers = await fetchAllPagePointers(pageSize);
-        setPagePointers(pointers);
-
-        // Load the first page
-        await loadPaginatedBlogs(1);
-      } catch (error) {
-        console.error("Failed to initialize data:", error);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
-
-  const handlePageChange = (page: number) => {
+  const handlePageChange = async (page: number) => {
     if (page !== currentPage) {
-      setCurrentPage(page);
-      loadPaginatedBlogs(page);
+      setLoading(true);
+      try {
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          page,
+        );
+        setBlogs(blogs);
+        setCurrentPage(page);
+      } catch {
+        setError("Failed to fetch page data.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

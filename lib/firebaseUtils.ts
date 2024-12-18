@@ -24,6 +24,27 @@ export interface Blog {
   date?: Timestamp | null;
 }
 
+interface WhatWeDo {
+  id: string;
+  about: string;
+}
+
+export const fetchWhatWeDoById = async (id: string): Promise<WhatWeDo | null> => {
+  try {
+    const docRef = doc(db, "whatwedo", id);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      return { id: docSnapshot.id, ...docSnapshot.data() } as WhatWeDo;
+    }
+    console.error(`No document found for ID: ${id}`);
+    return null;
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    throw new Error("Failed to fetch data.");
+  }
+};
+
 export const addNewBlog = async (blog: { title: string; author: string; post: string; img: string }) => {
   await addDoc(collection(db, "blogs"), {
     ...blog,
