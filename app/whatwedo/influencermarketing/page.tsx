@@ -5,27 +5,39 @@ import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-interface Influencer {
-  id: number;
-  attributes: {
-    contents: string;
-  };
-}
+import { fetchWhatWeDoById } from "@/lib/firebaseUtils";
 
 const InfluencerMarketing: React.FC = () => {
-  const [pageData, setPageData] = useState<Influencer | null>(null);
-
-  const { loading, error, data } = useFetch<{ data: Influencer; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/1`,
-  );
+  const [content, setContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (data && data.data) {
-      setPageData(data.data);
-    }
-    console.log(pageData?.attributes);
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const data = await fetchWhatWeDoById("smmm");
+        if (data?.about) {
+          setContent(data.about);
+        } else {
+          setError("Data not found");
+        }
+      } catch (err) {
+        setError("Failed to load data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -50,7 +62,7 @@ const InfluencerMarketing: React.FC = () => {
               ),
             }}
           >
-            {pageData?.attributes.contents}
+            {content}
           </ReactMarkdown>
         </p>
       </div>

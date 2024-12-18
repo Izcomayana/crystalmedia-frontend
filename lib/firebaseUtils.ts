@@ -3,6 +3,8 @@ import {
   query,
   orderBy,
   limit,
+  doc,
+  getDoc,
   getDocs,
   startAfter,
   addDoc,
@@ -21,6 +23,27 @@ export interface Blog {
   img: string;
   date?: Timestamp | null;
 }
+
+interface WhatWeDo {
+  id: string;
+  about: string;
+}
+
+export const fetchWhatWeDoById = async (id: string): Promise<WhatWeDo | null> => {
+  try {
+    const docRef = doc(db, "whatwedo", id);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      return { id: docSnapshot.id, ...docSnapshot.data() } as WhatWeDo;
+    }
+    console.error(`No document found for ID: ${id}`);
+    return null;
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    throw new Error("Failed to fetch data.");
+  }
+};
 
 export const addNewBlog = async (blog: { title: string; author: string; post: string; img: string }) => {
   await addDoc(collection(db, "blogs"), {
@@ -141,5 +164,30 @@ export const getTotalBlogsCount = async (): Promise<number> => {
   } catch (error) {
     console.error("Error fetching total blogs count:", error);
     throw new Error("Failed to fetch total blogs count.");
+  }
+};
+
+// Fetch single blog by ID
+export const fetchBlogById = async (id: string): Promise<Blog | null> => {
+  try {
+    const blogRef = doc(db, "blogs", id);
+    const docSnapshot = await getDoc(blogRef);
+
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+      return {
+        id: docSnapshot.id,
+        title: data.title || "",
+        author: data.author || "",
+        post: data.post || "",
+        img: data.img || "",
+        date: data.date instanceof Timestamp ? data.date : null,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error fetching blog by ID:", error);
+    throw new Error("Failed to fetch blog by ID.");
   }
 };

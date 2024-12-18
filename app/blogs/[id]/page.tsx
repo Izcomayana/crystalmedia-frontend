@@ -1,68 +1,91 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
-import useFetch from "@/lib/api";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogList from "../components/BlogList";
-
-interface Post {
-  id: number;
-  attributes: {
-    date: Date;
-    title: string;
-    post: string;
-    writer: string;
-    publishedAt: string;
-    img: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-          alternativeText: string;
-          width: number;
-          height: number;
-          url: string;
-        };
-      };
-    };
-  };
-}
+import { Blog, fetchBlogById } from "@/lib/firebaseUtils";
+import {
+  fetchInitialPaginationData,
+  loadPaginatedBlogsHelper,
+} from "@/lib/blogHelpers";
 
 const Page: React.FC = () => {
-  const [post, setPost] = useState<Post | null>(null);
+  const [blog, setBlog] = useState<Blog | null>(null);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pagePointers, setPagePointers] = useState<any[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-
-  const { loading, error, data } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs/${id}?populate=*`,
-  );
-
-  const {
-    loading: paginatedLoading,
-    error: paginatedError,
-    data: paginatedData,
-  } = useFetch<{ data: Post; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs?populate=*&pagination[page]=${currentPage}&pagination[pageSize]=4&sort=publishedAt:desc`,
-  );
-
-  const pagination = paginatedData?.meta.pagination;
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const pageSize = 4;
 
   useEffect(() => {
-    if (data && data.data) {
-      setPost(data.data);
-    }
-  }, [data]);
+    const loadBlogData = async () => {
+      setLoading(true);
+      setError(null);
 
-  if (loading || !post) {
+      try {
+        if (!id) {
+          throw new Error("Blog ID is missing.");
+        }
+
+        const blogData = await fetchBlogById(id);
+        if (!blogData) {
+          throw new Error("Blog not found.");
+        }
+        setBlog(blogData);
+
+        const { totalPages, pagePointers } =
+          await fetchInitialPaginationData(pageSize);
+        setTotalPages(totalPages);
+        setPagePointers(pagePointers);
+
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          1,
+        );
+        setBlogs(blogs);
+      } catch (err: any) {
+        console.error("Failed to load blog data:", err);
+        setError(err.message || "An unexpected error occurred.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadBlogData();
+  }, [id]);
+
+  const handlePageChange = async (page: number) => {
+    if (page !== currentPage) {
+      setLoading(true);
+      try {
+        const { blogs } = await loadPaginatedBlogsHelper(
+          pageSize,
+          pagePointers,
+          page,
+        );
+        setBlogs(blogs);
+        setCurrentPage(page);
+      } catch (err) {
+        console.error("Failed to fetch page data:", err);
+        setError("An error occurred while changing pages.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  if (loading) {
     return (
       <div className="mx-auto container">
         <div className="lg:flex lg:gap-6 lg:justify-between">
@@ -116,10 +139,12 @@ const Page: React.FC = () => {
     );
   }
 
-  if (error) {
+  if (error || !blog) {
     return (
-      <div className="mx-auto container">
-        <p>Error :(</p>;
+      <div className="container mx-auto">
+        <p className="text-red-500">
+          {error || "Error loading blog. Please try again later."}
+        </p>
       </div>
     );
   }
@@ -130,43 +155,38 @@ const Page: React.FC = () => {
         <div className="lg:flex lg:gap-6 lg:justify-between">
           <div className="my-10 mb-40 lg:w-[70%]">
             <p className="text-xs font-semibold lg:text-sm">
-              {format(
-                new Date(post.attributes.publishedAt),
-                "EEEE, MMMM d, yyyy",
-              )}
+              {blog.date
+                ? format(blog.date.toDate(), "EEEE, MMMM d, yyyy")
+                : ""}
             </p>
-
             <h1 className="font-semibold text-xl my-4 lg:text-2xl lg:my-8">
-              {post.attributes.title}
+              {blog.title}
             </h1>
 
-            <div className="mt-8 h-[300px] md:h-[412px]">
-              <Image
-                src={`${post.attributes.img.data.attributes.url}`}
-                width={post.attributes.img.data.attributes.width}
-                height={post.attributes.img.data.attributes.height}
-                alt={post.attributes.img.data.attributes.alternativeText}
-                className="w-full h-full object-cover"
-              />
+            <div className="mt-8 h-[300px]">
+              {blog.img && (
+                <Image
+                  src={blog.img}
+                  alt={blog.title}
+                  width={800}
+                  height={400}
+                  className="w-full h-80 object-cover rounded-md"
+                />
+              )}
             </div>
 
-            <p className="text-black text-sm font-light my-4 lg:text-base">
+            <div className="text-black text-sm font-light my-4 lg:text-base">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  p: ({ children }) => <p className="mb-4">{children}</p>, // Paragraph styling
+                  p: ({ children }) => <p className="mb-4">{children}</p>,
                   ul: ({ children }) => (
                     <ul className="list-disc ml-5">{children}</ul>
-                  ), // Unordered list
+                  ),
                   ol: ({ children }) => (
                     <ol className="list-decimal ml-5">{children}</ol>
-                  ), // Ordered list
-                  li: ({ children }) => (
-                    <li className="mb-2">
-                      <div>{children}</div>{" "}
-                      {/* Wrapping in a div to maintain numbering */}
-                    </li>
                   ),
+                  li: ({ children }) => <li className="mb-2">{children}</li>,
                   img: ({ src, alt }) => (
                     <div className="h-[300px] md:h-[412px]">
                       <Image
@@ -177,25 +197,22 @@ const Page: React.FC = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  ), // Custom image handling
+                  ),
                 }}
               >
-                {post.attributes.post}
+                {blog.post}
               </ReactMarkdown>
-            </p>
+            </div>
           </div>
-
           <div className="mb-10 lg:mt-12 lg:w-[30%]">
-            {/* <BlogList
-              blogs={
-                Array.isArray(paginatedData?.data) ? paginatedData.data : []
-              }
-              title="Recents blogs"
-              pagination={pagination}
+            <BlogList
+              blogs={blogs}
+              title="All blog posts"
               currentPage={currentPage}
+              totalPages={totalPages}
               onPageChange={handlePageChange}
               fullWidth={true}
-            /> */}
+            />
           </div>
         </div>
       </div>
