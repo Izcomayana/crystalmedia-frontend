@@ -1,31 +1,42 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useFetch from "@/lib/api";
-import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
+import CTA from "@/components/CTA";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { fetchWhatWeDoById } from "@/lib/firebaseUtils";
 
-interface SMMMM {
-  id: number;
-  attributes: {
-    contents: string;
-  };
-}
-
-const SMMMM = () => {
-  const [pageData, setPageData] = useState<SMMMM | null>(null);
-
-  const { loading, error, data } = useFetch<{ data: SMMMM; meta: any }>(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/2`,
-  );
+const SMMMPage = () => {
+  const [content, setContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (data && data.data) {
-      setPageData(data.data);
-    }
-    console.log(pageData?.attributes);
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const data = await fetchWhatWeDoById("smmm");
+        if (data?.about) {
+          setContent(data.about);
+        } else {
+          setError("Data not found");
+        }
+      } catch (err) {
+        setError("Failed to load data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -53,13 +64,14 @@ const SMMMM = () => {
               ),
             }}
           >
-            {pageData?.attributes.contents}
+            {content}
           </ReactMarkdown>
         </p>
       </div>
+
       <CTA />
     </>
   );
 };
 
-export default SMMMM;
+export default SMMMPage;

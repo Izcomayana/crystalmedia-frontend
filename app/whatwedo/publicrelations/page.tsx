@@ -1,37 +1,43 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useFetch from "@/lib/api";
 import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { fetchWhatWeDoById } from "@/lib/firebaseUtils";
 
-interface PublicRelation {
-  id: number;
-  attributes: {
-    contents: string;
-  };
-}
-
-const PublicRelation: React.FC = () => {
-  const [pageData, setPageData] = useState<PublicRelation | null>(null);
-
-  const { loading, error, data } = useFetch<{
-    data: PublicRelation;
-    meta: any;
-  }>(`${process.env.NEXT_PUBLIC_STRAPI_URL}/whatwedos/3`);
+const PublicRelation = () => {
+  const [content, setContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (data && data.data) {
-      setPageData(data.data);
-    }
-    console.log(pageData?.attributes);
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const data = await fetchWhatWeDoById("pr");
+        setContent(data?.about);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!content) {
+    return <p>Content not found.</p>;
+  }
 
   return (
     <>
-      <Hero title="What We Do" subtitle="Public Relations and Services" />
-
+      <Hero
+        title={content.title || "What We Do"}
+        subtitle={content.subtitle || "Public Relations"}
+      />
       <div className="container mx-auto my-10">
         <p className="text-black text-sm mb-10 font-light lg:text-base">
           <ReactMarkdown
@@ -51,7 +57,7 @@ const PublicRelation: React.FC = () => {
               ),
             }}
           >
-            {pageData?.attributes.contents}
+            {content}
           </ReactMarkdown>
         </p>
       </div>

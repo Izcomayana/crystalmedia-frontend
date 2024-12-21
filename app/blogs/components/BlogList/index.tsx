@@ -31,8 +31,10 @@ const BlogList: React.FC<BlogListProps> = ({
       </h2>
       <div className="flex flex-wrap gap-4 justify-between mb-10">
         {blogs.map((blog) => (
-          // <div key={blog.id} className={`mb-8 ${fullWidth ? "lg:w-full" : "lg:w-[48.5%]"}`}>
-          <div key={blog.id} className="w-full lg:w-[48.5%]">
+          <div
+            key={blog.id}
+            className={`mb-8 ${fullWidth ? "lg:w-full" : "lg:w-[48.5%]"}`}
+          >
             <div className="md:h-[240px]">
               <Image
                 src={blog.img}
