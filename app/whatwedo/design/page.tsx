@@ -51,7 +51,7 @@ const Designs: React.FC = () => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              p: ({ children }) => <p className="mb-4">{children}</p>, // Paragraph styling
+              p: ({ children }) => <p className="mb-4">{children}</p>,
               ul: ({ children }) => (
                 <ul className="list-disc ml-5">{children}</ul>
               ), // Unordered list
