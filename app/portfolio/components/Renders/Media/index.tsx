@@ -2,11 +2,12 @@ import React from "react";
 import RenderImages from "../Images";
 import RenderRichText from "../RichText";
 import { Portfolio, SubTab } from "../../usePortfolioState";
+import ReactMarkdown from "react-markdown";
 
 interface RenderMediaProps {
   portfolio: Portfolio;
   subtab?: SubTab;
-  activeSubTabs?: { [key: number]: string };
+  activeSubTabs?: { [key: string]: string };
 }
 
 const RenderMedia: React.FC<RenderMediaProps> = ({
@@ -14,57 +15,60 @@ const RenderMedia: React.FC<RenderMediaProps> = ({
   subtab,
   activeSubTabs,
 }) => {
-  // Directly render images if there are no subtabs and images exist
-  if (
-    !portfolio.attributes.subtabs?.data.length &&
-    portfolio.attributes.images?.data
-  ) {
-    return (
-      <RenderImages
-        data={portfolio.attributes.images.data || []}
-        name={portfolio.attributes.name}
-        subtabValue=""
-      />
-    );
-  }
+  console.log("Portfolio Passed to RenderMedia:", portfolio.name);
+  console.log("Portfolio Video:", portfolio.video);
 
-  // Render video if available
-  if (portfolio.attributes.video?.data) {
+  // Render video if video exists
+  if (portfolio.video) {
+    console.log("Rendering video for:", portfolio.name);
     return (
-      <div key={portfolio.attributes.video.data.id}>
-        <div className="w-full h-min mx-auto my-10 loop md:mb-20">
+      <div key={portfolio.id}>
+        <div className="max-w-[756px] max-h-[456px] mx-auto mb-10 loop md:mb-20">
           <video
             className="h-full w-full rounded-3xl cursor-pointer"
             loop
             controls
             muted
           >
-            <source
-              src={`${portfolio.attributes.video.data.attributes.url}`}
-              type="video/mp4"
-            />
+            <source src={portfolio.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
-        {portfolio.attributes.caption && (
-          <RenderRichText caption={portfolio.attributes.caption} />
-        )}
+        <div className="text-sm text-gray-800 my-3">
+          <ReactMarkdown>{portfolio.caption}</ReactMarkdown>
+        </div>
       </div>
     );
   }
 
-  // Render images for the subtab
-  if (subtab && subtab.attributes.images?.data) {
+  // Render images if no subtabs and images exist
+  if (!portfolio.subtabs?.length && portfolio.images?.length) {
     return (
       <RenderImages
-        data={subtab.attributes.images.data}
-        name={subtab.attributes.name}
-        subtabValue={subtab.attributes.value}
+        data={portfolio.images || []}
+        name={portfolio.name}
+        subtabValue=""
       />
     );
   }
 
-  return <div>null</div>;
+  // Render images for the subtab
+  if (subtab && subtab.images?.length) {
+    return (
+      <RenderImages
+        data={subtab.images}
+        name={subtab.name}
+        subtabValue={subtab.value}
+      />
+    );
+  }
+
+  // Default fallback for tabs with neither subtabs nor images
+  return (
+    <div className="text-center text-gray-500">
+      <p>No content available for this tab.</p>
+    </div>
+  );
 };
 
 export default RenderMedia;
