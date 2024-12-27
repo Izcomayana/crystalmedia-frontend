@@ -41,10 +41,9 @@ const TabsLayout: React.FC<TabsLayoutProps> = ({
       </Tabs>
     );
   }
-  
+
   // If no subtabs, render media directly
   return <RenderMedia portfolio={portfolio} />;
-  
 };
 
 export default TabsLayout;

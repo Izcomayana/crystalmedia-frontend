@@ -63,13 +63,14 @@ const usePortfolioState = () => {
               `portfolios/${doc.id}/subtabs`,
             );
             const subtabsSnapshot = await getDocs(subtabsCollection);
-            const subtabs = subtabsSnapshot.docs.map((subDoc) => ({
-              id: subDoc.id,
-              name: subDoc.data().name,
-              value: subDoc.data().value,
-              images: subDoc.data().images || [],
-            })) || [];
-            
+            const subtabs =
+              subtabsSnapshot.docs.map((subDoc) => ({
+                id: subDoc.id,
+                name: subDoc.data().name,
+                value: subDoc.data().value,
+                images: subDoc.data().images || [],
+              })) || [];
+
             return {
               id: doc.id,
               name: doc.data().name,

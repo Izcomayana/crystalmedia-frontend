@@ -100,5 +100,3 @@ const RenderImages: React.FC<RenderImagesProps> = ({ data, subtabValue }) => {
 };
 
 export default RenderImages;
-
-

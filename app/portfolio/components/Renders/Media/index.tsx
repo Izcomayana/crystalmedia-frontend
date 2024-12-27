@@ -35,11 +35,8 @@ const RenderMedia: React.FC<RenderMediaProps> = ({
           </video>
         </div>
         <div className="text-sm text-gray-800 my-3">
-                      <ReactMarkdown>
-                        {portfolio.caption}
-                      </ReactMarkdown>
-                    </div>
-        {/* {portfolio.caption && <RenderRichText caption={portfolio.caption} />} */}
+          <ReactMarkdown>{portfolio.caption}</ReactMarkdown>
+        </div>
       </div>
     );
   }
