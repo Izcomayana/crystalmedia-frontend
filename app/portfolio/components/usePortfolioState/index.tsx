@@ -9,7 +9,8 @@ export type Portfolio = {
   value: string;
   subtabs: SubTab[];
   video?: string;
-  caption?: Caption[];
+  caption?: string;
+  // caption?: Caption[];
   images?: Image[];
 };
 

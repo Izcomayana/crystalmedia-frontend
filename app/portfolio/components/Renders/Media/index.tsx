@@ -2,6 +2,7 @@ import React from "react";
 import RenderImages from "../Images";
 import RenderRichText from "../RichText";
 import { Portfolio, SubTab } from "../../usePortfolioState";
+import ReactMarkdown from "react-markdown";
 
 interface RenderMediaProps {
   portfolio: Portfolio;
@@ -22,7 +23,7 @@ const RenderMedia: React.FC<RenderMediaProps> = ({
     console.log("Rendering video for:", portfolio.name);
     return (
       <div key={portfolio.id}>
-        <div className="w-full h-min mx-auto my-10 loop md:mb-20">
+        <div className="max-w-[756px] max-h-[456px] mx-auto mb-10 loop md:mb-20">
           <video
             className="h-full w-full rounded-3xl cursor-pointer"
             loop
@@ -33,7 +34,12 @@ const RenderMedia: React.FC<RenderMediaProps> = ({
             Your browser does not support the video tag.
           </video>
         </div>
-        {portfolio.caption && <RenderRichText caption={portfolio.caption} />}
+        <div className="text-sm text-gray-800 my-3">
+                      <ReactMarkdown>
+                        {portfolio.caption}
+                      </ReactMarkdown>
+                    </div>
+        {/* {portfolio.caption && <RenderRichText caption={portfolio.caption} />} */}
       </div>
     );
   }
