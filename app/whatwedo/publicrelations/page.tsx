@@ -9,18 +9,26 @@ import { fetchWhatWeDoById } from "@/lib/firebaseUtils";
 const PublicRelation = () => {
   const [content, setContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchWhatWeDoById("pr");
-        setContent(data?.about);
-      } catch (error) {
-        console.error(error);
+        console.log("Fetched Content:", data?.about);
+        if (data?.about) {
+          setContent(data.about.replace(/\\n/g, "\n"));
+        } else {
+          setError("Data not found");
+        }
+      } catch (err) {
+        setError("Failed to load data");
       } finally {
         setLoading(false);
+        console.log("Markdown Content:", content);
       }
     };
+
     fetchData();
   }, []);
 
@@ -43,21 +51,29 @@ const PublicRelation = () => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              p: ({ children }) => <p className="mb-4">{children}</p>, // Paragraph styling
+              p: ({ children }) => (
+                <p className="mb-4" style={{ textIndent: "1.5em" }}>
+                  {children}
+                </p>
+              ),
               ul: ({ children }) => (
                 <ul className="list-disc ml-5">{children}</ul>
-              ), // Unordered list
+              ),
               ol: ({ children }) => (
                 <ol className="list-decimal ml-5">{children}</ol>
-              ), // Ordered list
-              li: ({ children }) => (
-                <li className="mb-2">
-                  <div>{children}</div>{" "}
-                </li>
+              ),
+              li: ({ children }) => <li className="mb-2">{children}</li>,
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-4 pl-4 italic text-gray-600">
+                  {children}
+                </blockquote>
+              ),
+              h1: ({ children }) => (
+                <h1 className="text-3xl font-bold mb-4">{children}</h1>
               ),
             }}
           >
-            {content}
+            {content || ""}
           </ReactMarkdown>
         </p>
       </div>
