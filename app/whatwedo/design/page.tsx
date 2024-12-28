@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useFetch from "@/lib/api";
 import CTA from "@/components/CTA";
 import Hero from "@/components/Hero";
 import ReactMarkdown from "react-markdown";
@@ -15,9 +14,9 @@ const Designs: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchWhatWeDoById("smmm");
+        const data = await fetchWhatWeDoById("designs");
         if (data?.about) {
-          setContent(data.about);
+          setContent(data.about.replace(/\\n/g, "\n"));
         } else {
           setError("Data not found");
         }
@@ -25,6 +24,7 @@ const Designs: React.FC = () => {
         setError("Failed to load data");
       } finally {
         setLoading(false);
+        console.log("Markdown Content:", content);
       }
     };
 
@@ -47,27 +47,37 @@ const Designs: React.FC = () => {
       />
 
       <div className="container mx-auto my-10">
-        <p className="text-black text-sm mb-10 font-light lg:text-base">
+        <div className="text-black text-sm mb-10 font-light lg:text-base">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               p: ({ children }) => <p className="mb-4">{children}</p>,
               ul: ({ children }) => (
                 <ul className="list-disc ml-5">{children}</ul>
-              ), // Unordered list
+              ),
               ol: ({ children }) => (
                 <ol className="list-decimal ml-5">{children}</ol>
-              ), // Ordered list
-              li: ({ children }) => (
-                <li className="mb-2">
-                  <div>{children}</div>{" "}
-                </li>
+              ),
+              li: ({ children }) => <li className="mb-2">{children}</li>,
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600">
+                  {children}
+                </blockquote>
+              ), // Blockquote
+              h1: ({ children }) => (
+                <h1 className="text-3xl font-bold">{children}</h1>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-2xl font-semibold">{children}</h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="text-xl font-medium">{children}</h3>
               ),
             }}
           >
             {content}
           </ReactMarkdown>
-        </p>
+        </div>
       </div>
       <CTA />
     </>
