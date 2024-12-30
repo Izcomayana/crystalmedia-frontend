@@ -24,7 +24,6 @@ const SMMMPage = () => {
         setError("Failed to load data");
       } finally {
         setLoading(false);
-        console.log("Markdown Content:", content);
       }
     };
 
