@@ -14,6 +14,14 @@ import {
   loadPaginatedBlogsHelper,
 } from "@/lib/blogHelpers";
 
+const cleanMarkdown = (markdown: string) =>
+  markdown
+    .replace(/\\n/g, "\n")
+    .replace(/\n\n\s*(\d+)\.\s+/g, "\n$1. ")
+    .replace(/(\d+\.)\s+\n/g, "$1 ")
+    .replace(/(\n)+/g, "\n\n")
+    .trim();
+
 const Page: React.FC = () => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -41,17 +49,24 @@ const Page: React.FC = () => {
         if (!blogData) {
           throw new Error("Blog not found.");
         }
+
+        // Clean up Markdown content
+        if (blogData.post) {
+          blogData.post = cleanMarkdown(blogData.post);
+        }
+
         setBlog(blogData);
 
-        const { totalPages, pagePointers } =
-          await fetchInitialPaginationData(pageSize);
+        const { totalPages, pagePointers } = await fetchInitialPaginationData(
+          pageSize
+        );
         setTotalPages(totalPages);
         setPagePointers(pagePointers);
 
         const { blogs } = await loadPaginatedBlogsHelper(
           pageSize,
           pagePointers,
-          1,
+          1
         );
         setBlogs(blogs);
       } catch (err: any) {
@@ -72,7 +87,7 @@ const Page: React.FC = () => {
         const { blogs } = await loadPaginatedBlogsHelper(
           pageSize,
           pagePointers,
-          page,
+          page
         );
         setBlogs(blogs);
         setCurrentPage(page);
@@ -142,9 +157,7 @@ const Page: React.FC = () => {
   if (error || !blog) {
     return (
       <div className="container mx-auto">
-        <p className="text-red-500">
-          {error || "Error loading blog. Please try again later."}
-        </p>
+        <p className="text-red-500">{error || "Error loading blog."}</p>
       </div>
     );
   }
