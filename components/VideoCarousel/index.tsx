@@ -36,7 +36,11 @@ const VideoCarousel = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading videos...</p>;
+    return (
+      <div className="flex justify-center">
+        <span className="tips-loader my-56"></span>
+      </div>
+    );
   }
 
   return (

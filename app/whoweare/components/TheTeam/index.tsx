@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Loader from "@/components/Loader";
+import { Skeleton } from "@/components/ui/skeleton";
 import { fetchTeam } from "@/lib/firebaseUtils";
 
 type TeamMember = {
@@ -31,45 +31,52 @@ const TheTeam = () => {
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="mx-auto mt-8 flex flex-col justify-start gap-10 lg:flex-row">
+        {[...Array(3)].map((_, index) => (
+          <div
+            className="flex flex-col w-full mx-auto md:w-1/2 lg:mx-0 lg:w-80"
+            key={index}
+          >
+            <Skeleton className="h-[21.5rem] w-full rounded-none" />
+            <div className="space-y-4 mt-1">
+              <Skeleton className="h-20 w-full rounded-none" />
+            </div>
+          </div>
+                ))}
+      </div>
+    );
   }
 
   return (
-    <section>
-      <div className="container mx-auto">
-        <h3 className="font-semibold text-lg lg:text-3xl xl:font-bold xl:text-5xl">
-          Meet the <br /> remarkable brains
-        </h3>
-        <div className="mt-4 flex flex-col justify-between gap-6 lg:flex-row">
-          {team.map((member) => (
-            <div
-              key={member.id}
-              className="md:w-1/2 md:mx-auto lg:w-fit"
-              data-aos="fade-down"
-              data-aos-easing="linear"
-              data-aos-duration="1500"
-            >
-              <div className="w-fit mx-auto">
-                <Image
-                  src={member.img}
-                  alt={member.name}
-                  width={200}
-                  height={200}
-                />
-              </div>
-              <div className="bg-primaryBlue p-4 mt-1 text-white">
-                <h4 className="font-bold text-lg xl:text-lg">
-                  {member.name || "Unknown"}
-                </h4>
-                <p className="font-semibold text-xs xl:text-sm">
-                  {member.role || "No role specified"}
-                </p>
-              </div>
-            </div>
-          ))}
+    <div className="mt-8 flex flex-col gap-10 lg:flex-row">
+      {team.map((member) => (
+        <div
+          key={member.id}
+          className="md:w-1/2 mx-auto lg:mx-0 lg:w-fit"
+          data-aos="fade-down"
+          data-aos-easing="linear"
+          data-aos-duration="1500"
+        >
+          <div className="w-fit mx-auto">
+            <Image
+              src={member.img}
+              alt={member.name}
+              width={300}
+              height={200}
+            />
+          </div>
+          <div className="bg-primaryBlue p-4 mt-1 text-white">
+            <h4 className="font-bold text-lg xl:text-lg">
+              {member.name || "Unknown"}
+            </h4>
+            <p className="font-semibold text-xs xl:text-sm">
+              {member.role || "No role specified"}
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 };
 

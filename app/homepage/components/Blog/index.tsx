@@ -160,10 +160,6 @@
 
 // export default Blog;
 
-
-
-
-
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -272,7 +268,7 @@ const Blog = () => {
                   </h2>
                 </Link>
                 <div className="text-black text-sm lg:text-base">
-                  <ReactMarkdown
+                  {/* <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
                       p: ({ children }) => (
@@ -302,13 +298,13 @@ const Blog = () => {
                     {blog.post.length > 300
                       ? `${blog.post.slice(0, 300)}...`
                       : blog.post}
-                  </ReactMarkdown>
+                  </ReactMarkdown> */}
 
-                  {/* <ReactMarkdown>
+                  <ReactMarkdown>
                     {blog.post.length > 300
                       ? `${blog.post.slice(0, 300)}...`
                       : blog.post}
-                  </ReactMarkdown> */}
+                  </ReactMarkdown>
                 </div>
                 <Link
                   href={`/blogs/blog?id=${blog.id}`}

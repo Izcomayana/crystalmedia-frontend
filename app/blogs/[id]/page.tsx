@@ -57,16 +57,15 @@ const Page: React.FC = () => {
 
         setBlog(blogData);
 
-        const { totalPages, pagePointers } = await fetchInitialPaginationData(
-          pageSize
-        );
+        const { totalPages, pagePointers } =
+          await fetchInitialPaginationData(pageSize);
         setTotalPages(totalPages);
         setPagePointers(pagePointers);
 
         const { blogs } = await loadPaginatedBlogsHelper(
           pageSize,
           pagePointers,
-          1
+          1,
         );
         setBlogs(blogs);
       } catch (err: any) {
@@ -87,7 +86,7 @@ const Page: React.FC = () => {
         const { blogs } = await loadPaginatedBlogsHelper(
           pageSize,
           pagePointers,
-          page
+          page,
         );
         setBlogs(blogs);
         setCurrentPage(page);
